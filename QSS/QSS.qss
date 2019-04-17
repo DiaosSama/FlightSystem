@@ -1,0 +1,101 @@
+/* 主窗口 */
+FirstWindow, SecondWindow {
+	background-color: #FCFCFC;
+}
+
+
+/* 标签样式 */
+FirstWindow QLabel {
+	margin-bottom: 17px;
+}
+
+SecondWindow QLabel {
+	margin-right: 8px;
+	padding: 0px;
+}
+
+
+
+/* 文本编辑框样式 */
+FirstWindow QLineEdit, FirstWindow QTextBrowser, FirstWindow QListWidget, SecondWindow QLineEdit, SecondWindow QTextBrowser, SecondWindow QListWidget {
+	border: 1px solid rgb(41, 57, 85);   
+    border-radius: 3px;  
+	padding: 1px;
+    background: white;   
+    selection-background-color: darkgray; 
+    font-size: 12px; 
+}
+
+FirstWindow QLineEdit:hover, FirstWindow QTextBrowser:hover, SecondWindow QLineEdit:hover, SecondWindow QTextBrowser:hover {
+    border: 1px solid blue;  
+}
+
+FirstWindow QLineEdit:readonly, SecondWindow QLineEdit:readonly {
+    background: gray;   
+}
+
+FirstWindow QLineEdit {
+	margin-right: 20px;
+	margin-bottom: 12px;
+	margin-left: 20px;
+}
+
+
+
+/* 栈窗口样式 */
+FirstWindow QStackedWidget, SecondWindow QStackedWidget {
+	min-width: 430px;
+	max-width: 430px;
+}
+ 
+ 
+ 
+/* 按钮样式 */
+FirstWindow QPushButton, SecondWindow QPushButton { 
+	border: 1px solid #333333; 
+	padding: 4px; 
+	min-width: 65px; 
+	min-height: 12px; 
+	border-radius: 3px; 
+}
+
+FirstWindow QPushButton:hover, SecondWindow QPushButton:hover { 
+	background-color: #A4D3EE; 
+	border-color: #444444; 
+}
+
+FirstWindow QPushButton:pressed, SecondWindow QPushButton:pressed { 
+	background-color: #8DB6CD; 
+	border-color: #333333; 
+	color: white; 
+}
+
+FirstWindow QPushButton:disabled, SecondWindow QPushButton:disabled { 
+	color: #333333; 
+}
+
+FirstWindow QPushButton {
+	margin-right: 20px;
+	margin-bottom: 12px;
+}
+
+/* 复选框样式 */
+FirstWindow QComboBox, SecondWindow QComboBox {
+	background: rgb(0, 0, 0, 0);
+}
+
+QLabel#decorator {
+	min-height: 30px; 
+	max-height: 30px;
+	min-width: 400px; 
+	max-width: 400px;
+}
+
+QPushButton#search_btn_1,#search_btn_4 {
+	border: 0px; 
+	background-color: rgb(0, 0, 0, 0);
+}
+
+QPushButton#search_btn_4 {
+    min-width: 0px;
+}
