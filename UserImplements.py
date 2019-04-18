@@ -1,23 +1,16 @@
 from UserInfo import *
 from FlightInfo import *
 import Const
+from FlightImplements import *
 
 
-def myHash(text, size=Const.HASH_SIZE):
-    home = 0
-    bit = 1
-    for i in text:
-        home += ord(i) * bit
-        bit += 1
-    return int(home % size)
+def orderTicket(usr, flightInfo):
+    """
+    用户订票
+    :param usr:
+    :type usr: dict
+    :param flightInfo: dict{"origin":"", "terminal":"", "date":{}}
+    :return: bool
+    """
+    revFlightInfo()
 
-
-def newHashTable():
-    hash_table = []
-    for i in range(Const.HASH_SIZE):
-        hash_table.append(Const.EMPTY)
-    return hash_table
-
-
-def registerUser(usrName, pwd, realName, sex, age, flightInfo):
-    pass

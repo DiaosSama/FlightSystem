@@ -2,6 +2,7 @@ import os
 import json
 import FlightInfo
 import Const
+import datetime
 
 
 def myHash(text, size=Const.HASH_SIZE):
@@ -38,37 +39,49 @@ def queryFlightInfo(ticket):
     :rtype: list
     """
     date = ticket.getDateStr()
-    start = ticket.getStart()
-    end = ticket.getEnd()
-    home = myHash(start + end, Const.HASH_SIZE)
-    file = Const.PATH_FLIGHT_INFO + "\\" + date + ".json"
+    # 判断日期是否合法
+    if isValidDate(date):
+        start = ticket.getStart()
+        end = ticket.getEnd()
+        home = myHash(start + end, Const.HASH_SIZE)
+        file = Const.PATH_FLIGHT_INFO + "\\" + date + ".json"
 
-    if os.path.exists(file):
-        f = open(file, "r")
-        hash_table = json.load(f)
-        f.close()
-        index = home
+        if os.path.exists(file):
+            f = open(file, "r")
+            hash_table = json.load(f)
+            f.close()
+            index = home
 
-        # 在哈希表中寻找起点终点相同的航班信息
-        i = 1
-        while True:
-            # print("result:", hash_table[index])
-            # 哈希查找失败条件
-            if hash_table[index] == Const.EMPTY or hash_table[index] == []:
-                return Const.FLIGHT_NOT_FOUND
-            # 哈希查找的绝望阈值
-            if i > Const.DES_VAL:
-                return Const.FLIGHT_NOT_FOUND
-            else:
-                suit = (ticket.getStart() == hash_table[index][0]['origin'] and
-                        ticket.getEnd() == hash_table[index][0]['terminal'])
-                if suit:
-                    return hash_table[index]
+            # 在哈希表中寻找起点终点相同的航班信息
+            i = 1
+            while True:
+                # print("result:", hash_table[index])
+                # 哈希查找失败条件
+                if hash_table[index] == Const.EMPTY or hash_table[index] == []:
+                    return Const.FLIGHT_NOT_FOUND
+                # 哈希查找的绝望阈值
+                if i > Const.DES_VAL:
+                    return Const.FLIGHT_NOT_FOUND
                 else:
-                    index = (index + i * i) % Const.HASH_SIZE
-                    i += 1
+                    suit = (ticket.getStart() == hash_table[index][0]['origin'] and
+                            ticket.getEnd() == hash_table[index][0]['terminal'])
+                    if suit:
+                        return hash_table[index]
+                    else:
+                        index = (index + i * i) % Const.HASH_SIZE
+                        i += 1
+        else:
+            return Const.FLIGHT_NOT_FOUND
     else:
-        return Const.FLIGHT_NOT_FOUND
+        return Const.DATE_INVALID
+
+
+def queryFlight(ticket):
+    """
+    返回具体航班信息
+    :param ticket:
+    :return:
+    """
 
 
 def addFlightInfo(ticket):
@@ -226,3 +239,17 @@ def revFlightInfo(oldTicket, newTicket):
                 i += 1
     else:
         return Const.FLIGHT_NOT_FOUND
+
+
+def isValidDate(date_str):
+    # 判断日期是否合法
+    try:
+        datetime.datetime.strptime(date_str, '%Y-%m-%d')
+        return True
+    except ValueError:
+        return False
+
+
+def formatDate(year, month, day):
+    # 日期格式化
+    return str(year)+'-'+str(month)+'-'+str(day)

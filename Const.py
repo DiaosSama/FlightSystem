@@ -5,6 +5,9 @@
 # 找不到相应航班信息
 FLIGHT_NOT_FOUND = 0
 
+# 日期不合法
+DATE_INVALID = -1
+
 # 哈希表已满
 HASH_TABLE_FULL = 1
 

@@ -6,7 +6,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from usrsHashTable import *
 from cityDict import *
-from datetime  import  *
+import datetime
 from FlightImplements import *
 from FlightInfo import *
 from Const import *
@@ -828,10 +828,10 @@ class SecondWindow(QWidget):
     # 确定日期是否有效
     def confirmDay(self, year, month, day):
         # 日的范围 根据年和月判断
-        date = year + '-' + month +'-' + day 
-        #print(date)
+        date = year + '-' + month +'-' + day
+        print(date)
         try:
-            datetime.strptime(date, "%Y-%m-%d")
+            datetime.datetime.strptime(date, "%Y-%m-%d")
             return True
         except:
             # 弹出信息框
@@ -942,9 +942,6 @@ class SecondWindow(QWidget):
     def searchFlightInfo(self, item):
         origin = self.origin_1.currentText()
         terminal = self.terminal_1.currentText()
-        year = self.year_1.currentText()
-        month = self.month_1.currentText()
-        day = self.day_1.currentText()
 
         y = self.year_1.currentText()
         m = self.month_1.currentText()

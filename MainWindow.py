@@ -143,6 +143,7 @@ class MainWindow(QtWidgets.QMainWindow):
                   'Zhengzhou', 'Chongqing', 'Zhuhai', 'Zunyi']
 
         self.city_dict = dict(zip(city_opt, city_pin))
+        self.city_EnToCh = dict(zip(city_pin, city_opt))
 
         # 出发地标签和下拉列表
         self.origin_label = QtWidgets.QLabel()
@@ -661,7 +662,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.search_button.clicked.connect(self.searchFlight)
         self.next_page_button.clicked.connect(self.nextPage)
         self.last_page_button.clicked.connect(self.prevPage)
-        self.last_day_button.clicked.connect(self.test)
+        self.p_next_pape_button.clicked.connect(self.nextPage)
+        self.p_last_pape_button.clicked.connect(self.prevPage)
+        self.next_day_button.clicked.connect(self.nextDay)
+        self.last_day_button.clicked.connect(self.prevDay)
 
     def change_windows(self):
         """
@@ -750,6 +754,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if sender.text() == '个人中心':
             self.right_stack.setCurrentIndex(1)
             self.user_page = 1  # 页码
+            self.freshUserFlight()
 
     def searchFlight(self):
         """
@@ -759,6 +764,12 @@ class MainWindow(QtWidgets.QMainWindow):
         origin = self.city_dict[origin]
         terminal = self.terminal_combobox.currentText()
         terminal = self.city_dict[terminal]
+        if origin == terminal:
+            # 弹出信息框
+            msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "起点与终点不可相同！")
+            msg_box.show()
+            msg_box.exec_()
+            return
         date = dict()
         date["year"] = self.year_combobox.currentText()
         date["month"] = self.month_combobox.currentText()
@@ -767,6 +778,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.search_page = 1  # 页码
 
         self.Flight = queryFlightInfo(ticket)  # 查询航班
+
+        if self.Flight == Const.DATE_INVALID:
+            # 弹出信息框
+            msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "该日期不合法！请重新选择")
+            msg_box.show()
+            msg_box.exec_()
+            return
+        elif self.Flight == Const.FLIGHT_NOT_FOUND:
+            # 弹出信息框
+            msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "该日期暂无航班信息！")
+            msg_box.show()
+            msg_box.exec_()
+            return
 
         # 航班按时间排序
         def time(s):
@@ -837,22 +861,148 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.last_page_button.setEnabled(True)
 
+    def freshUserFlight(self):
+        # 更新乘客航班信息
+        self.UserFlight = self.User["flightInfo"]
+
+        # 更新用户UI
+        if (5 * self.user_page - 5) < len(self.UserFlight):
+            self.p_start_time_1.setText(self.UserFlight[5 * self.user_page - 5]["date"]["startTime"])
+            self.p_end_time_1.setText(self.UserFlight[5 * self.user_page - 5]["date"]["endTime"])
+            self.p_price_1.setText('￥' + str(self.UserFlight[5 * self.user_page - 5]["price"]))
+            self.p_origin_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["origin"]])
+            self.p_terminal_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["terminal"]])
+        else:
+            self.p_start_time_1.setText("")
+            self.p_end_time_1.setText("")
+            self.p_price_1.setText('￥')
+            self.p_origin_1.setText("")
+            self.p_terminal_1.setText("")
+
+        if (5 * self.user_page - 4) < len(self.UserFlight):
+            self.p_start_time_2.setText(self.UserFlight[5 * self.user_page - 4]["date"]["startTime"])
+            self.p_end_time_2.setText(self.UserFlight[5 * self.user_page - 4]["date"]["endTime"])
+            self.p_price_2.setText('￥' + str(self.UserFlight[5 * self.user_page - 4]["price"]))
+            self.p_origin_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["origin"]])
+            self.p_terminal_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["terminal"]])
+        else:
+            self.p_start_time_2.setText("")
+            self.p_end_time_2.setText("")
+            self.p_price_2.setText('￥')
+            self.p_origin_2.setText("")
+            self.p_terminal_2.setText("")
+
+        if (5 * self.user_page - 3) < len(self.UserFlight):
+            self.p_start_time_3.setText(self.UserFlight[5 * self.user_page - 3]["date"]["startTime"])
+            self.p_end_time_3.setText(self.UserFlight[5 * self.user_page - 3]["date"]["endTime"])
+            self.p_price_3.setText('￥' + str(self.UserFlight[5 * self.user_page - 3]["price"]))
+            self.p_origin_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["origin"]])
+            self.p_terminal_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["terminal"]])
+        else:
+            self.p_start_time_3.setText("")
+            self.p_end_time_3.setText("")
+            self.p_price_3.setText('￥')
+            self.p_origin_3.setText("")
+            self.p_terminal_3.setText("")
+
+        if (5 * self.user_page - 2) < len(self.UserFlight):
+            self.p_start_time_4.setText(self.UserFlight[5 * self.user_page - 2]["date"]["startTime"])
+            self.p_end_time_4.setText(self.UserFlight[5 * self.user_page - 2]["date"]["endTime"])
+            self.p_price_4.setText('￥' + str(self.UserFlight[5 * self.user_page - 2]["price"]))
+            self.p_origin_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["origin"]])
+            self.p_terminal_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["terminal"]])
+        else:
+            self.p_start_time_4.setText("")
+            self.p_end_time_4.setText("")
+            self.p_price_4.setText('￥')
+            self.p_origin_4.setText("")
+            self.p_terminal_4.setText("")
+
+        if (5 * self.user_page - 1) < len(self.UserFlight):
+            self.p_start_time_5.setText(self.UserFlight[5 * self.user_page - 1]["date"]["startTime"])
+            self.p_end_time_5.setText(self.UserFlight[5 * self.user_page - 1]["date"]["endTime"])
+            self.p_price_5.setText('￥' + str(self.UserFlight[5 * self.user_page - 1]["price"]))
+            self.p_origin_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["origin"]])
+            self.p_terminal_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["terminal"]])
+        else:
+            self.p_start_time_5.setText("")
+            self.p_end_time_5.setText("")
+            self.p_price_5.setText('￥')
+            self.p_origin_5.setText("")
+            self.p_terminal_5.setText("")
+
+        # 设置按钮可用/不可用
+        if self.user_page*5 >= len(self.UserFlight):
+            self.p_next_pape_button.setEnabled(False)
+        else:
+            self.p_next_pape_button.setEnabled(True)
+        if self.user_page == 1:
+            self.p_last_pape_button.setEnabled(False)
+        else:
+            self.p_last_pape_button.setEnabled(True)
+
     def nextPage(self):
         sender = self.sender()
         if sender.objectName() == 'search_next':
             self.search_page += 1
             self.freshSearchFlight()
-            print("next_page")
+            print("search_next_page")
+        elif sender.objectName() == 'user_next':
+            self.user_page += 1
+            self.freshUserFlight()
+            print("user_next_page")
 
     def prevPage(self):
-        self.search_page -= 1
-        self.freshSearchFlight()
-        print("prev_page")
+        sender = self.sender()
+        if sender.objectName() == 'search_last':
+            self.search_page -= 1
+            self.freshSearchFlight()
+            print("search_prev_page")
+        elif sender.objectName() == 'user_last':
+            self.user_page -= 1
+            self.freshUserFlight()
+            print("user_prev_page")
 
-    def test(self):
-        self.setFixedSize(960, 700)
-        print("test")
+    def nextDay(self):
+        year = int(self.year_combobox.currentText())
+        month = int(self.month_combobox.currentText())
+        day = int(self.day_combobox.currentText()) + 1
 
+        while not isValidDate(formatDate(year, month, day)):
+            day = 1
+            if month == 12:
+                month = 1
+                year += 1
+            else:
+                month += 1
+
+        self.year_combobox.setCurrentIndex(self.year_combobox.findText(str(year)))
+        self.month_combobox.setCurrentIndex(self.month_combobox.findText(str(month)))
+        self.day_combobox.setCurrentIndex(self.day_combobox.findText(str(day)))
+
+        self.searchFlight()
+
+    def prevDay(self):
+        year = int(self.year_combobox.currentText())
+        month = int(self.month_combobox.currentText())
+        day = int(self.day_combobox.currentText()) - 1
+
+        while not isValidDate(formatDate(year, month, day)):
+            if day == 0:
+                day = 31
+                if month == 1:
+                    month = 12
+                    year -= 1
+                else:
+                    month -= 1
+            else:
+                day -= 1
+
+        self.year_combobox.setCurrentIndex(self.year_combobox.findText(str(year)))
+        self.month_combobox.setCurrentIndex(self.month_combobox.findText(str(month)))
+        self.day_combobox.setCurrentIndex(self.day_combobox.findText(str(day)))
+
+        self.searchFlight()
 
     """
     def mousePressEvent(self, event):
@@ -875,7 +1025,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    gui = MainWindow("admin3")
+    gui = MainWindow("admin2")
     gui.show()
     sys.exit(app.exec_())
 

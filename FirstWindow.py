@@ -89,7 +89,7 @@ class FirstWindow(QWidget):
             return
         else:
             account = self.lineEdit_account.text()
-            password =  self.lineEdit_password.text()
+            password = self.lineEdit_password.text()
             # 判断用户名是否存在
             if account in self.usrNames:
                 rightPassword = self.table.get(account)[1]["pwd"]

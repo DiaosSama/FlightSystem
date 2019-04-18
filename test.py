@@ -3,8 +3,9 @@
 import os
 import json
 from FlightInfo import *
+from FlightImplements import *
 import myClass
 import Data
 import random
 
-Data.init_data()
+print(isValidDate("2019-3-32"))

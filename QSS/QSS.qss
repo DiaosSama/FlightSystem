@@ -44,8 +44,8 @@ FirstWindow QLineEdit {
 
 /* 栈窗口样式 */
 FirstWindow QStackedWidget, SecondWindow QStackedWidget {
-	min-width: 430px;
-	max-width: 430px;
+	min-width: 500px;
+	max-width: 500px;
 }
  
  
