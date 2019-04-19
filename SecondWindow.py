@@ -6,7 +6,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from usrsHashTable import *
 from cityDict import *
-import datetime
+import datetime 
 from FlightImplements import *
 from FlightInfo import *
 from Const import *
@@ -828,8 +828,8 @@ class SecondWindow(QWidget):
     # 确定日期是否有效
     def confirmDay(self, year, month, day):
         # 日的范围 根据年和月判断
-        date = year + '-' + month +'-' + day
-        print(date)
+        date = year + '-' + month +'-' + day 
+        #print(date)
         try:
             datetime.datetime.strptime(date, "%Y-%m-%d")
             return True
@@ -856,7 +856,8 @@ class SecondWindow(QWidget):
             msg_box.show()
             msg_box.exec_()
             return False
-
+      
+    
     # 航班状态变化
     def stateChanged(self):
         print(self.normalButton_3.isChecked())
@@ -891,7 +892,7 @@ class SecondWindow(QWidget):
         d = str(date["day"])
 
         # 判断星期几
-        week = datetime.strptime(y+'-'+m+'-'+d, "%Y-%m-%d").weekday()
+        week = datetime.datetime.strptime(y+'-'+m+'-'+d, "%Y-%m-%d").weekday()
         week_dict = {
             0: "一",
             1: "二",
@@ -909,7 +910,7 @@ class SecondWindow(QWidget):
         
         self.startTime_text_7.setText(date["startTime"])
         date["totalTime"] = 0 if date["totalTime"]=='' else date["totalTime"]
-        self.totalTime_text_7.setText(str(date["totalTime"]) + '分钟')
+        self.totalTime_text_7.setText(str(date["totalTime"]) + '小时')
 		       
         self.pasQuota_text_7.setText(str(data["pasQuota"]))
 		        
@@ -937,6 +938,7 @@ class SecondWindow(QWidget):
         # 跳转到查看页面
         self.leftlist.setCurrentRow(6)
         self.stack.setCurrentIndex(6)
+        
 
     # 搜索航班信息
     def searchFlightInfo(self, item):
@@ -952,7 +954,14 @@ class SecondWindow(QWidget):
             print(origin, terminal, y, m, d)
             origin = cityDict[self.origin_1.currentText()]
             terminal = cityDict[self.terminal_1.currentText()]
-            data = FlightInfo(y, m, d, origin, terminal)
+            date = {
+                'year' : y,
+                'month' : m,
+                'day' : d,
+                'startTime' : 0,
+                'totalTime' : 0
+            }
+            data = FlightInfo(date, origin, terminal)
             self.flightArray_1 = queryFlightInfo(data)
             if self.flightArray_1 != FLIGHT_NOT_FOUND :
                 self.flightInfoList_1.clear()
@@ -993,9 +1002,9 @@ class SecondWindow(QWidget):
         self.month_3.setCurrentIndex(self.month_3.findText(str(date["month"])))
         self.day_3.setCurrentIndex(self.day_3.findText(str(date["day"])))
         self.startTime_text_3.setText(startTime)
-        self.totalTime_text_3.setText(str(totalTime)+"分钟")
-        self.pasQuota_text_3.setText(pasQuota)
-        self.remTicketNum_text_3.setText(remTicketNum)
+        self.totalTime_text_3.setText(str(totalTime)+"小时")
+        self.pasQuota_text_3.setText(str(pasQuota))
+        self.remTicketNum_text_3.setText(str(remTicketNum))
         self.price_text_3.setText(str(price))
         
     # 修改航班信息
@@ -1026,7 +1035,8 @@ class SecondWindow(QWidget):
             msg_box = QMessageBox(QMessageBox.Warning, "警告", "当前未指定航班！")
             msg_box.show()
             msg_box.exec_()
-
+        
+    
     # 添加航班信息
     def addFlightInfo(self):
         origin = self.origin_text_2.text().strip()
@@ -1065,7 +1075,14 @@ class SecondWindow(QWidget):
                         terminal = cityDict[terminal]
                         y, m, d = int(year), int(month), int(day)
                         print(origin, terminal, y, m, d)
-                        flight = FlightInfo(y, m, d, origin, terminal, startTime, totalTime,
+                        date = {
+                            'year' : y,
+                            'month' : m,
+                            'day' : d,
+                            'startTime' : 0,
+                            'totalTime' : 0
+                        }
+                        flight = FlightInfo(date, origin, terminal, startTime, totalTime,
                                             flightNum, planeNum, pasQuota, remTicketNum, price)
                         if(addFlightInfo(flight)):
                             # 添加成功
@@ -1073,6 +1090,8 @@ class SecondWindow(QWidget):
                             msg_box.show()
                             msg_box.exec_()
                             print("添加成功", flight.__dict__)
+
+        
 
     # 保存修改的航班信息
     def saveFlightInfo(self):
@@ -1084,7 +1103,7 @@ class SecondWindow(QWidget):
         m = self.month_3.currentText()
         d = self.day_3.currentText()
         startTime = self.startTime_text_3.text()
-        totalTime = self.totalTime_text_3.text().replace('分钟','')
+        totalTime = self.totalTime_text_3.text().replace('小时','')
         pasQuota = self.pasQuota_text_3.text()
         remTicketNum = self.remTicketNum_text_3.text()
         price = self.price_text_3.text()
@@ -1096,8 +1115,14 @@ class SecondWindow(QWidget):
             oldTicket = FlightInfo(self.flight_3)
             origin = cityDict[origin]
             terminal = cityDict[terminal]
-            newTicket = FlightInfo(y, m, d, origin, terminal, startTime, totalTime,
-                                   flightNum, planeNum, pasQuota, remTicketNum, price,
+            date = {
+                'year' : y,
+                'month' : m,
+                'day' : d,
+                'startTime' : startTime,
+                'totalTime' : totalTime
+            }
+            newTicket = FlightInfo(date, origin, terminal, flightNum, planeNum, pasQuota, remTicketNum, price,
                                    self.flight_3["orderedList"], self.flight_3["waitingList"],
                                    state, remark)
             if(revFlightInfo(oldTicket, newTicket)):
@@ -1112,6 +1137,7 @@ class SecondWindow(QWidget):
                 msg_box.show()
                 msg_box.exec_()
                 print('修改失败')
+                               
 
     # 重置航班信息
     def resetFlightInfo(self):
@@ -1172,7 +1198,6 @@ class SecondWindow(QWidget):
                     + i["origin"]+"->"+i["terminal"])    
 
     # 添加用户信息
-
     def addUserInfo(self):
         # 获取文本编辑框信息
         usrName = self.usrName_text_5.text().strip()
@@ -1206,7 +1231,8 @@ class SecondWindow(QWidget):
             
             self.table.add(newUserInfo)
             print("【*】 添加用户成功")
-
+            
+    
     # 重置用户信息
     def resetUserInfo(self):
         self.usrName_text_5.setText('')
@@ -1276,6 +1302,7 @@ class SecondWindow(QWidget):
             msg_box = QMessageBox(QMessageBox.Information, "信息", "已修改当前用户！")
             msg_box.show()
             msg_box.exec_()
+            
 
     # 取消修改用户信息
     def cancelSaveRevisedUserInfo(self):
