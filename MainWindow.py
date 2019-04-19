@@ -116,31 +116,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.search_layout = QtWidgets.QGridLayout()
 
         # 初始化地名
-        city_opt = ['阿坝（红原）', '阿克苏', '巴彦淖尔', '包头', '北海', '北京', '博鳌', '长春', '长沙', '长治', '常州', '朝阳', '成都', '赤峰', '达州',
-                    '大理', '大连', '大庆', '大同', '丹东', '稻城（亚丁）', '敦煌', '鄂尔多斯', '十堰（武当山）', '石河子', '福州', '抚远', '阜阳', '赣州',
-                    '广元', '广州', '贵阳', '桂林', '哈尔滨', '哈密', '海口', '海拉尔', '杭州', '合肥', '呼和浩特', '惠州', '淮安', '和田', '黄山',
-                    '揭阳（汕头）', '晋江', '井冈山', '景德镇', '佳木斯', '九寨沟', '建三江', '库尔勒', '克拉玛依', '昆明', '喀什', '兰州', '丽江', '林芝',
-                    '柳州', '六盘水', '泸州', '临汾', '拉萨', '满洲里', '茅台', '牡丹江', '绵阳', '南昌', '南京', '南宁', '南通', '宁波', '攀枝花',
-                    '齐齐哈尔', '青岛', '三亚', '石家庄', '松原', '上海', '深圳', '沈阳', '台州（黄岩）', '太原', '天津', '通化', '通辽',
-                    '吐鲁番', '万州', '威海', '温州', '乌鲁木齐', '无锡', '乌海', '武汉', '乌兰浩特', '乌兰察布', '西安', '西昌', '西宁', '锡林浩特', '厦门',
-                    '徐州', '烟台', '延吉', '盐城', '扬州', '伊宁', '宜宾', '宜昌', '义乌', '银川', '榆林', '运城', '湛江', '张家界', '郑州', '重庆',
-                    '珠海', '遵义']
+        city_opt = ['阿坝', '阿克苏', '包头', '巴彦淖尔', '北海', '北京', '博鳌', '长春', '长沙', '长治', '常州', '朝阳', '成都', '赤峰', '重庆', '稻城', '大理', '大连', '丹东', '大庆', '大同', '达州', '敦煌', '鄂尔多斯', '抚远', '福州', '赣州', '阜阳', '广元', '广州', '桂林', '贵阳', '海口', '海拉尔', '哈密', '杭州', '哈尔滨', '合肥', '和田', '呼和浩特', '淮安', '黄山', '惠州', '佳木斯', '建三江', '揭阳', '景德镇', '井冈山', '晋江', '九寨沟', '喀什', '克拉玛依', '库尔勒', '昆明', '兰州', '拉萨', '丽江', '临汾', '林芝', '柳州', '满洲里', '茅台', '绵阳', '牡丹江', '南昌', '南京', '南宁', '南通', '宁波', '攀枝花', '青岛', '齐齐哈尔', '三亚', '上海', '沈阳', '深圳', '石河子', '石家庄', '十堰', '六盘水', '松原', '太原', '台州', '天津', '通化', '通辽', '吐鲁番', '乌兰察布', '乌兰浩特', '万州', '威海', '温州', '乌海', '武汉', '乌鲁木齐', '无锡', '厦门', '西安', '西昌', '锡林浩特', '西宁', '徐州', '盐城', '扬州', '延吉', '烟台', '宜宾', '宜昌', '银川', '伊宁', '义乌', '榆林', '运城', '张家界', '泸州', '湛江', '郑州', '珠海', '遵义']
 
         # 初始化地名与拼音对应字典
-        city_pin = ['Aba', 'Akesu', 'Bayannaoer', 'Baotou', 'Beihai', 'Beijing', 'Boao', 'Changchun', 'Changsha',
-                  'Changzhi', 'Changzhou', 'Chaoyang', 'Chengdu', 'Chifeng', 'Dazhou', 'Dali', 'Dalian', 'Daqing',
-                  'Datong', 'Dandong', 'Dacheng', 'Dunhuang', 'Erdos', 'Shiyan', 'Shihezi', 'Fuzhou', 'Fuyuan',
-                  'Gaoyang', 'Ganzhou', 'Guangyuan', 'Guangzhou', 'Guiyang', 'Guilin', 'Harbin', 'Hami', 'Haikou',
-                  'Hailar ', 'Hangzhou', 'Hefei', 'Hohhot', 'Huizhou', 'Huai', 'Hetian', 'Huangshan', 'Jieyang',
-                  'Jinjiang', 'Jinggangshan', 'Jingdezhen', 'Jiamusi', 'Jiuzhaigou', 'Jiansanjiang', 'Korla',
-                  'Kelamayi', 'Kunming', 'Kashi', 'Lanzhou', 'Lijiang', 'Linzhi', 'Liuzhou', 'Six panshui', 'Zhangzhou',
-                  'Linfen', 'Lhasa', 'Manzhouli', 'Maotai', 'Mudanjiang', 'Mianyang', 'Nanchang', 'Nanjing', 'Nanning',
-                  'Nantong', 'Ningbo', 'Panzhihua', 'Qiqihar ', 'Qingdao', 'Sanya', 'Shijiazhuang', 'Songyuan',
-                  'Shanghai', 'Shenzhen', 'Shenyang', 'Taizhou', 'Taiyuan', 'Tianjin', 'Tonghua', 'Tongliao', 'Tulufan',
-                  'Wanzhou', 'Weihai', 'Wenzhou', 'Wulumuqi', 'Wuxi', 'Wuhai', 'Wuhan', 'Ulanhot', 'Ulanchabu', 'Xian',
-                  'Xichang', 'Xining', 'Xilinhot', 'Xiamen', 'Xuzhou ', 'Yantai', 'Yanji', 'Yancheng', 'Yangzhou',
-                  'Yining', 'Yibin', 'Yichang', 'Yiwu', 'Yinchuan', 'Yulin', 'Yuncheng', 'Zhanjiang', 'Zhangjiajie',
-                  'Zhengzhou', 'Chongqing', 'Zhuhai', 'Zunyi']
+        city_pin = ['Aba', 'Akesu', 'Bayannaoer', 'Baotou', 'Beihai', 'Beijing', 'Boao', 'Changchun', 'Changsha', 'Changzhi', 'Changzhou', 'Chaoyang', 'Chengdu', 'Chifeng', 'Dazhou', 'Dali', 'Dalian', 'Daqing', 'Datong', 'Dandong', 'Dacheng', 'Dunhuang', 'Erdos', 'Shiyan', 'Shihezi', 'Fuzhou', 'Fuyuan', 'Gaoyang', 'Ganzhou', 'Guangyuan', 'Guangzhou', 'Guiyang', 'Guilin', 'Harbin', 'Hami', 'Haikou', 'Hailar ', 'Hangzhou', 'Hefei', 'Hohhot', 'Huizhou', 'Huai', 'Hetian', 'Huangshan', 'Jieyang', 'Jinjiang', 'Jinggangshan', 'Jingdezhen', 'Jiamusi', 'Jiuzhaigou', 'Jiansanjiang', 'Korla', 'Kelamayi', 'Kunming', 'Kashi', 'Lanzhou', 'Lijiang', 'Linzhi', 'Liuzhou', 'Six panshui', 'Zhangzhou', 'Linfen', 'Lhasa', 'Manzhouli', 'Maotai', 'Mudanjiang', 'Mianyang', 'Nanchang', 'Nanjing', 'Nanning', 'Nantong', 'Ningbo', 'Panzhihua', 'Qiqihar ', 'Qingdao', 'Sanya', 'Shijiazhuang', 'Songyuan', 'Shanghai', 'Shenzhen', 'Shenyang', 'Taizhou', 'Taiyuan', 'Tianjin', 'Tonghua', 'Tongliao', 'Tulufan', 'Wanzhou', 'Weihai', 'Wenzhou', 'Wulumuqi', 'Wuxi', 'Wuhai', 'Wuhan', 'Ulanhot', 'Ulanchabu', 'Xian', 'Xichang', 'Xining', 'Xilinhot', 'Xiamen', 'Xuzhou ', 'Yantai', 'Yanji', 'Yancheng', 'Yangzhou', 'Yining', 'Yibin', 'Yichang', 'Yiwu', 'Yinchuan', 'Yulin', 'Yuncheng', 'Zhanjiang', 'Zhangjiajie', 'Zhengzhou', 'Chongqing', 'Zhuhai', 'Zunyi']
 
         self.city_dict = dict(zip(city_opt, city_pin))
         self.city_EnToCh = dict(zip(city_pin, city_opt))
@@ -209,128 +188,192 @@ class MainWindow(QtWidgets.QMainWindow):
         self.next_day_button.setText('后一天')
 
         # 航班信息标签
-        self.flight_label = QtWidgets.QLabel()
-        self.flight_label.setText('航班信息')
+        #self.flight_label = QtWidgets.QLabel()
+        #self.flight_label.setText('航班信息')
+
+        # 标题栏，采用网格布局
+        self.flight_title = QtWidgets.QGridLayout()
+        # 起飞时间标题
+        self.title_startTime = QtWidgets.QLabel()
+        self.title_startTime.setText('起飞时间')
+        # 抵达时间标题
+        self.title_endTime = QtWidgets.QLabel()
+        self.title_endTime.setText('抵达时间')
+        # 余票量标题
+        self.title_rem = QtWidgets.QLabel()
+        self.title_rem.setText('余票量')
+        # 状态标题
+        self.title_state= QtWidgets.QLabel()
+        self.title_state.setText('状态')
+        # 价格标题
+        self.title_price= QtWidgets.QLabel()
+        self.title_price.setText('价格')
+        # 为标题栏添加子控件
+        self.flight_title.addWidget(self.title_startTime, 0, 0, 1, 2)
+        self.flight_title.addWidget(self.title_endTime, 0, 2, 1, 2)
+        self.flight_title.addWidget(self.title_rem, 0, 4, 1, 1)
+        self.flight_title.addWidget(self.title_state, 0, 5, 1, 1)
+        self.flight_title.addWidget(self.title_price, 0, 6, 1, 3)
 
         # 第一条航班信息，采用网格布局
         self.flight_1 = QtWidgets.QGridLayout()
-        self.start_time_1 = QtWidgets.QLabel()
         # 起飞时间
-        self.start_time_1.setText('7:00')
-        self.separator_1 = QtWidgets.QLabel()
+        self.start_time_1 = QtWidgets.QLabel()
         # 分隔符
+        self.separator_1 = QtWidgets.QLabel()
         self.separator_1.setText('->')
-        self.end_time_1 = QtWidgets.QLabel()
         # 到达时间
-        self.end_time_1.setText('8:50')
-        self.price_1 = QtWidgets.QLabel()
+        self.end_time_1 = QtWidgets.QLabel()
+        # 余票量
+        self.rem_1 = QtWidgets.QLabel()
+        # 状态量
+        self.state_1 = QtWidgets.QLabel()
         # 航班价格
-        self.price_1.setText('￥1000')
-        self.order_1 = QtWidgets.QPushButton()
+        self.price_1 = QtWidgets.QLabel()
         # 购买按钮
+        self.order_1 = QtWidgets.QPushButton()
         self.order_1.setText('购买')
+        # 详情连接
+        self.detail_1 = QtWidgets.QLabel()
+        self.detail_1.setText('航班详情')
+
         # 向第一条航班信息添加子控件
         self.flight_1.addWidget(self.start_time_1, 0, 0, 1, 1)
         self.flight_1.addWidget(self.separator_1, 0, 1, 1, 1)
-        self.flight_1.addWidget(self.end_time_1, 0, 2, 1, 4)
+        self.flight_1.addWidget(self.end_time_1, 0, 2, 1, 2)
+        self.flight_1.addWidget(self.rem_1, 0, 4, 1, 1)
+        self.flight_1.addWidget(self.state_1, 0, 5, 1, 1)
         self.flight_1.addWidget(self.price_1, 0, 6, 1, 1)
         self.flight_1.addWidget(self.order_1, 0, 7, 1, 1)
+        self.flight_1.addWidget(self.detail_1, 0, 8, 1, 1)
 
         # 第二条航班信息，采用网格布局
         self.flight_2 = QtWidgets.QGridLayout()
-        self.start_time_2 = QtWidgets.QLabel()
         # 起飞时间
-        self.start_time_2.setText('9:00')
-        self.separator_2 = QtWidgets.QLabel()
+        self.start_time_2 = QtWidgets.QLabel()
         # 分隔符
+        self.separator_2 = QtWidgets.QLabel()
         self.separator_2.setText('->')
-        self.end_time_2 = QtWidgets.QLabel()
         # 到达时间
-        self.end_time_2.setText('10:50')
-        self.price_2 = QtWidgets.QLabel()
+        self.end_time_2 = QtWidgets.QLabel()
+        # 余票量
+        self.rem_2 = QtWidgets.QLabel()
+        # 状态量
+        self.state_2 = QtWidgets.QLabel()
         # 航班价格
-        self.price_2.setText('￥1100')
-        self.order_2 = QtWidgets.QPushButton()
+        self.price_2 = QtWidgets.QLabel()
         # 购买按钮
+        self.order_2 = QtWidgets.QPushButton()
         self.order_2.setText('购买')
+        # 详情连接
+        self.detail_2 = QtWidgets.QLabel()
+        self.detail_2.setText('航班详情')
+
         # 向第二条航班信息添加子控件
         self.flight_2.addWidget(self.start_time_2, 0, 0, 1, 1)
         self.flight_2.addWidget(self.separator_2, 0, 1, 1, 1)
-        self.flight_2.addWidget(self.end_time_2, 0, 2, 1, 4)
+        self.flight_2.addWidget(self.end_time_2, 0, 2, 1, 2)
+        self.flight_2.addWidget(self.rem_2, 0, 4, 1, 1)
+        self.flight_2.addWidget(self.state_2, 0, 5, 1, 1)
         self.flight_2.addWidget(self.price_2, 0, 6, 1, 1)
         self.flight_2.addWidget(self.order_2, 0, 7, 1, 1)
+        self.flight_2.addWidget(self.detail_2, 0, 8, 1, 1)
 
         # 第三条航班信息，采用网格布局
         self.flight_3 = QtWidgets.QGridLayout()
-        self.start_time_3 = QtWidgets.QLabel()
         # 起飞时间
-        self.start_time_3.setText('11:00')
-        self.separator_3 = QtWidgets.QLabel()
+        self.start_time_3 = QtWidgets.QLabel()
         # 分隔符
+        self.separator_3 = QtWidgets.QLabel()
         self.separator_3.setText('->')
-        self.end_time_3 = QtWidgets.QLabel()
         # 到达时间
-        self.end_time_3.setText('12:50')
-        self.price_3 = QtWidgets.QLabel()
+        self.end_time_3 = QtWidgets.QLabel()
+        # 余票量
+        self.rem_3 = QtWidgets.QLabel()
+        # 状态量
+        self.state_3 = QtWidgets.QLabel()
         # 航班价格
-        self.price_3.setText('￥900')
-        self.order_3 = QtWidgets.QPushButton()
+        self.price_3 = QtWidgets.QLabel()
         # 购买按钮
+        self.order_3 = QtWidgets.QPushButton()
         self.order_3.setText('购买')
+        # 详情连接
+        self.detail_3 = QtWidgets.QLabel()
+        self.detail_3.setText('航班详情')
+
         # 向第三条航班信息添加子控件
         self.flight_3.addWidget(self.start_time_3, 0, 0, 1, 1)
         self.flight_3.addWidget(self.separator_3, 0, 1, 1, 1)
-        self.flight_3.addWidget(self.end_time_3, 0, 2, 1, 4)
+        self.flight_3.addWidget(self.end_time_3, 0, 2, 1, 2)
+        self.flight_3.addWidget(self.rem_3, 0, 4, 1, 1)
+        self.flight_3.addWidget(self.state_3, 0, 5, 1, 1)
         self.flight_3.addWidget(self.price_3, 0, 6, 1, 1)
         self.flight_3.addWidget(self.order_3, 0, 7, 1, 1)
+        self.flight_3.addWidget(self.detail_3, 0, 8, 1, 1)
 
         # 第四条航班信息，采用网格布局
         self.flight_4 = QtWidgets.QGridLayout()
-        self.start_time_4 = QtWidgets.QLabel()
         # 起飞时间
-        self.start_time_4.setText('14:00')
-        self.separator_4 = QtWidgets.QLabel()
+        self.start_time_4 = QtWidgets.QLabel()
         # 分隔符
+        self.separator_4 = QtWidgets.QLabel()
         self.separator_4.setText('->')
-        self.end_time_4 = QtWidgets.QLabel()
         # 到达时间
-        self.end_time_4.setText('15:50')
-        self.price_4 = QtWidgets.QLabel()
+        self.end_time_4 = QtWidgets.QLabel()
+        # 余票量
+        self.rem_4 = QtWidgets.QLabel()
+        # 状态量
+        self.state_4 = QtWidgets.QLabel()
         # 航班价格
-        self.price_4.setText('￥1000')
-        self.order_4 = QtWidgets.QPushButton()
+        self.price_4 = QtWidgets.QLabel()
         # 购买按钮
+        self.order_4 = QtWidgets.QPushButton()
         self.order_4.setText('购买')
+        # 详情连接
+        self.detail_4 = QtWidgets.QLabel()
+        self.detail_4.setText('航班详情')
+
         # 向第四条航班信息添加子控件
         self.flight_4.addWidget(self.start_time_4, 0, 0, 1, 1)
         self.flight_4.addWidget(self.separator_4, 0, 1, 1, 1)
-        self.flight_4.addWidget(self.end_time_4, 0, 2, 1, 4)
+        self.flight_4.addWidget(self.end_time_4, 0, 2, 1, 2)
+        self.flight_4.addWidget(self.rem_4, 0, 4, 1, 1)
+        self.flight_4.addWidget(self.state_4, 0, 5, 1, 1)
         self.flight_4.addWidget(self.price_4, 0, 6, 1, 1)
         self.flight_4.addWidget(self.order_4, 0, 7, 1, 1)
+        self.flight_4.addWidget(self.detail_4, 0, 8, 1, 1)
 
         # 第五条航班信息，采用网格布局
         self.flight_5 = QtWidgets.QGridLayout()
-        self.start_time_5 = QtWidgets.QLabel()
         # 起飞时间
-        self.start_time_5.setText('16:00')
-        self.separator_5 = QtWidgets.QLabel()
+        self.start_time_5 = QtWidgets.QLabel()
         # 分隔符
+        self.separator_5 = QtWidgets.QLabel()
         self.separator_5.setText('->')
-        self.end_time_5 = QtWidgets.QLabel()
         # 到达时间
-        self.end_time_5.setText('17:50')
-        self.price_5 = QtWidgets.QLabel()
+        self.end_time_5 = QtWidgets.QLabel()
+        # 余票量
+        self.rem_5 = QtWidgets.QLabel()
+        # 状态量
+        self.state_5 = QtWidgets.QLabel()
         # 航班价格
-        self.price_5.setText('￥1100')
-        self.order_5 = QtWidgets.QPushButton()
+        self.price_5 = QtWidgets.QLabel()
         # 购买按钮
+        self.order_5 = QtWidgets.QPushButton()
         self.order_5.setText('购买')
+        # 详情连接
+        self.detail_5 = QtWidgets.QLabel()
+        self.detail_5.setText('航班详情')
+
         # 向第五条航班信息添加子控件
         self.flight_5.addWidget(self.start_time_5, 0, 0, 1, 1)
         self.flight_5.addWidget(self.separator_5, 0, 1, 1, 1)
-        self.flight_5.addWidget(self.end_time_5, 0, 2, 1, 4)
+        self.flight_5.addWidget(self.end_time_5, 0, 2, 1, 2)
+        self.flight_5.addWidget(self.rem_5, 0, 4, 1, 1)
+        self.flight_5.addWidget(self.state_5, 0, 5, 1, 1)
         self.flight_5.addWidget(self.price_5, 0, 6, 1, 1)
         self.flight_5.addWidget(self.order_5, 0, 7, 1, 1)
+        self.flight_5.addWidget(self.detail_5, 0, 8, 1, 1)
 
         # 前一页按钮
         self.last_page_button = QtWidgets.QPushButton()
@@ -354,7 +397,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.search_layout.addWidget(self.last_day_button, 3, 0, 1, 1)
         self.search_layout.addWidget(self.search_button, 3, 1, 1, 1)
         self.search_layout.addWidget(self.next_day_button, 3, 2, 1, 1)
-        self.search_layout.addWidget(self.flight_label, 4, 1, 1, 1)
+        self.search_layout.addLayout(self.flight_title, 4, 0, 1, 3)
         self.search_layout.addLayout(self.flight_1, 5, 0, 2, 3)
         self.search_layout.addLayout(self.flight_2, 7, 0, 2, 3)
         self.search_layout.addLayout(self.flight_3, 9, 0, 2, 3)
@@ -387,30 +430,30 @@ class MainWindow(QtWidgets.QMainWindow):
         self.user_name_babel = QtWidgets.QLabel()
         self.user_name_babel.setText('账户')
         self.user_name_babel.setStyleSheet(self.flatwhite_style)
-        self.user_name_text = QtWidgets.QLineEdit()
+        self.user_name_text = QtWidgets.QLabel()
         self.user_name_text.setText(self.User['usrName'])
         # self.user_name_text.setText('440*********5678')
         self.user_name_text.setStyleSheet(self.flatwhite_style)
-        self.user_name_text.setReadOnly(True)
+        #self.user_name_text.setReadOnly(True)
 
         # 姓名
         self.real_name_babel = QtWidgets.QLabel()
         self.real_name_babel.setText('姓名')
         self.real_name_babel.setStyleSheet(self.flatwhite_style)
-        self.real_name_text = QtWidgets.QLineEdit()
+        self.real_name_text = QtWidgets.QLabel()
         self.real_name_text.setText(self.User['realName'])
         # self.real_name_text.setText("王小明")
-        self.real_name_text.setReadOnly(True)
+        #self.real_name_text.setReadOnly(True)
         self.real_name_text.setStyleSheet(self.flatwhite_style)
 
         # 年龄
         self.age_babel = QtWidgets.QLabel()
         self.age_babel.setText('年龄')
         self.age_babel.setStyleSheet(self.flatwhite_style)
-        self.age_text = QtWidgets.QLineEdit()
+        self.age_text = QtWidgets.QLabel()
         self.age_text.setText(str(self.User['age']))
         # self.age_text.setText("20")
-        self.age_text.setReadOnly(True)
+        #self.age_text.setReadOnly(True)
         self.age_text.setStyleSheet(self.flatwhite_style)
 
         # 用网格布局放置用户名、姓名和年龄信息
@@ -423,40 +466,88 @@ class MainWindow(QtWidgets.QMainWindow):
         self.info_layout.addWidget(self.age_text, 2, 1, 1, 2)
 
         # 个人订单标签
-        self.order_list_label = QtWidgets.QLabel()
-        self.order_list_label.setText('个人订单')
-        self.order_list_label.setStyleSheet(self.flatwhite_style)
+        #self.order_list_label = QtWidgets.QLabel()
+        #self.order_list_label.setText('个人订单')
+        #self.order_list_label.setStyleSheet(self.flatwhite_style)
+
+        # 标题栏，采用网格布局
+        self.p_flight_title = QtWidgets.QGridLayout()
+        # 航班日期标题
+        self.p_title_date = QtWidgets.QLabel()
+        self.p_title_date.setText('航班日期')
+        self.p_title_date.setStyleSheet(self.flatwhite_style)
+        # 起飞时间标题
+        self.p_title_startTime = QtWidgets.QLabel()
+        self.p_title_startTime.setText('起飞时间')
+        self.p_title_startTime.setStyleSheet(self.flatwhite_style)
+        # 抵达时间标题
+        self.p_title_endTime = QtWidgets.QLabel()
+        self.p_title_endTime.setText('抵达时间')
+        self.p_title_endTime.setStyleSheet(self.flatwhite_style)
+        # 起点标题
+        self.p_title_origin = QtWidgets.QLabel()
+        self.p_title_origin.setText('起点')
+        self.p_title_origin.setStyleSheet(self.flatwhite_style)
+        # 终点标题
+        self.p_title_terminal = QtWidgets.QLabel()
+        self.p_title_terminal.setText('终点')
+        self.p_title_terminal.setStyleSheet(self.flatwhite_style)
+        # 订单状态标题
+        self.p_title_state= QtWidgets.QLabel()
+        self.p_title_state.setText('订单状态')
+        self.p_title_state.setStyleSheet(self.flatwhite_style)
+        # 价格标题
+        self.p_title_price= QtWidgets.QLabel()
+        self.p_title_price.setText('价格')
+        self.p_title_price.setStyleSheet(self.flatwhite_style)
+        # 为标题栏添加子控件
+        self.p_flight_title.addWidget(self.p_title_date, 0, 0, 1, 2)
+        self.p_flight_title.addWidget(self.p_title_startTime, 0, 2, 1, 2)
+        self.p_flight_title.addWidget(self.p_title_endTime, 0, 4, 1, 2)
+        self.p_flight_title.addWidget(self.p_title_origin, 0, 6, 1, 1)
+        self.p_flight_title.addWidget(self.p_title_terminal, 0, 7, 1, 1)
+        self.p_flight_title.addWidget(self.p_title_price, 0, 8, 1, 1)
+        self.p_flight_title.addWidget(self.p_title_state, 0, 9, 1, 3)
+
 
         # 第一条航班信息，采用网格布局
         self.p_flight_1 = QtWidgets.QGridLayout()
+
+        # 航班日期
+        self.p_flight_date_1 = QtWidgets.QLabel()
+        self.p_flight_date_1.setText('2019年4月1日')
+        self.p_flight_date_1.setStyleSheet(self.flatwhite_style)
+        # 起飞时间
         self.p_start_time_1 = QtWidgets.QLabel()
         self.p_start_time_1.setStyleSheet(self.flatwhite_style)
-        # 起飞时间
-        self.p_start_time_1.setText('7:00')
+        # 分隔符
         self.p_separator_1 = QtWidgets.QLabel()
         self.p_separator_1.setStyleSheet(self.flatwhite_style)
-        # 分隔符
-        self.p_separator_1.setText('----->')
+        self.p_separator_1.setText('---->')
+        # 到达时间
         self.p_end_time_1 = QtWidgets.QLabel()
         self.p_end_time_1.setStyleSheet(self.flatwhite_style)
-        # 到达时间
-        self.p_end_time_1.setText('8:50')
+        # 航班价格
         self.p_price_1 = QtWidgets.QLabel()
         self.p_price_1.setStyleSheet(self.flatwhite_style)
-        # 航班价格
-        self.p_price_1.setText('￥1000')
         # 航班起点
         self.p_origin_1 = QtWidgets.QLabel()
-        self.p_origin_1.setText('广州')
         self.p_origin_1.setStyleSheet(self.flatwhite_style)
         # 航班终点
         self.p_terminal_1 = QtWidgets.QLabel()
-        self.p_terminal_1.setText('上海')
         self.p_terminal_1.setStyleSheet(self.flatwhite_style)
+        # 订单状态
+        self.p_order_state_1 = QtWidgets.QLabel()
+        self.p_order_state_1.setText('等待中')
+        self.p_order_state_1.setStyleSheet(self.flatwhite_style)
+        # 取消按钮
         self.p_refund_1 = QtWidgets.QPushButton()
         self.p_refund_1.setStyleSheet(self.flatwhite_style)
-        # 取消按钮
         self.p_refund_1.setText('取消')
+        # 航班详情
+        self.p_detail_1 = QtWidgets.QLabel()
+        self.p_detail_1.setText('航班详情')
+        #self.p_detail_1.setStyleSheet(self.flatwhite_style)
         """
         # 航班号
         self.p_flight_num_1 = QtWidgets.QLabel()
@@ -464,169 +555,216 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_num_1.setStyleSheet(self.flatwhite_style)
         """
         # 向第一条航班信息添加子控件
-        self.p_flight_1.addWidget(self.p_start_time_1, 0, 0, 1, 1)
-        self.p_flight_1.addWidget(self.p_separator_1, 0, 1, 1, 1)
-        self.p_flight_1.addWidget(self.p_end_time_1, 0, 2, 1, 1)
-        self.p_flight_1.addWidget(self.p_origin_1, 0, 3, 1, 1)
-        self.p_flight_1.addWidget(self.p_terminal_1, 0, 4, 1, 1)
-        self.p_flight_1.addWidget(self.p_price_1, 0, 5, 1, 1)
-        self.p_flight_1.addWidget(self.p_refund_1, 0, 6, 1, 1)
+        self.p_flight_1.addWidget(self.p_flight_date_1, 0, 0, 1, 2)
+        self.p_flight_1.addWidget(self.p_start_time_1, 0, 2, 1, 1)
+        self.p_flight_1.addWidget(self.p_separator_1, 0, 3, 1, 1)
+        self.p_flight_1.addWidget(self.p_end_time_1, 0, 4, 1, 2)
+        self.p_flight_1.addWidget(self.p_origin_1, 0, 6, 1, 1)
+        self.p_flight_1.addWidget(self.p_terminal_1, 0, 7, 1, 1)
+        self.p_flight_1.addWidget(self.p_price_1, 0, 8, 1, 1)
+        self.p_flight_1.addWidget(self.p_order_state_1, 0, 9, 1, 1)
+        self.p_flight_1.addWidget(self.p_refund_1, 0, 10, 1, 1)
+        self.p_flight_1.addWidget(self.p_detail_1, 0, 11, 1, 1)
 
         # 第二条航班信息，采用网格布局
         self.p_flight_2 = QtWidgets.QGridLayout()
+
+        # 航班日期
+        self.p_flight_date_2 = QtWidgets.QLabel()
+        self.p_flight_date_2.setStyleSheet(self.flatwhite_style)
+        # 起飞时间
         self.p_start_time_2 = QtWidgets.QLabel()
         self.p_start_time_2.setStyleSheet(self.flatwhite_style)
-        # 起飞时间
-        self.p_start_time_2.setText('9:00')
+        # 分隔符
         self.p_separator_2 = QtWidgets.QLabel()
         self.p_separator_2.setStyleSheet(self.flatwhite_style)
-        # 分隔符
-        self.p_separator_2.setText('->')
+        self.p_separator_2.setText('---->')
+        # 到达时间
         self.p_end_time_2 = QtWidgets.QLabel()
         self.p_end_time_2.setStyleSheet(self.flatwhite_style)
-        # 到达时间
-        self.p_end_time_2.setText('10:50')
+        # 航班价格
         self.p_price_2 = QtWidgets.QLabel()
         self.p_price_2.setStyleSheet(self.flatwhite_style)
-        # 航班价格
-        self.p_price_2.setText('￥1100')
-        self.p_origin_2 = QtWidgets.QLabel()
-        self.p_origin_2.setText('广州')
-        self.p_origin_2.setStyleSheet(self.flatwhite_style)
         # 航班起点
-        self.p_terminal_2 = QtWidgets.QLabel()
-        self.p_terminal_2.setText('上海')
-        self.p_terminal_2.setStyleSheet(self.flatwhite_style)
+        self.p_origin_2 = QtWidgets.QLabel()
+        self.p_origin_2.setStyleSheet(self.flatwhite_style)
         # 航班终点
+        self.p_terminal_2 = QtWidgets.QLabel()
+        self.p_terminal_2.setStyleSheet(self.flatwhite_style)
+        # 订单状态
+        self.p_order_state_2 = QtWidgets.QLabel()
+        self.p_order_state_2.setText('等待中')
+        self.p_order_state_2.setStyleSheet(self.flatwhite_style)
+        # 取消按钮
         self.p_refund_2 = QtWidgets.QPushButton()
         self.p_refund_2.setStyleSheet(self.flatwhite_style)
-        # 取消按钮
         self.p_refund_2.setText('取消')
+        # 航班详情
+        self.p_detail_2 = QtWidgets.QLabel()
+        self.p_detail_2.setText('航班详情')
+        #self.p_detail_2.setStyleSheet(self.flatwhite_style)
+
         # 向第二条航班信息添加子控件
-        self.p_flight_2.addWidget(self.p_start_time_2, 0, 0, 1, 1)
-        self.p_flight_2.addWidget(self.p_separator_2, 0, 1, 1, 1)
-        self.p_flight_2.addWidget(self.p_end_time_2, 0, 2, 1, 1)
-        self.p_flight_2.addWidget(self.p_origin_2, 0, 3, 1, 1)
-        self.p_flight_2.addWidget(self.p_terminal_2, 0, 4, 1, 1)
-        self.p_flight_2.addWidget(self.p_price_2, 0, 5, 1, 1)
-        self.p_flight_2.addWidget(self.p_refund_2, 0, 6, 1, 1)
+        self.p_flight_2.addWidget(self.p_flight_date_2, 0, 0, 1, 2)
+        self.p_flight_2.addWidget(self.p_start_time_2, 0, 2, 1, 1)
+        self.p_flight_2.addWidget(self.p_separator_2, 0, 3, 1, 1)
+        self.p_flight_2.addWidget(self.p_end_time_2, 0, 4, 1, 2)
+        self.p_flight_2.addWidget(self.p_origin_2, 0, 6, 1, 1)
+        self.p_flight_2.addWidget(self.p_terminal_2, 0, 7, 1, 1)
+        self.p_flight_2.addWidget(self.p_price_2, 0, 8, 1, 1)
+        self.p_flight_2.addWidget(self.p_order_state_2, 0, 9, 1, 1)
+        self.p_flight_2.addWidget(self.p_refund_2, 0, 10, 1, 1)
+        self.p_flight_2.addWidget(self.p_detail_2, 0, 11, 1, 1)
 
         # 第三条航班信息，采用网格布局
         self.p_flight_3 = QtWidgets.QGridLayout()
+
+        # 航班日期
+        self.p_flight_date_3 = QtWidgets.QLabel()
+        self.p_flight_date_3.setStyleSheet(self.flatwhite_style)
+        # 起飞时间
         self.p_start_time_3 = QtWidgets.QLabel()
         self.p_start_time_3.setStyleSheet(self.flatwhite_style)
-        # 起飞时间
-        self.p_start_time_3.setText('11:00')
+        # 分隔符
         self.p_separator_3 = QtWidgets.QLabel()
         self.p_separator_3.setStyleSheet(self.flatwhite_style)
-        # 分隔符
-        self.p_separator_3.setText('->')
+        self.p_separator_3.setText('---->')
+        # 到达时间
         self.p_end_time_3 = QtWidgets.QLabel()
         self.p_end_time_3.setStyleSheet(self.flatwhite_style)
-        # 到达时间
-        self.p_end_time_3.setText('12:50')
+        # 航班价格
         self.p_price_3 = QtWidgets.QLabel()
         self.p_price_3.setStyleSheet(self.flatwhite_style)
-        # 航班价格
-        self.p_price_3.setText('￥900')
-        self.p_origin_3 = QtWidgets.QLabel()
-        self.p_origin_3.setText('广州')
-        self.p_origin_3.setStyleSheet(self.flatwhite_style)
         # 航班起点
-        self.p_terminal_3 = QtWidgets.QLabel()
-        self.p_terminal_3.setText('上海')
-        self.p_terminal_3.setStyleSheet(self.flatwhite_style)
+        self.p_origin_3 = QtWidgets.QLabel()
+        self.p_origin_3.setStyleSheet(self.flatwhite_style)
         # 航班终点
+        self.p_terminal_3 = QtWidgets.QLabel()
+        self.p_terminal_3.setStyleSheet(self.flatwhite_style)
+        # 订单状态
+        self.p_order_state_3 = QtWidgets.QLabel()
+        self.p_order_state_3.setText('等待中')
+        self.p_order_state_3.setStyleSheet(self.flatwhite_style)
+        # 取消按钮
         self.p_refund_3 = QtWidgets.QPushButton()
         self.p_refund_3.setStyleSheet(self.flatwhite_style)
-        # 取消按钮
         self.p_refund_3.setText('取消')
-        # 向第三条航班信息添加子控件
-        self.p_flight_3.addWidget(self.p_start_time_3, 0, 0, 1, 1)
-        self.p_flight_3.addWidget(self.p_separator_3, 0, 1, 1, 1)
-        self.p_flight_3.addWidget(self.p_end_time_3, 0, 2, 1, 1)
-        self.p_flight_3.addWidget(self.p_origin_3, 0, 3, 1, 1)
-        self.p_flight_3.addWidget(self.p_terminal_3, 0, 4, 1, 1)
-        self.p_flight_3.addWidget(self.p_price_3, 0, 5, 1, 1)
-        self.p_flight_3.addWidget(self.p_refund_3, 0, 6, 1, 1)
+        # 航班详情
+        self.p_detail_3 = QtWidgets.QLabel()
+        self.p_detail_3.setText('航班详情')
+        #self.p_detail_3.setStyleSheet(self.flatwhite_style)
 
+        # 向第三条航班信息添加子控件
+        self.p_flight_3.addWidget(self.p_flight_date_3, 0, 0, 1, 2)
+        self.p_flight_3.addWidget(self.p_start_time_3, 0, 2, 1, 1)
+        self.p_flight_3.addWidget(self.p_separator_3, 0, 3, 1, 1)
+        self.p_flight_3.addWidget(self.p_end_time_3, 0, 4, 1, 2)
+        self.p_flight_3.addWidget(self.p_origin_3, 0, 6, 1, 1)
+        self.p_flight_3.addWidget(self.p_terminal_3, 0, 7, 1, 1)
+        self.p_flight_3.addWidget(self.p_price_3, 0, 8, 1, 1)
+        self.p_flight_3.addWidget(self.p_order_state_3, 0, 9, 1, 1)
+        self.p_flight_3.addWidget(self.p_refund_3, 0, 10, 1, 1)
+        self.p_flight_3.addWidget(self.p_detail_3, 0, 11, 1, 1)
+        
         # 第四条航班信息，采用网格布局
         self.p_flight_4 = QtWidgets.QGridLayout()
+
+        # 航班日期
+        self.p_flight_date_4 = QtWidgets.QLabel()
+        self.p_flight_date_4.setStyleSheet(self.flatwhite_style)
+        # 起飞时间
         self.p_start_time_4 = QtWidgets.QLabel()
         self.p_start_time_4.setStyleSheet(self.flatwhite_style)
-        # 起飞时间
-        self.p_start_time_4.setText('14:00')
+        # 分隔符
         self.p_separator_4 = QtWidgets.QLabel()
         self.p_separator_4.setStyleSheet(self.flatwhite_style)
-        # 分隔符
-        self.p_separator_4.setText('->')
+        self.p_separator_4.setText('---->')
+        # 到达时间
         self.p_end_time_4 = QtWidgets.QLabel()
         self.p_end_time_4.setStyleSheet(self.flatwhite_style)
-        # 到达时间
-        self.p_end_time_4.setText('15:50')
+        # 航班价格
         self.p_price_4 = QtWidgets.QLabel()
         self.p_price_4.setStyleSheet(self.flatwhite_style)
-        # 航班价格
-        self.p_price_4.setText('￥1000')
-        self.p_origin_4 = QtWidgets.QLabel()
-        self.p_origin_4.setText('广州')
-        self.p_origin_4.setStyleSheet(self.flatwhite_style)
         # 航班起点
-        self.p_terminal_4 = QtWidgets.QLabel()
-        self.p_terminal_4.setText('上海')
-        self.p_terminal_4.setStyleSheet(self.flatwhite_style)
+        self.p_origin_4 = QtWidgets.QLabel()
+        self.p_origin_4.setStyleSheet(self.flatwhite_style)
         # 航班终点
+        self.p_terminal_4 = QtWidgets.QLabel()
+        self.p_terminal_4.setStyleSheet(self.flatwhite_style)
+        # 订单状态
+        self.p_order_state_4 = QtWidgets.QLabel()
+        self.p_order_state_4.setText('等待中')
+        self.p_order_state_4.setStyleSheet(self.flatwhite_style)
+        # 取消按钮
         self.p_refund_4 = QtWidgets.QPushButton()
         self.p_refund_4.setStyleSheet(self.flatwhite_style)
-        # 取消按钮
         self.p_refund_4.setText('取消')
+        # 航班详情
+        self.p_detail_4 = QtWidgets.QLabel()
+        self.p_detail_4.setText('航班详情')
+        #self.p_detail_4.setStyleSheet(self.flatwhite_style)
+
         # 向第四条航班信息添加子控件
-        self.p_flight_4.addWidget(self.p_start_time_4, 0, 0, 1, 1)
-        self.p_flight_4.addWidget(self.p_separator_4, 0, 1, 1, 1)
-        self.p_flight_4.addWidget(self.p_end_time_4, 0, 2, 1, 1)
-        self.p_flight_4.addWidget(self.p_origin_4, 0, 3, 1, 1)
-        self.p_flight_4.addWidget(self.p_terminal_4, 0, 4, 1, 1)
-        self.p_flight_4.addWidget(self.p_price_4, 0, 5, 1, 1)
-        self.p_flight_4.addWidget(self.p_refund_4, 0, 6, 1, 1)
+        self.p_flight_4.addWidget(self.p_flight_date_4, 0, 0, 1, 2)
+        self.p_flight_4.addWidget(self.p_start_time_4, 0, 2, 1, 1)
+        self.p_flight_4.addWidget(self.p_separator_4, 0, 3, 1, 1)
+        self.p_flight_4.addWidget(self.p_end_time_4, 0, 4, 1, 2)
+        self.p_flight_4.addWidget(self.p_origin_4, 0, 6, 1, 1)
+        self.p_flight_4.addWidget(self.p_terminal_4, 0, 7, 1, 1)
+        self.p_flight_4.addWidget(self.p_price_4, 0, 8, 1, 1)
+        self.p_flight_4.addWidget(self.p_order_state_4, 0, 9, 1, 1)
+        self.p_flight_4.addWidget(self.p_refund_4, 0, 10, 1, 1)
+        self.p_flight_4.addWidget(self.p_detail_4, 0, 11, 1, 1)
 
         # 第五条航班信息，采用网格布局
         self.p_flight_5 = QtWidgets.QGridLayout()
+
+        # 航班日期
+        self.p_flight_date_5 = QtWidgets.QLabel()
+        self.p_flight_date_5.setStyleSheet(self.flatwhite_style)
+        # 起飞时间
         self.p_start_time_5 = QtWidgets.QLabel()
         self.p_start_time_5.setStyleSheet(self.flatwhite_style)
-        # 起飞时间
-        self.p_start_time_5.setText('16:00')
+        # 分隔符
         self.p_separator_5 = QtWidgets.QLabel()
         self.p_separator_5.setStyleSheet(self.flatwhite_style)
-        # 分隔符
-        self.p_separator_5.setText('->')
+        self.p_separator_5.setText('---->')
+        # 到达时间
         self.p_end_time_5 = QtWidgets.QLabel()
         self.p_end_time_5.setStyleSheet(self.flatwhite_style)
-        # 到达时间
-        self.p_end_time_5.setText('17:50')
+        # 航班价格
         self.p_price_5 = QtWidgets.QLabel()
         self.p_price_5.setStyleSheet(self.flatwhite_style)
-        # 航班价格
-        self.p_price_5.setText('￥1100')
-        self.p_origin_5 = QtWidgets.QLabel()
-        self.p_origin_5.setText('广州')
-        self.p_origin_5.setStyleSheet(self.flatwhite_style)
         # 航班起点
-        self.p_terminal_5 = QtWidgets.QLabel()
-        self.p_terminal_5.setText('上海')
-        self.p_terminal_5.setStyleSheet(self.flatwhite_style)
+        self.p_origin_5 = QtWidgets.QLabel()
+        self.p_origin_5.setStyleSheet(self.flatwhite_style)
         # 航班终点
+        self.p_terminal_5 = QtWidgets.QLabel()
+        self.p_terminal_5.setStyleSheet(self.flatwhite_style)
+        # 订单状态
+        self.p_order_state_5 = QtWidgets.QLabel()
+        self.p_order_state_5.setText('等待中')
+        self.p_order_state_5.setStyleSheet(self.flatwhite_style)
+        # 取消按钮
         self.p_refund_5 = QtWidgets.QPushButton()
         self.p_refund_5.setStyleSheet(self.flatwhite_style)
-        # 取消按钮
         self.p_refund_5.setText('取消')
+        # 航班详情
+        self.p_detail_5 = QtWidgets.QLabel()
+        self.p_detail_5.setText('航班详情')
+        #self.p_detail_5.setStyleSheet(self.flatwhite_style)
+
         # 向第五条航班信息添加子控件
-        self.p_flight_5.addWidget(self.p_start_time_5, 0, 0, 1, 1)
-        self.p_flight_5.addWidget(self.p_separator_5, 0, 1, 1, 1)
-        self.p_flight_5.addWidget(self.p_end_time_5, 0, 2, 1, 1)
-        self.p_flight_5.addWidget(self.p_origin_5, 0, 3, 1, 1)
-        self.p_flight_5.addWidget(self.p_terminal_5, 0, 4, 1, 1)
-        self.p_flight_5.addWidget(self.p_price_5, 0, 5, 1, 1)
-        self.p_flight_5.addWidget(self.p_refund_5, 0, 6, 1, 1)
+        self.p_flight_5.addWidget(self.p_flight_date_5, 0, 0, 1, 2)
+        self.p_flight_5.addWidget(self.p_start_time_5, 0, 2, 1, 1)
+        self.p_flight_5.addWidget(self.p_separator_5, 0, 3, 1, 1)
+        self.p_flight_5.addWidget(self.p_end_time_5, 0, 4, 1, 2)
+        self.p_flight_5.addWidget(self.p_origin_5, 0, 6, 1, 1)
+        self.p_flight_5.addWidget(self.p_terminal_5, 0, 7, 1, 1)
+        self.p_flight_5.addWidget(self.p_price_5, 0, 8, 1, 1)
+        self.p_flight_5.addWidget(self.p_order_state_5, 0, 9, 1, 1)
+        self.p_flight_5.addWidget(self.p_refund_5, 0, 10, 1, 1)
+        self.p_flight_5.addWidget(self.p_detail_5, 0, 11, 1, 1)
 
         # 上一页按钮
         self.p_last_pape_button = QtWidgets.QPushButton()
@@ -641,9 +779,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_next_pape_button.setObjectName('user_next')
 
         # 向总布局添加子控件
-        self.personal_layout.addWidget(self.head, 0, 0, 1, 1)
-        self.personal_layout.addLayout(self.info_layout, 0, 2, 1, 1)
-        self.personal_layout.addWidget(self.order_list_label, 1, 0, 1, 12)
+        self.personal_layout.addWidget(self.head, 0, 5, 1, 1)
+        self.personal_layout.addLayout(self.info_layout, 0, 6, 1, 1)
+        self.personal_layout.addLayout(self.p_flight_title, 1, 0, 1, 12)
         self.personal_layout.addLayout(self.p_flight_1, 2, 0, 2, 12)
         self.personal_layout.addLayout(self.p_flight_2, 4, 0, 2, 12)
         self.personal_layout.addLayout(self.p_flight_3, 6, 0, 2, 12)

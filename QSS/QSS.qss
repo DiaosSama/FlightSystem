@@ -87,8 +87,8 @@ FirstWindow QComboBox, SecondWindow QComboBox {
 QLabel#decorator {
 	min-height: 30px; 
 	max-height: 30px;
-	min-width: 400px; 
-	max-width: 400px;
+	min-width: 500px; 
+	max-width: 500px;
 }
 
 QPushButton#search_btn_1,#search_btn_4 {
