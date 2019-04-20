@@ -91,6 +91,18 @@ SecondWindow QLabel#decorator {
 	max-width: 500px;
 }
 
+/*航班显示列表样式*/
+SecondWindow QListWidget#flightInfoList_1
+{ border: 0px; border-top: 1px solid gray; }
+SecondWindow QListWidget#flightInfoList_1::Item
+{ padding-top:20px; padding-bottom:4px; }
+SecondWindow QListWidget#flightInfoList_1::Item:hover
+{ background:skyblue; }
+SecondWindow QListWidget#flightInfoList_1::item:selected
+{ color:red; }
+SecondWindow QListWidget#flightInfoList_1::item:selected:!active
+{ background:lightgray; }
+
 QPushButton#search_btn_1,#search_btn_4 {
 	border: 0px; 
 	background-color: rgb(0, 0, 0, 0);

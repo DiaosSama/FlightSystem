@@ -182,7 +182,13 @@ class SecondWindow(QWidget):
         
         # 中间放置显示列表
         self.flightInfoList_1 = QListWidget()
-        self.flightInfoList_1.setStyleSheet('border: 0px; border-top: 1px solid gray; ')
+        self.flightInfoList_1.setObjectName('flightInfoList_1')
+        '''self.flightInfoList_1.setStyleSheet("QListWidget{border: 0px; border-top: 1px solid gray; }"
+                                            "QListWidget::Item{padding-top:20px; padding-bottom:4px; }"
+                                            "QListWidget::Item:hover{background:skyblue; }"
+                                            "QListWidget::item:selected{ color:red; }"
+                                            "QListWidget::item:selected:!active{border-width:0px; background:lightgray; }"
+                                            )'''
         self.flightInfoList_1.itemDoubleClicked.connect(self.detailedFlightInfo)
 
         # 搜索按钮
@@ -873,7 +879,8 @@ class SecondWindow(QWidget):
 
     # 查看详细的航班信息
     def detailedFlightInfo(self, item):
-        startTime = item.text()
+        startTime = item.text().split('\t')[0].replace('起飞时间：','')
+        print(startTime)
         flight = []
         for i in self.flightArray_1:
             if startTime == i['date']['startTime']:
@@ -966,15 +973,19 @@ class SecondWindow(QWidget):
             self.flightArray_1 = FlightImplements.queryFlightInfo(data)
             if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
                 self.flightInfoList_1.clear()
-                timeArray = []
                 for i in self.flightArray_1:
-                    timeArray.append(i['date']['startTime'])
-                timeArray.sort()
-                self.flightInfoList_1.addItems(timeArray)
+                    item_text = "起飞时间：" + i['date']['startTime'] + '\t' + \
+                                "航班号：" + i['flightNum'] + '\t' + \
+                                "余票量：" + str(i['remTicketNum'])
+                    item = QListWidgetItem(item_text)
+                    item.setTextAlignment(Qt.AlignHCenter)
+                    self.flightInfoList_1.addItem(item)
             else:
                 self.flightArray_1 = []
                 self.flightInfoList_1.clear()
-                self.flightInfoList_1.addItem("本时间段暂无航班信息")
+                item = QListWidgetItem("本时间段暂无航班信息")
+                item.setTextAlignment(Qt.AlignHCenter)
+                self.flightInfoList_1.addItem(item)
 
     # 恢复正在修改的航班信息
     def recoverFlightInfo(self):
@@ -1360,15 +1371,19 @@ class SecondWindow(QWidget):
             self.flightArray_1 = FlightImplements.queryFlightInfo(data)
             if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
                 self.flightInfoList_1.clear()
-                timeArray = []
                 for i in self.flightArray_1:
-                    timeArray.append(i['date']['startTime'])
-                timeArray.sort()
-                self.flightInfoList_1.addItems(timeArray)
+                    item_text = "起飞时间：" + i['date']['startTime'] + '\t' + \
+                                "航班号：" + i['flightNum'] + '\t' + \
+                                "余票量：" + str(i['remTicketNum'])
+                    item = QListWidgetItem(item_text)
+                    item.setTextAlignment(Qt.AlignHCenter)
+                    self.flightInfoList_1.addItem(item)
             else:
                 self.flightArray_1 = []
                 self.flightInfoList_1.clear()
-                self.flightInfoList_1.addItem("本时间段暂无航班信息")
+                item = QListWidgetItem("本时间段暂无航班信息")
+                item.setTextAlignment(Qt.AlignHCenter)
+                self.flightInfoList_1.addItem(item)
     # 更新到后一天的航班数据
     def getTomorrow(self):
         origin = self.origin_1.currentText()
@@ -1414,15 +1429,19 @@ class SecondWindow(QWidget):
             self.flightArray_1 = FlightImplements.queryFlightInfo(data)
             if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
                 self.flightInfoList_1.clear()
-                timeArray = []
                 for i in self.flightArray_1:
-                    timeArray.append(i['date']['startTime'])
-                timeArray.sort()
-                self.flightInfoList_1.addItems(timeArray)
+                    item_text = "起飞时间：" + i['date']['startTime'] + '\t' + \
+                                "航班号：" + i['flightNum'] + '\t' + \
+                                "余票量：" + str(i['remTicketNum'])
+                    item = QListWidgetItem(item_text)
+                    item.setTextAlignment(Qt.AlignHCenter)
+                    self.flightInfoList_1.addItem(item)
             else:
                 self.flightArray_1 = []
                 self.flightInfoList_1.clear()
-                self.flightInfoList_1.addItem("本时间段暂无航班信息")
+                item = QListWidgetItem("本时间段暂无航班信息")
+                item.setTextAlignment(Qt.AlignHCenter)
+                self.flightInfoList_1.addItem(item)
 
 
 
