@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PIL import Image
-from usrsHashTable import *
+import usrsHashTable
 from SecondWindow import *
 from MainWindow import *
 
@@ -17,7 +17,7 @@ class FirstWindow(QWidget):
     def initUI(self):
 
         # 读取用户表
-        self.table = usrsHashTable()
+        self.table = usrsHashTable.usrsHashTable()
         self.usrs = self.table.usrs
         self.usrNames = []
         for i in self.usrs:

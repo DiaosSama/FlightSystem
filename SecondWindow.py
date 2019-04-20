@@ -1,15 +1,15 @@
 # -*- coding:utf-8 -*-
-import sys
-import json
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from usrsHashTable import *
-from cityDict import *
+import sys
+import json
+import usrsHashTable
+import cityDict
 import datetime 
-from FlightImplements import *
-from FlightInfo import *
-from Const import *
+import FlightImplements
+import FlightInfo 
+import Const 
 
 class SecondWindow(QWidget):
     
@@ -23,7 +23,7 @@ class SecondWindow(QWidget):
         self.setWindowTitle("航空客运订票系统")
 
         # 读取用户表
-        self.table = usrsHashTable()
+        self.table = usrsHashTable.usrsHashTable()
         self.usrs = self.table.usrs
 
         # 导入QListWidget的qss样式
@@ -125,7 +125,7 @@ class SecondWindow(QWidget):
         
 
         # 城市
-        city_opt = allCity
+        city_opt = cityDict.allCity
         self.origin_1.addItems(city_opt)
         self.terminal_1.addItems(city_opt)
         
@@ -152,11 +152,11 @@ class SecondWindow(QWidget):
         decorator.setPixmap(QPixmap('./pictures/sky.jpg'))
         decorator.setObjectName('decorator')
         decorator.setStyleSheet('''
-                                min-height: 30px; 
-                                max-height: 30px;
-                                min-width: 400px; 
-                                max-width: 400px;
-                                ''')
+            min-height: 30px; 
+            max-height: 30px;
+            min-width: 500px; 
+            max-width: 500px;
+        ''')
 
         # 地点和日期
         self.topMid_1 = QVBoxLayout()
@@ -166,11 +166,13 @@ class SecondWindow(QWidget):
         # 顶层靠左放置前一天的按钮
         self.topLeft_1 = QPushButton()
         self.topLeft_1.setText("<<\n\n前一天")
+        self.topLeft_1.clicked.connect(self.getLastDay)
         self.topLeft_1.setStyleSheet('border: 0px;')
         # 顶层靠右放置后一天的按钮
         self.topRight_1 = QPushButton()
         self.topRight_1.setText(">>\n\n后一天")
         self.topRight_1.setStyleSheet('border: 0px;')
+        self.topRight_1.clicked.connect(self.getTomorrow)
 
         # 顶层
         self.top_1 = QHBoxLayout()
@@ -828,7 +830,7 @@ class SecondWindow(QWidget):
     # 确定日期是否有效
     def confirmDay(self, year, month, day):
         # 日的范围 根据年和月判断
-        date = year + '-' + month +'-' + day 
+        date = str(year) + '-' + str(month) +'-' + str(day) 
         #print(date)
         try:
             datetime.datetime.strptime(date, "%Y-%m-%d")
@@ -842,7 +844,7 @@ class SecondWindow(QWidget):
 
     # 确定起终点是否有效
     def confirmPlace(self, origin, terminal):
-        if origin in allCity and terminal in allCity:
+        if origin in cityDict.allCity and terminal in cityDict.allCity:
             if origin == terminal:
                 # 弹出信息框
                 msg_box = QMessageBox(QMessageBox.Warning, "警告", "起点与终点不能相同！")
@@ -879,9 +881,9 @@ class SecondWindow(QWidget):
                 break
 
         data = self.flight_7
-        origin = reCityDict[data["origin"]]
+        origin = cityDict.reCityDict[data["origin"]]
         self.origin_text_7.setText(origin)
-        terminal = reCityDict[data["terminal"]]
+        terminal = cityDict.reCityDict[data["terminal"]]
         self.terminal_text_7.setText(terminal)
         self.flightNum_text_7.setText(data["flightNum"])     
         self.planeNum_text_7.setText(data["planeNum"])
@@ -939,7 +941,6 @@ class SecondWindow(QWidget):
         self.leftlist.setCurrentRow(6)
         self.stack.setCurrentIndex(6)
         
-
     # 搜索航班信息
     def searchFlightInfo(self, item):
         origin = self.origin_1.currentText()
@@ -952,8 +953,8 @@ class SecondWindow(QWidget):
         # 判断地点和日期是否有效
         if self.confirmPlace(origin, terminal) and self.confirmDay(y, m, d):
             print(origin, terminal, y, m, d)
-            origin = cityDict[self.origin_1.currentText()]
-            terminal = cityDict[self.terminal_1.currentText()]
+            origin = cityDict.cityDict[self.origin_1.currentText()]
+            terminal = cityDict.cityDict[self.terminal_1.currentText()]
             date = {
                 'year' : y,
                 'month' : m,
@@ -961,9 +962,9 @@ class SecondWindow(QWidget):
                 'startTime' : 0,
                 'totalTime' : 0
             }
-            data = FlightInfo(date, origin, terminal)
-            self.flightArray_1 = queryFlightInfo(data)
-            if self.flightArray_1 != FLIGHT_NOT_FOUND :
+            data = FlightInfo.FlightInfo(date, origin, terminal)
+            self.flightArray_1 = FlightImplements.queryFlightInfo(data)
+            if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
                 self.flightInfoList_1.clear()
                 timeArray = []
                 for i in self.flightArray_1:
@@ -991,8 +992,8 @@ class SecondWindow(QWidget):
         price = self.flight_3["price"]
 
         # 将信息更新到修改页面
-        origin = reCityDict[origin]
-        terminal = reCityDict[terminal]
+        origin = cityDict.reCityDict[origin]
+        terminal = cityDict.reCityDict[terminal]
 
         self.origin_text_3.setText(origin)
         self.terminal_text_3.setText(terminal)
@@ -1023,8 +1024,8 @@ class SecondWindow(QWidget):
     # 删除航班信息
     def deleteFlightInfo(self):
         if self.flight_7 != []:
-            flight = FlightInfo(self.flight_7)
-            if(delFlightInfo(flight)):
+            flight = FlightInfo.FlightInfo(self.flight_7)
+            if(FlightImplements.delFlightInfo(flight)):
                 # 删除成功
                 msg_box = QMessageBox(QMessageBox.Information, "信息", "已删除当前航班！")
                 msg_box.show()
@@ -1035,8 +1036,7 @@ class SecondWindow(QWidget):
             msg_box = QMessageBox(QMessageBox.Warning, "警告", "当前未指定航班！")
             msg_box.show()
             msg_box.exec_()
-        
-    
+          
     # 添加航班信息
     def addFlightInfo(self):
         origin = self.origin_text_2.text().strip()
@@ -1071,8 +1071,8 @@ class SecondWindow(QWidget):
                         msg_box.show()
                         msg_box.exec_()
                     else:
-                        origin = cityDict[origin]
-                        terminal = cityDict[terminal]
+                        origin = cityDict.cityDict[origin]
+                        terminal = cityDict.cityDict[terminal]
                         y, m, d = int(year), int(month), int(day)
                         print(origin, terminal, y, m, d)
                         date = {
@@ -1082,16 +1082,14 @@ class SecondWindow(QWidget):
                             'startTime' : 0,
                             'totalTime' : 0
                         }
-                        flight = FlightInfo(date, origin, terminal, startTime, totalTime,
+                        flight = FlightInfo.FlightInfo(date, origin, terminal, startTime, totalTime,
                                             flightNum, planeNum, pasQuota, remTicketNum, price)
-                        if(addFlightInfo(flight)):
+                        if(FlightImplements.addFlightInfo(flight)):
                             # 添加成功
                             msg_box = QMessageBox(QMessageBox.Information, "信息", "已添加当前航班！")
                             msg_box.show()
                             msg_box.exec_()
                             print("添加成功", flight.__dict__)
-
-        
 
     # 保存修改的航班信息
     def saveFlightInfo(self):
@@ -1112,9 +1110,9 @@ class SecondWindow(QWidget):
         if self.abnormalButton_3.isChecked():
             state = 2
         if self.confirmDay(y, m, d):
-            oldTicket = FlightInfo(self.flight_3)
-            origin = cityDict[origin]
-            terminal = cityDict[terminal]
+            oldTicket = FlightInfo.FlightInfo(self.flight_3)
+            origin = cityDict.cityDict[origin]
+            terminal = cityDict.cityDict[terminal]
             date = {
                 'year' : y,
                 'month' : m,
@@ -1122,10 +1120,10 @@ class SecondWindow(QWidget):
                 'startTime' : startTime,
                 'totalTime' : totalTime
             }
-            newTicket = FlightInfo(date, origin, terminal, flightNum, planeNum, pasQuota, remTicketNum, price,
+            newTicket = FlightInfo.FlightInfo(date, origin, terminal, flightNum, planeNum, pasQuota, remTicketNum, price,
                                    self.flight_3["orderedList"], self.flight_3["waitingList"],
                                    state, remark)
-            if(revFlightInfo(oldTicket, newTicket)):
+            if(FlightImplements.revFlightInfo(oldTicket, newTicket)):
                 # 修改成功
                 msg_box = QMessageBox(QMessageBox.Information, "信息", "已修改当前航班！")
                 msg_box.show()
@@ -1138,7 +1136,6 @@ class SecondWindow(QWidget):
                 msg_box.exec_()
                 print('修改失败')
                                
-
     # 重置航班信息
     def resetFlightInfo(self):
         self.origin_text_2.setText('')
@@ -1231,8 +1228,7 @@ class SecondWindow(QWidget):
             
             self.table.add(newUserInfo)
             print("【*】 添加用户成功")
-            
-    
+              
     # 重置用户信息
     def resetUserInfo(self):
         self.usrName_text_5.setText('')
@@ -1303,7 +1299,6 @@ class SecondWindow(QWidget):
             msg_box.show()
             msg_box.exec_()
             
-
     # 取消修改用户信息
     def cancelSaveRevisedUserInfo(self):
         if self.usrName_text_6.text() == '':
@@ -1322,6 +1317,112 @@ class SecondWindow(QWidget):
     def display(self, i):
         #设置当前可见的选项卡的索引
         self.stack.setCurrentIndex(i)
+
+    # 更新到前一天的航班数据
+    def getLastDay(self):
+        origin = self.origin_1.currentText()
+        terminal = self.terminal_1.currentText()
+
+        y = self.year_1.currentText()
+        m = self.month_1.currentText()
+        d = self.day_1.currentText()
+        # 判断日期是否合理
+        if self.confirmDay(y, m, d) == False:
+            return
+        # 获取前一天的日期
+        currentDay = datetime.datetime.strptime(y+'-'+m+'-'+d, "%Y-%m-%d")
+        yesterday = currentDay + datetime.timedelta(days = -1)
+        y, m, d= yesterday.year, yesterday.month, yesterday.day
+        # 超出最早日期
+        if y == 2018:
+            # 弹出信息框
+            msg_box = QMessageBox(QMessageBox.Warning, "警告", "超出系统指定时间！")
+            msg_box.show()
+            msg_box.exec_()
+            return
+        # 判断地点和日期是否有效
+        if self.confirmPlace(origin, terminal):
+            # 更新年月日选项
+            self.year_1.setCurrentIndex(self.year_1.findText(str(y)))
+            self.month_1.setCurrentIndex(self.month_1.findText(str(m)))
+            self.day_1.setCurrentIndex(self.day_1.findText(str(d)))
+            print(origin, terminal, y, m, d)
+            origin = cityDict.cityDict[self.origin_1.currentText()]
+            terminal = cityDict.cityDict[self.terminal_1.currentText()]
+            date = {
+                'year' : y,
+                'month' : m,
+                'day' : d,
+                'startTime' : 0,
+                'totalTime' : 0
+            }
+            data = FlightInfo.FlightInfo(date, origin, terminal)
+            self.flightArray_1 = FlightImplements.queryFlightInfo(data)
+            if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
+                self.flightInfoList_1.clear()
+                timeArray = []
+                for i in self.flightArray_1:
+                    timeArray.append(i['date']['startTime'])
+                timeArray.sort()
+                self.flightInfoList_1.addItems(timeArray)
+            else:
+                self.flightArray_1 = []
+                self.flightInfoList_1.clear()
+                self.flightInfoList_1.addItem("本时间段暂无航班信息")
+    # 更新到后一天的航班数据
+    def getTomorrow(self):
+        origin = self.origin_1.currentText()
+        terminal = self.terminal_1.currentText()
+
+        y = self.year_1.currentText()
+        m = self.month_1.currentText()
+        d = self.day_1.currentText()
+        # 判断日期是否合理
+        if self.confirmDay(y, m, d) == False:
+            # 弹出信息框
+            return
+        # 获取后一天的日期
+        currentDay = datetime.datetime.strptime(y+'-'+m+'-'+d, "%Y-%m-%d")
+        tomorrow = currentDay + datetime.timedelta(days = 1)
+        y, m, d= tomorrow.year, tomorrow.month, tomorrow.day
+        # 超出最远日期
+        if y == 2051:
+            # 弹出信息框
+            msg_box = QMessageBox(QMessageBox.Warning, "警告", "超出系统指定时间！")
+            msg_box.show()
+            msg_box.exec_()
+            return
+        
+        # 判断地点和日期是否有效
+        if self.confirmPlace(origin, terminal):
+            # 更新年月日选项
+            self.year_1.setCurrentIndex(self.year_1.findText(str(y)))
+            self.month_1.setCurrentIndex(self.month_1.findText(str(m)))
+            self.day_1.setCurrentIndex(self.day_1.findText(str(d)))
+            print(y,m,d)
+            print(origin, terminal, y, m, d)
+            origin = cityDict.cityDict[self.origin_1.currentText()]
+            terminal = cityDict.cityDict[self.terminal_1.currentText()]
+            date = {
+                'year' : y,
+                'month' : m,
+                'day' : d,
+                'startTime' : 0,
+                'totalTime' : 0
+            }
+            data = FlightInfo.FlightInfo(date, origin, terminal)
+            self.flightArray_1 = FlightImplements.queryFlightInfo(data)
+            if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
+                self.flightInfoList_1.clear()
+                timeArray = []
+                for i in self.flightArray_1:
+                    timeArray.append(i['date']['startTime'])
+                timeArray.sort()
+                self.flightInfoList_1.addItems(timeArray)
+            else:
+                self.flightArray_1 = []
+                self.flightInfoList_1.clear()
+                self.flightInfoList_1.addItem("本时间段暂无航班信息")
 
 
 
