@@ -97,8 +97,8 @@ class usrsHashTable(object):
         pass
 
     # 用户添加航班信息
-    def addFlightInfo(self, usr, flightInfo):
-        result = self.get(usr["usrName"])
+    def addFlightInfo(self, name, flightInfo):
+        result = self.get(name)
         print(result)
         if result == 0:
             return ADD_FAILED
@@ -115,8 +115,8 @@ class usrsHashTable(object):
         pass
 
     # 用户删除航班信息
-    def deleteFlightInfo(self, usr, flightInfo):
-        result = self.get(usr["usrName"])
+    def deleteFlightInfo(self, name, flightInfo):
+        result = self.get(name)
         print(result)
         if result == 0:
             # 0 为删除失败代码
@@ -133,8 +133,8 @@ class usrsHashTable(object):
             return 1
 
     # 用户修改航班信息
-    def reviseFlightInfo(self, usr, oldFlightInfo, newFlightInfo):
-        result = self.get(usr["usrName"])
+    def reviseFlightInfo(self, name, oldFlightInfo, newFlightInfo):
+        result = self.get(name)
         print(result)
         if result == 0:
             return DELETE_FAILED

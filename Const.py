@@ -14,6 +14,15 @@ HASH_TABLE_FULL = 1
 # 操作成功
 SUCCESS = 100
 
+# 该票已购买过
+TICKET_ORDERED = 0
+
+# 进入等待列表
+TICKET_WAITING = -1
+
+# 未找到用户订票信息
+USER_NOT_FOUND = -1
+
 # 常用常量
 
 # 哈希表大小

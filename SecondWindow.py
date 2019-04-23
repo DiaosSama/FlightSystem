@@ -872,13 +872,13 @@ class SecondWindow(QWidget):
     # 查看详细的航班信息
     def detailedFlightInfo(self, item):
         startTime = item.text()
-        flight = []
         for i in self.flightArray_1:
             if startTime == i['date']['startTime']:
                 self.flight_7 = i
                 break
 
         data = self.flight_7
+        # print(data)
         origin = reCityDict[data["origin"]]
         self.origin_text_7.setText(origin)
         terminal = reCityDict[data["terminal"]]
@@ -952,8 +952,8 @@ class SecondWindow(QWidget):
         # 判断地点和日期是否有效
         if self.confirmPlace(origin, terminal) and self.confirmDay(y, m, d):
             print(origin, terminal, y, m, d)
-            origin = cityDict[self.origin_1.currentText()]
-            terminal = cityDict[self.terminal_1.currentText()]
+            origin = cityDict[origin]
+            terminal = cityDict[terminal]
             date = {
                 'year' : y,
                 'month' : m,

@@ -66,7 +66,17 @@ def queryFlightInfo(ticket):
                     suit = (ticket.getStart() == hash_table[index][0]['origin'] and
                             ticket.getEnd() == hash_table[index][0]['terminal'])
                     if suit:
-                        return hash_table[index]
+                        Flight = hash_table[index]
+
+                        # 航班按时间排序
+                        def time(s):
+                            hour, min = s['date']['startTime'].split(':')
+                            hour = int(hour)
+                            min = int(min)
+                            return hour + (min / 60)
+
+                        Flight = sorted(Flight, key=time)
+                        return Flight
                     else:
                         index = (index + i * i) % Const.HASH_SIZE
                         i += 1
@@ -82,6 +92,7 @@ def queryFlight(ticket):
     :param ticket:
     :return:
     """
+    pass
 
 
 def addFlightInfo(ticket):
@@ -230,8 +241,11 @@ def revFlightInfo(oldTicket, newTicket):
                         hash_table[index].append(newTicket.__dict__)
                         print("after hash_table[index]", hash_table[index], '\n')
                         f = open(file, "w")
+                        print("open ok")
                         json.dump(hash_table, f)
+                        print("dump ok")
                         f.close()
+                        print("close ok")
                         return Const.SUCCESS
                 return Const.FLIGHT_NOT_FOUND
             else:

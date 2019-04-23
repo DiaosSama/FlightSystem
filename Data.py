@@ -7,7 +7,7 @@ import json
 import csv
 
 
-def init_data():
+def init_data(y, m, d):
     hash_table = newHashTable()
     State = 1
     remark = ""
@@ -63,7 +63,7 @@ def init_data():
     planeQuota = dict(zip(planeNum, pasQuota))
     orderedList = []
     waitingList = []
-    Date = {"year": 2019, "month": 4, "day": 2}
+    Date = {"year": y, "month": m, "day": d}
     date = ""
     totalTime = 0
     price = 0
@@ -156,4 +156,8 @@ def init_data():
     f = open(file, "w")
     json.dump(hash_table, f)
     f.close()
+
+
+if __name__ == '__main__':
+    init_data(2019, 4, 3)
 
