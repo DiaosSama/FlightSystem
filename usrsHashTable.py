@@ -123,7 +123,10 @@ class usrsHashTable(object):
             return 0
         else:
             # 删除航班信息
-            result[1]["flightInfo"].remove(flightInfo)
+            for i in result[1]["flightInfo"]:
+                if i["origin"]==flightInfo["origin"] and i["terminal"]==flightInfo["terminal"] and i["date"]==flightInfo["date"]:
+                    result[1]["flightInfo"].remove(i)
+                    break
             # 更新哈希表
             self.usrs[result[0]] = result[1]
             with open("./info/UserInfo2.json", 'w') as dump_f:
@@ -142,7 +145,7 @@ class usrsHashTable(object):
             # 修改航班信息
             allFlightInfo = result[1]["flightInfo"]
             for i in range(len(allFlightInfo)):
-                if allFlightInfo[i] == oldFlightInfo:
+                if allFlightInfo[i]["origin"]==oldFlightInfo["origin"] and allFlightInfo[i]["terminal"]==oldFlightInfo["terminal"] and allFlightInfo[i]["date"]==oldFlightInfo["date"]:
                     allFlightInfo[i] = newFlightInfo
                     break;
             # 更新哈希表
@@ -152,13 +155,6 @@ class usrsHashTable(object):
                 print("写入 json 文件成功...")
             # 修改成功
             return 1
-
-    '''  
-    订票只需在 flightInfo 追加一个航班信息
-    至于等待购票、航班被迫取消、航班信息更新等机票状态可以在机票里的 state 设置
-    退票可以直接在 flightInfo 删除航班信息
-    
-    '''
 
 '''
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ import datetime
 import FlightImplements
 import FlightInfo 
 import Const 
+import myClass
 
 class SecondWindow(QWidget):
     
@@ -183,12 +184,12 @@ class SecondWindow(QWidget):
         # 中间放置显示列表
         self.flightInfoList_1 = QListWidget()
         self.flightInfoList_1.setObjectName('flightInfoList_1')
-        '''self.flightInfoList_1.setStyleSheet("QListWidget{border: 0px; border-top: 1px solid gray; }"
+        self.flightInfoList_1.setStyleSheet("QListWidget{border: 0px; border-top: 1px solid gray; }"
                                             "QListWidget::Item{padding-top:20px; padding-bottom:4px; }"
                                             "QListWidget::Item:hover{background:skyblue; }"
                                             "QListWidget::item:selected{ color:red; }"
                                             "QListWidget::item:selected:!active{border-width:0px; background:lightgray; }"
-                                            )'''
+                                            )
         self.flightInfoList_1.itemDoubleClicked.connect(self.detailedFlightInfo)
 
         # 搜索按钮
@@ -1218,7 +1219,7 @@ class SecondWindow(QWidget):
             age = '0'
 
         # 创建一个新的用户类
-        newUserInfo = UserInfo.copy()
+        newUserInfo = myClass.UserInfo.copy()
         newUserInfo["usrName"] = usrName
         newUserInfo["pwd"] = pwd
         newUserInfo["realName"] = realName
@@ -1295,7 +1296,7 @@ class SecondWindow(QWidget):
             sex = self.sex_text_6.text()
             age = self.age_text_6.text()
 
-            newUserInfo = UserInfo.copy()
+            newUserInfo = myClass.UserInfo.copy()
             newUserInfo["usrName"] = usrName
             newUserInfo["pwd"] = pwd
             newUserInfo["realName"] = realName
