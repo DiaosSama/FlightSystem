@@ -34,6 +34,8 @@ class FirstWindow(QWidget):
         styleSheet = str(styleSheet, encoding='utf8')
         qApp.setStyleSheet(styleSheet)
 
+        # 设置标题
+        self.setWindowTitle("航空客运订票系统")
         # 设置图标
         self.setWindowIcon(QIcon('icons/plane2.png'))
         # 登陆图片

@@ -77,7 +77,7 @@ def init_data(y, m, d):
                 size = random.randint(1, 15)
 
                 # 初始化价格
-                with open("timeTable.csv", encoding='UTF-8') as f:
+                with open("info/timeTable.csv", encoding='UTF-8') as f:
                     reader = csv.DictReader(f)
                     for row in reader:
                         hi, he = cityEntoCh[row["ORIGIN"]], cityEntoCh[row["TERMINAL"]]
