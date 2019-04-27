@@ -25,7 +25,7 @@ class FlightInfo:
             self.terminal = end
             self.flightNum = fnum
             self.planeNum = pnum
-            self.pasQuota = end
+            self.pasQuota = quota
             self.remTicketNum = rem
             self.price = price
             self.orderedList = ordered

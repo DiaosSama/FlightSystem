@@ -8,6 +8,9 @@ FLIGHT_NOT_FOUND = 0
 # 日期不合法
 DATE_INVALID = -1
 
+# 起点终点没有对应航班
+NO_SUIT_FLIGHT = -2
+
 # 哈希表已满
 HASH_TABLE_FULL = 1
 

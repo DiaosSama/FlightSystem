@@ -124,10 +124,15 @@ def init_data(y, m, d):
                     newDate["endTime"] = hour+':'+min
                     # print(Date["startTime"])
 
-                    # 初始化飞行时间
-
-                    info = FlightInfo(newDate, originList[i], terminalList[j], FN, PN, PQ, PQ, price, orderedList,
-                                      waitingList, State, remark)
+                    # 航班价格随机波动
+                    offset = random.randint(0, 100)
+                    undo = random.randint(0, 1)
+                    if undo == 1:
+                        info = FlightInfo(newDate, originList[i], terminalList[j], FN, PN, PQ, PQ,
+                                          str(int(price)+offset), orderedList, waitingList, State, remark)
+                    else:
+                        info = FlightInfo(newDate, originList[i], terminalList[j], FN, PN, PQ, PQ,
+                                          str(int(price)-offset), orderedList, waitingList, State, remark)
                     date = info.getDateStr()
                     info = info.__dict__
                     # print(hash_table)
@@ -139,7 +144,7 @@ def init_data(y, m, d):
                         if hash_table[index] == Const.EMPTY:
                             hash_table[index] = []
                             hash_table[index].append(info)
-                            # print(info)
+                            print(info)
                             break
                         else:
                             if hash_table[index][0]['origin'] + hash_table[index][0]['terminal'] == originList[i] + terminalList[j]:

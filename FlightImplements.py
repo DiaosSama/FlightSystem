@@ -58,10 +58,10 @@ def queryFlightInfo(ticket):
                 # print("result:", hash_table[index])
                 # 哈希查找失败条件
                 if hash_table[index] == Const.EMPTY or hash_table[index] == []:
-                    return Const.FLIGHT_NOT_FOUND
+                    return Const.NO_SUIT_FLIGHT
                 # 哈希查找的绝望阈值
                 if i > Const.DES_VAL:
-                    return Const.FLIGHT_NOT_FOUND
+                    return Const.NO_SUIT_FLIGHT
                 else:
                     suit = (ticket.getStart() == hash_table[index][0]['origin'] and
                             ticket.getEnd() == hash_table[index][0]['terminal'])

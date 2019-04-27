@@ -1,11 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QCursor
+from PyQt5.QtGui import QCursor, QPalette
 import sys
 import qtawesome
 from FlightImplements import *
 from FlightInfo import *
 import usrsHashTable as uT
+import deFlightWindow as deWin
+import flightPathWindow as fpWin
+import shortest
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -244,8 +247,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_1 = QtWidgets.QPushButton()
         self.order_1.setText('购买')
         # 详情连接
-        self.detail_1 = QtWidgets.QLabel()
+        self.detail_1 = QtWidgets.QPushButton()
         self.detail_1.setText('航班详情')
+        self.detail_1.setObjectName("detail_1")
+        self.detail_1.setEnabled(False)
 
         self.order_1.setObjectName("order_1")
         self.order_1.setEnabled(False)
@@ -278,8 +283,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_2 = QtWidgets.QPushButton()
         self.order_2.setText('购买')
         # 详情连接
-        self.detail_2 = QtWidgets.QLabel()
+        self.detail_2 = QtWidgets.QPushButton()
         self.detail_2.setText('航班详情')
+        self.detail_2.setObjectName("detail_2")
+        self.detail_2.setEnabled(False)
 
         self.order_2.setObjectName("order_2")
         self.order_2.setEnabled(False)
@@ -312,8 +319,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_3 = QtWidgets.QPushButton()
         self.order_3.setText('购买')
         # 详情连接
-        self.detail_3 = QtWidgets.QLabel()
+        self.detail_3 = QtWidgets.QPushButton()
         self.detail_3.setText('航班详情')
+        self.detail_3.setObjectName("detail_3")
+        self.detail_3.setEnabled(False)
 
         self.order_3.setObjectName("order_3")
         self.order_3.setEnabled(False)
@@ -346,8 +355,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_4 = QtWidgets.QPushButton()
         self.order_4.setText('购买')
         # 详情连接
-        self.detail_4 = QtWidgets.QLabel()
+        self.detail_4 = QtWidgets.QPushButton()
         self.detail_4.setText('航班详情')
+        self.detail_4.setObjectName("detail_4")
+        self.detail_4.setEnabled(False)
 
         self.order_4.setObjectName("order_4")
         self.order_4.setEnabled(False)
@@ -380,8 +391,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_5 = QtWidgets.QPushButton()
         self.order_5.setText('购买')
         # 详情连接
-        self.detail_5 = QtWidgets.QLabel()
+        self.detail_5 = QtWidgets.QPushButton()
         self.detail_5.setText('航班详情')
+        self.detail_5.setObjectName("detail_5")
+        self.detail_5.setEnabled(False)
 
         self.order_5.setObjectName("order_5")
         self.order_5.setEnabled(False)
@@ -565,9 +578,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_1.setStyleSheet(self.flatwhite_style)
         self.p_refund_1.setText('取消')
         # 航班详情
-        self.p_detail_1 = QtWidgets.QLabel()
+        self.p_detail_1 = QtWidgets.QPushButton()
         self.p_detail_1.setText('航班详情')
-        #self.p_detail_1.setStyleSheet(self.flatwhite_style)
+        self.p_detail_1.setObjectName("p_detail_1")
+        self.p_detail_1.setEnabled(False)
+        self.p_detail_1.setStyleSheet(self.flatwhite_style)
+
         self.p_refund_1.setObjectName("p_refund_1")
         self.p_refund_1.setEnabled(False)
         """
@@ -622,9 +638,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_2.setStyleSheet(self.flatwhite_style)
         self.p_refund_2.setText('取消')
         # 航班详情
-        self.p_detail_2 = QtWidgets.QLabel()
+        self.p_detail_2 = QtWidgets.QPushButton()
         self.p_detail_2.setText('航班详情')
-        #self.p_detail_2.setStyleSheet(self.flatwhite_style)
+        self.p_detail_2.setObjectName("p_detail_2")
+        self.p_detail_2.setEnabled(False)
+        self.p_detail_2.setStyleSheet(self.flatwhite_style)
 
         self.p_refund_2.setObjectName("p_refund_2")
         self.p_refund_2.setEnabled(False)
@@ -674,9 +692,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_3.setStyleSheet(self.flatwhite_style)
         self.p_refund_3.setText('取消')
         # 航班详情
-        self.p_detail_3 = QtWidgets.QLabel()
+        self.p_detail_3 = QtWidgets.QPushButton()
         self.p_detail_3.setText('航班详情')
-        #self.p_detail_3.setStyleSheet(self.flatwhite_style)
+        self.p_detail_3.setObjectName("p_detail_3")
+        self.p_detail_3.setEnabled(False)
+        self.p_detail_3.setStyleSheet(self.flatwhite_style)
         self.p_refund_3.setObjectName("p_refund_3")
         self.p_refund_3.setEnabled(False)
 
@@ -726,9 +746,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_4.setStyleSheet(self.flatwhite_style)
         self.p_refund_4.setText('取消')
         # 航班详情
-        self.p_detail_4 = QtWidgets.QLabel()
+        self.p_detail_4 = QtWidgets.QPushButton()
         self.p_detail_4.setText('航班详情')
-        #self.p_detail_4.setStyleSheet(self.flatwhite_style)
+        self.p_detail_4.setObjectName("p_detail_4")
+        self.p_detail_4.setEnabled(False)
+        self.p_detail_4.setStyleSheet(self.flatwhite_style)
 
         self.p_refund_4.setObjectName("p_refund_4")
         self.p_refund_4.setEnabled(False)
@@ -778,9 +800,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_5.setStyleSheet(self.flatwhite_style)
         self.p_refund_5.setText('取消')
         # 航班详情
-        self.p_detail_5 = QtWidgets.QLabel()
+        self.p_detail_5 = QtWidgets.QPushButton()
         self.p_detail_5.setText('航班详情')
-        #self.p_detail_5.setStyleSheet(self.flatwhite_style)
+        self.p_detail_5.setObjectName("p_detail_5")
+        self.p_detail_5.setEnabled(False)
+        self.p_detail_5.setStyleSheet(self.flatwhite_style)
 
         self.p_refund_5.setObjectName("p_refund_5")
         self.p_refund_5.setEnabled(False)
@@ -846,12 +870,26 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_4.clicked.connect(self.orderButtonClicked)
         self.order_5.clicked.connect(self.orderButtonClicked)
 
+        # 搜索界面航班详情
+        self.detail_1.clicked.connect(self.detailFlightInfo)
+        self.detail_2.clicked.connect(self.detailFlightInfo)
+        self.detail_3.clicked.connect(self.detailFlightInfo)
+        self.detail_4.clicked.connect(self.detailFlightInfo)
+        self.detail_5.clicked.connect(self.detailFlightInfo)
+
         # 用户界面订票按钮
         self.p_refund_1.clicked.connect(self.refundButtonClicked)
         self.p_refund_2.clicked.connect(self.refundButtonClicked)
         self.p_refund_3.clicked.connect(self.refundButtonClicked)
         self.p_refund_4.clicked.connect(self.refundButtonClicked)
         self.p_refund_5.clicked.connect(self.refundButtonClicked)
+
+        # 用户界面航班详情
+        self.p_detail_1.clicked.connect(self.detailFlightInfo)
+        self.p_detail_2.clicked.connect(self.detailFlightInfo)
+        self.p_detail_3.clicked.connect(self.detailFlightInfo)
+        self.p_detail_4.clicked.connect(self.detailFlightInfo)
+        self.p_detail_5.clicked.connect(self.detailFlightInfo)
 
     def change_windows(self):
         """
@@ -979,11 +1017,39 @@ class MainWindow(QtWidgets.QMainWindow):
             msg_box.show()
             msg_box.exec_()
             return
+        elif self.Flight == Const.NO_SUIT_FLIGHT:
+            # 创建一个问答框，注意是Question
+            self.box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
+                                             '所选起点终点无直达航班，是否需要推荐转机路线？')
+
+            # 添加按钮，可用中文
+            yes = self.box.addButton('确定', QtWidgets.QMessageBox.YesRole)
+            no = self.box.addButton('取消', QtWidgets.QMessageBox.NoRole)
+
+            # 设置消息框中内容前面的图标
+            self.box.setIcon(1)
+
+            # 设置消息框的位置，大小无法设置
+            # self.box.setGeometry(500, 500, 0, 0)
+
+            # 显示该问答框
+            self.box.show()
+
+            if self.box.clickedButton() == yes:
+                info = shortest.getShortest(origin, terminal)
+                self.pathWin = fpWin.flightPathWindow(info)
+                self.pathWin.show()
+                return
+            else:
+                return
 
         # 更新航班信息
         self.freshSearchFlight()
 
     def freshSearchFlight(self):
+        # QSS设置QLabel颜色
+        stylegreen = "QLabel{color:green;}"
+        stylered = "QLabel{color:red;}"
         # 更新航班信息
         if (5 * self.search_page - 5) < len(self.Flight):
             self.start_time_1.setText(self.Flight[5 * self.search_page - 5]["date"]["startTime"])
@@ -991,12 +1057,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.price_1.setText('￥' + str(self.Flight[5 * self.search_page - 5]["price"]))
             self.rem_1.setText(str(self.Flight[5 * self.search_page - 5]["remTicketNum"]))
             self.order_1.setEnabled(True)
+            self.detail_1.setEnabled(True)
 
             state = self.Flight[5 * self.search_page - 5]["State"]
             if state == Const.STATE_GOOD:
                 self.state_1.setText("正常")
+                self.state_1.setStyleSheet(stylegreen)
             else:
-                self.state_1.setText("延误")
+                self.state_1.setText("异常")
+                self.state_1.setStyleSheet(stylered)
         else:
             self.start_time_1.setText("")
             self.end_time_1.setText("")
@@ -1004,6 +1073,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.rem_1.setText("")
             self.state_1.setText("")
             self.order_1.setEnabled(False)
+            self.detail_1.setEnabled(False)
 
         if (5 * self.search_page - 4) < len(self.Flight):
             self.start_time_2.setText(self.Flight[5 * self.search_page - 4]["date"]["startTime"])
@@ -1011,12 +1081,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.price_2.setText('￥' + str(self.Flight[5 * self.search_page - 4]["price"]))
             self.rem_2.setText(str(self.Flight[5 * self.search_page - 4]["remTicketNum"]))
             self.order_2.setEnabled(True)
+            self.detail_2.setEnabled(True)
 
             state = self.Flight[5 * self.search_page - 4]["State"]
             if state == Const.STATE_GOOD:
                 self.state_2.setText("正常")
+                self.state_2.setStyleSheet(stylegreen)
             else:
                 self.state_2.setText("延误")
+                self.state_2.setStyleSheet(stylered)
         else:
             self.start_time_2.setText("")
             self.end_time_2.setText("")
@@ -1024,6 +1097,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.rem_2.setText("")
             self.state_2.setText("")
             self.order_2.setEnabled(False)
+            self.detail_2.setEnabled(False)
 
         if (5 * self.search_page - 3) < len(self.Flight):
             self.start_time_3.setText(self.Flight[5 * self.search_page - 3]["date"]["startTime"])
@@ -1031,12 +1105,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.price_3.setText('￥' + str(self.Flight[5 * self.search_page - 3]["price"]))
             self.rem_3.setText(str(self.Flight[5 * self.search_page - 3]["remTicketNum"]))
             self.order_3.setEnabled(True)
+            self.detail_3.setEnabled(True)
 
             state = self.Flight[5 * self.search_page - 3]["State"]
             if state == Const.STATE_GOOD:
                 self.state_3.setText("正常")
+                self.state_3.setStyleSheet(stylegreen)
             else:
                 self.state_3.setText("延误")
+                self.state_3.setStyleSheet(stylered)
         else:
             self.start_time_3.setText("")
             self.end_time_3.setText("")
@@ -1044,6 +1121,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.rem_3.setText("")
             self.state_3.setText("")
             self.order_3.setEnabled(False)
+            self.detail_3.setEnabled(False)
 
         if (5 * self.search_page - 2) < len(self.Flight):
             self.start_time_4.setText(self.Flight[5 * self.search_page - 2]["date"]["startTime"])
@@ -1051,12 +1129,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.price_4.setText('￥' + str(self.Flight[5 * self.search_page - 2]["price"]))
             self.rem_4.setText(str(self.Flight[5 * self.search_page - 2]["remTicketNum"]))
             self.order_4.setEnabled(True)
+            self.detail_4.setEnabled(True)
 
             state = self.Flight[5 * self.search_page - 2]["State"]
             if state == Const.STATE_GOOD:
                 self.state_4.setText("正常")
+                self.state_4.setStyleSheet(stylegreen)
             else:
                 self.state_4.setText("延误")
+                self.state_4.setStyleSheet(stylered)
         else:
             self.start_time_4.setText("")
             self.end_time_4.setText("")
@@ -1064,6 +1145,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.rem_4.setText("")
             self.state_4.setText("")
             self.order_4.setEnabled(False)
+            self.detail_4.setEnabled(False)
 
         if (5 * self.search_page - 1) < len(self.Flight):
             self.start_time_5.setText(self.Flight[5 * self.search_page - 1]["date"]["startTime"])
@@ -1071,12 +1153,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.price_5.setText('￥' + str(self.Flight[5 * self.search_page - 1]["price"]))
             self.rem_5.setText(str(self.Flight[5 * self.search_page - 1]["remTicketNum"]))
             self.order_5.setEnabled(True)
+            self.detail_5.setEnabled(True)
 
             state = self.Flight[5 * self.search_page - 1]["State"]
             if state == Const.STATE_GOOD:
                 self.state_5.setText("正常")
+                self.state_5.setStyleSheet(stylegreen)
             else:
                 self.state_5.setText("延误")
+                self.state_5.setStyleSheet(stylered)
         else:
             self.start_time_5.setText("")
             self.end_time_5.setText("")
@@ -1084,6 +1169,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.rem_5.setText("")
             self.state_5.setText("")
             self.order_5.setEnabled(False)
+            self.detail_5.setEnabled(False)
 
         # 设置按钮可用/不可用
         if self.search_page*5 >= len(self.Flight):
@@ -1111,6 +1197,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["origin"]])
             self.p_terminal_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["terminal"]])
             self.p_refund_1.setEnabled(True)
+            self.p_detail_1.setEnabled(True)
         else:
             self.p_flight_date_1.setText("")
             self.p_start_time_1.setText("")
@@ -1119,6 +1206,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_1.setText("")
             self.p_terminal_1.setText("")
             self.p_refund_1.setEnabled(False)
+            self.p_detail_1.setEnabled(False)
 
         if (5 * self.user_page - 4) < len(self.UserFlight):
             self.p_flight_date_2.setText(str(self.UserFlight[5 * self.user_page - 4]["date"]["year"]) + '-' +
@@ -1130,6 +1218,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["origin"]])
             self.p_terminal_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["terminal"]])
             self.p_refund_2.setEnabled(True)
+            self.p_detail_2.setEnabled(True)
         else:
             self.p_flight_date_2.setText("")
             self.p_start_time_2.setText("")
@@ -1138,6 +1227,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_2.setText("")
             self.p_terminal_2.setText("")
             self.p_refund_2.setEnabled(False)
+            self.p_detail_2.setEnabled(False)
 
         if (5 * self.user_page - 3) < len(self.UserFlight):
             self.p_flight_date_3.setText(str(self.UserFlight[5 * self.user_page - 3]["date"]["year"]) + '-' +
@@ -1149,6 +1239,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["origin"]])
             self.p_terminal_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["terminal"]])
             self.p_refund_3.setEnabled(True)
+            self.p_detail_3.setEnabled(True)
         else:
             self.p_flight_date_3.setText("")
             self.p_start_time_3.setText("")
@@ -1157,6 +1248,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_3.setText("")
             self.p_terminal_3.setText("")
             self.p_refund_3.setEnabled(False)
+            self.p_detail_3.setEnabled(False)
 
         if (5 * self.user_page - 2) < len(self.UserFlight):
             self.p_flight_date_4.setText(str(self.UserFlight[5 * self.user_page - 2]["date"]["year"]) + '-' +
@@ -1168,6 +1260,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["origin"]])
             self.p_terminal_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["terminal"]])
             self.p_refund_4.setEnabled(True)
+            self.p_detail_4.setEnabled(True)
         else:
             self.p_flight_date_4.setText("")
             self.p_start_time_4.setText("")
@@ -1176,6 +1269,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_4.setText("")
             self.p_terminal_4.setText("")
             self.p_refund_4.setEnabled(False)
+            self.p_detail_4.setEnabled(False)
 
         if (5 * self.user_page - 1) < len(self.UserFlight):
             self.p_flight_date_5.setText(str(self.UserFlight[5 * self.user_page - 1]["date"]["year"]) + '-' +
@@ -1187,6 +1281,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_origin_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["origin"]])
             self.p_terminal_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["terminal"]])
             self.p_refund_5.setEnabled(True)
+            self.p_detail_5.setEnabled(True)
         else:
             self.p_flight_date_5.setText("")
             self.p_start_time_5.setText("")
@@ -1194,7 +1289,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_price_5.setText('￥')
             self.p_origin_5.setText("")
             self.p_terminal_5.setText("")
-            self.p_refund_4.setEnabled(False)
+            self.p_refund_5.setEnabled(False)
+            self.p_detail_5.setEnabled(False)
 
         # 设置按钮可用/不可用
         if self.user_page*5 >= len(self.UserFlight):
@@ -1389,6 +1485,39 @@ class MainWindow(QtWidgets.QMainWindow):
             return Const.SUCCESS
         else:
             return Const.USER_NOT_FOUND  # 未找到订单信息
+
+    def detailFlightInfo(self):
+        sender = self.sender()
+        if sender.objectName() == "detail_1":
+            self.deWindow = deWin.deFlightWindow(self.Flight[5 * self.search_page - 5])
+            self.deWindow.show()
+        elif sender.objectName() == "detail_2":
+            self.newWindow = deWin.deFlightWindow(self.Flight[5 * self.search_page - 4])
+            self.newWindow.show()
+        elif sender.objectName() == "detail_3":
+            self.newWindow = deWin.deFlightWindow(self.Flight[5 * self.search_page - 3])
+            self.newWindow.show()
+        elif sender.objectName() == "detail_4":
+            self.newWindow = deWin.deFlightWindow(self.Flight[5 * self.search_page - 2])
+            self.newWindow.show()
+        elif sender.objectName() == "detail_5":
+            self.newWindow = deWin.deFlightWindow(self.Flight[5 * self.search_page - 1])
+            self.newWindow.show()
+        elif sender.objectName() == "p_detail_1":
+            self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 5])
+            self.newWindow.show()
+        elif sender.objectName() == "p_detail_2":
+            self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 4])
+            self.newWindow.show()
+        elif sender.objectName() == "p_detail_3":
+            self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 3])
+            self.newWindow.show()
+        elif sender.objectName() == "p_detail_4":
+            self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 2])
+            self.newWindow.show()
+        elif sender.objectName() == "p_detail_5":
+            self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 1])
+            self.newWindow.show()
 
     """
     def mousePressEvent(self, event):
