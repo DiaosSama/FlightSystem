@@ -535,7 +535,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 航班日期
         self.p_flight_date_1 = QtWidgets.QLabel()
-        self.p_flight_date_1.setText('2019年4月1日')
+        self.p_flight_date_1.setText('')
         self.p_flight_date_1.setStyleSheet(self.flatwhite_style)
         # 起飞时间
         self.p_start_time_1 = QtWidgets.QLabel()
@@ -679,14 +679,6 @@ class MainWindow(QtWidgets.QMainWindow):
         #self.p_detail_3.setStyleSheet(self.flatwhite_style)
         self.p_refund_3.setObjectName("p_refund_3")
         self.p_refund_3.setEnabled(False)
-        # 向第三条航班信息添加子控件
-        self.p_flight_3.addWidget(self.p_start_time_3, 0, 0, 1, 1)
-        self.p_flight_3.addWidget(self.p_separator_3, 0, 1, 1, 1)
-        self.p_flight_3.addWidget(self.p_end_time_3, 0, 2, 1, 1)
-        self.p_flight_3.addWidget(self.p_origin_3, 0, 3, 1, 1)
-        self.p_flight_3.addWidget(self.p_terminal_3, 0, 4, 1, 1)
-        self.p_flight_3.addWidget(self.p_price_3, 0, 5, 1, 1)
-        self.p_flight_3.addWidget(self.p_refund_3, 0, 6, 1, 1)
 
         # 向第三条航班信息添加子控件
         self.p_flight_3.addWidget(self.p_flight_date_3, 0, 0, 1, 2)
@@ -930,7 +922,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 ''')
 
         # 窗口背景透明
-        self.setWindowOpacity(0.9)  # 设置窗口透明度
+        # self.setWindowOpacity(0.9)  # 设置窗口透明度
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
 
         # 去除窗口内缝隙
@@ -944,6 +936,8 @@ class MainWindow(QtWidgets.QMainWindow):
         if sender.text() == '航班搜索':
             self.right_stack.setCurrentIndex(0)
             # self.search_page = 1  # 页码
+            # self.freshSearchFlight()
+            # self.searchFlight()
 
         if sender.text() == '个人中心':
             self.right_stack.setCurrentIndex(1)
@@ -995,55 +989,100 @@ class MainWindow(QtWidgets.QMainWindow):
             self.start_time_1.setText(self.Flight[5 * self.search_page - 5]["date"]["startTime"])
             self.end_time_1.setText(self.Flight[5 * self.search_page - 5]["date"]["endTime"])
             self.price_1.setText('￥' + str(self.Flight[5 * self.search_page - 5]["price"]))
+            self.rem_1.setText(str(self.Flight[5 * self.search_page - 5]["remTicketNum"]))
             self.order_1.setEnabled(True)
+
+            state = self.Flight[5 * self.search_page - 5]["State"]
+            if state == Const.STATE_GOOD:
+                self.state_1.setText("正常")
+            else:
+                self.state_1.setText("延误")
         else:
             self.start_time_1.setText("")
             self.end_time_1.setText("")
             self.price_1.setText('￥')
+            self.rem_1.setText("")
+            self.state_1.setText("")
             self.order_1.setEnabled(False)
 
         if (5 * self.search_page - 4) < len(self.Flight):
             self.start_time_2.setText(self.Flight[5 * self.search_page - 4]["date"]["startTime"])
             self.end_time_2.setText(self.Flight[5 * self.search_page - 4]["date"]["endTime"])
             self.price_2.setText('￥' + str(self.Flight[5 * self.search_page - 4]["price"]))
+            self.rem_2.setText(str(self.Flight[5 * self.search_page - 4]["remTicketNum"]))
             self.order_2.setEnabled(True)
+
+            state = self.Flight[5 * self.search_page - 4]["State"]
+            if state == Const.STATE_GOOD:
+                self.state_2.setText("正常")
+            else:
+                self.state_2.setText("延误")
         else:
             self.start_time_2.setText("")
             self.end_time_2.setText("")
             self.price_2.setText('￥')
+            self.rem_2.setText("")
+            self.state_2.setText("")
             self.order_2.setEnabled(False)
 
         if (5 * self.search_page - 3) < len(self.Flight):
             self.start_time_3.setText(self.Flight[5 * self.search_page - 3]["date"]["startTime"])
             self.end_time_3.setText(self.Flight[5 * self.search_page - 3]["date"]["endTime"])
             self.price_3.setText('￥' + str(self.Flight[5 * self.search_page - 3]["price"]))
+            self.rem_3.setText(str(self.Flight[5 * self.search_page - 3]["remTicketNum"]))
             self.order_3.setEnabled(True)
+
+            state = self.Flight[5 * self.search_page - 3]["State"]
+            if state == Const.STATE_GOOD:
+                self.state_3.setText("正常")
+            else:
+                self.state_3.setText("延误")
         else:
             self.start_time_3.setText("")
             self.end_time_3.setText("")
             self.price_3.setText('￥')
+            self.rem_3.setText("")
+            self.state_3.setText("")
             self.order_3.setEnabled(False)
 
         if (5 * self.search_page - 2) < len(self.Flight):
             self.start_time_4.setText(self.Flight[5 * self.search_page - 2]["date"]["startTime"])
             self.end_time_4.setText(self.Flight[5 * self.search_page - 2]["date"]["endTime"])
             self.price_4.setText('￥' + str(self.Flight[5 * self.search_page - 2]["price"]))
+            self.rem_4.setText(str(self.Flight[5 * self.search_page - 2]["remTicketNum"]))
             self.order_4.setEnabled(True)
+
+            state = self.Flight[5 * self.search_page - 2]["State"]
+            if state == Const.STATE_GOOD:
+                self.state_4.setText("正常")
+            else:
+                self.state_4.setText("延误")
         else:
             self.start_time_4.setText("")
             self.end_time_4.setText("")
             self.price_4.setText('￥')
+            self.rem_4.setText("")
+            self.state_4.setText("")
             self.order_4.setEnabled(False)
 
         if (5 * self.search_page - 1) < len(self.Flight):
             self.start_time_5.setText(self.Flight[5 * self.search_page - 1]["date"]["startTime"])
             self.end_time_5.setText(self.Flight[5 * self.search_page - 1]["date"]["endTime"])
             self.price_5.setText('￥' + str(self.Flight[5 * self.search_page - 1]["price"]))
+            self.rem_5.setText(str(self.Flight[5 * self.search_page - 1]["remTicketNum"]))
             self.order_5.setEnabled(True)
+
+            state = self.Flight[5 * self.search_page - 1]["State"]
+            if state == Const.STATE_GOOD:
+                self.state_5.setText("正常")
+            else:
+                self.state_5.setText("延误")
         else:
             self.start_time_5.setText("")
             self.end_time_5.setText("")
             self.price_5.setText('￥')
+            self.rem_5.setText("")
+            self.state_5.setText("")
             self.order_5.setEnabled(False)
 
         # 设置按钮可用/不可用
@@ -1063,6 +1102,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 更新用户UI
         if (5 * self.user_page - 5) < len(self.UserFlight):
+            self.p_flight_date_1.setText(str(self.UserFlight[5 * self.user_page - 5]["date"]["year"])+'-'+
+                                         str(self.UserFlight[5 * self.user_page - 5]["date"]["month"])+'-'+
+                                         str(self.UserFlight[5 * self.user_page - 5]["date"]["day"]))
             self.p_start_time_1.setText(self.UserFlight[5 * self.user_page - 5]["date"]["startTime"])
             self.p_end_time_1.setText(self.UserFlight[5 * self.user_page - 5]["date"]["endTime"])
             self.p_price_1.setText('￥' + str(self.UserFlight[5 * self.user_page - 5]["price"]))
@@ -1070,6 +1112,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["terminal"]])
             self.p_refund_1.setEnabled(True)
         else:
+            self.p_flight_date_1.setText("")
             self.p_start_time_1.setText("")
             self.p_end_time_1.setText("")
             self.p_price_1.setText('￥')
@@ -1078,6 +1121,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_refund_1.setEnabled(False)
 
         if (5 * self.user_page - 4) < len(self.UserFlight):
+            self.p_flight_date_2.setText(str(self.UserFlight[5 * self.user_page - 4]["date"]["year"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 4]["date"]["month"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 4]["date"]["day"]))
             self.p_start_time_2.setText(self.UserFlight[5 * self.user_page - 4]["date"]["startTime"])
             self.p_end_time_2.setText(self.UserFlight[5 * self.user_page - 4]["date"]["endTime"])
             self.p_price_2.setText('￥' + str(self.UserFlight[5 * self.user_page - 4]["price"]))
@@ -1085,6 +1131,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["terminal"]])
             self.p_refund_2.setEnabled(True)
         else:
+            self.p_flight_date_2.setText("")
             self.p_start_time_2.setText("")
             self.p_end_time_2.setText("")
             self.p_price_2.setText('￥')
@@ -1093,6 +1140,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_refund_2.setEnabled(False)
 
         if (5 * self.user_page - 3) < len(self.UserFlight):
+            self.p_flight_date_3.setText(str(self.UserFlight[5 * self.user_page - 3]["date"]["year"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 3]["date"]["month"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 3]["date"]["day"]))
             self.p_start_time_3.setText(self.UserFlight[5 * self.user_page - 3]["date"]["startTime"])
             self.p_end_time_3.setText(self.UserFlight[5 * self.user_page - 3]["date"]["endTime"])
             self.p_price_3.setText('￥' + str(self.UserFlight[5 * self.user_page - 3]["price"]))
@@ -1100,6 +1150,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["terminal"]])
             self.p_refund_3.setEnabled(True)
         else:
+            self.p_flight_date_3.setText("")
             self.p_start_time_3.setText("")
             self.p_end_time_3.setText("")
             self.p_price_3.setText('￥')
@@ -1108,6 +1159,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_refund_3.setEnabled(False)
 
         if (5 * self.user_page - 2) < len(self.UserFlight):
+            self.p_flight_date_4.setText(str(self.UserFlight[5 * self.user_page - 2]["date"]["year"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 2]["date"]["month"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 2]["date"]["day"]))
             self.p_start_time_4.setText(self.UserFlight[5 * self.user_page - 2]["date"]["startTime"])
             self.p_end_time_4.setText(self.UserFlight[5 * self.user_page - 2]["date"]["endTime"])
             self.p_price_4.setText('￥' + str(self.UserFlight[5 * self.user_page - 2]["price"]))
@@ -1115,6 +1169,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["terminal"]])
             self.p_refund_4.setEnabled(True)
         else:
+            self.p_flight_date_4.setText("")
             self.p_start_time_4.setText("")
             self.p_end_time_4.setText("")
             self.p_price_4.setText('￥')
@@ -1123,6 +1178,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_refund_4.setEnabled(False)
 
         if (5 * self.user_page - 1) < len(self.UserFlight):
+            self.p_flight_date_5.setText(str(self.UserFlight[5 * self.user_page - 1]["date"]["year"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 1]["date"]["month"]) + '-' +
+                                         str(self.UserFlight[5 * self.user_page - 1]["date"]["day"]))
             self.p_start_time_5.setText(self.UserFlight[5 * self.user_page - 1]["date"]["startTime"])
             self.p_end_time_5.setText(self.UserFlight[5 * self.user_page - 1]["date"]["endTime"])
             self.p_price_5.setText('￥' + str(self.UserFlight[5 * self.user_page - 1]["price"]))
@@ -1130,6 +1188,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["terminal"]])
             self.p_refund_5.setEnabled(True)
         else:
+            self.p_flight_date_5.setText("")
             self.p_start_time_5.setText("")
             self.p_end_time_5.setText("")
             self.p_price_5.setText('￥')
@@ -1234,6 +1293,7 @@ class MainWindow(QtWidgets.QMainWindow):
             msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "通知", "订票成功！")
             msg_box.show()
             msg_box.exec_()
+            self.freshSearchFlight()
             return
         elif signal == Const.TICKET_WAITING:
             # 弹出信息框

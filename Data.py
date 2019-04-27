@@ -139,12 +139,12 @@ def init_data(y, m, d):
                         if hash_table[index] == Const.EMPTY:
                             hash_table[index] = []
                             hash_table[index].append(info)
-                            print(info)
+                            # print(info)
                             break
                         else:
                             if hash_table[index][0]['origin'] + hash_table[index][0]['terminal'] == originList[i] + terminalList[j]:
                                 hash_table[index].append(info)
-                                print(info)
+                                # print(info)
                                 break
                             elif time > Const.DES_VAL:
                                 return Const.HASH_TABLE_FULL
@@ -156,8 +156,9 @@ def init_data(y, m, d):
     f = open(file, "w")
     json.dump(hash_table, f)
     f.close()
+    print(date + ".json write ok!")
 
 
 if __name__ == '__main__':
-    init_data(2019, 4, 3)
-
+    for i in range(1, 6):
+        init_data(2019, 4, i)

@@ -64,3 +64,9 @@ REVISE_FAILED = 0
 # 添加失败代码
 ADD_FAILED = 0
 
+# 航班状态正常
+STATE_GOOD = 1
+
+# 航班状态异常
+STATE_BAD = 0
+
