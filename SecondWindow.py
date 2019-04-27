@@ -880,6 +880,8 @@ class SecondWindow(QWidget):
 
     # 查看详细的航班信息
     def detailedFlightInfo(self, item):
+        if item.text() == '本时间段暂无航班信息':
+            return
         startTime = item.text().split('\t')[0].replace('起飞时间：','')
         print(startTime)
         flight = []
@@ -889,6 +891,7 @@ class SecondWindow(QWidget):
                 break
 
         data = self.flight_7
+        print(data)
         origin = cityDict.reCityDict[data["origin"]]
         self.origin_text_7.setText(origin)
         terminal = cityDict.reCityDict[data["terminal"]]
