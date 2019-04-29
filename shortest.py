@@ -12,7 +12,7 @@ def getShortest(beg, end):
     begIndex = cityDict.allCity2.index(beg)
     endIndex = cityDict.allCity2.index(end)
     # 读取距离信息和建立图
-    data = pd.read_csv('info/timeTable.csv', sep=',', encoding='gb2312')
+    data = pd.read_csv('info/timeTable.csv', sep=',', encoding='utf-8')
     dis = data['DISTENCE']
     length = len(cityDict.allCity)
     # 最短路径表
@@ -87,7 +87,7 @@ def getShortest(beg, end):
     
     return(path)
         
-print(getShortest('Aba' ,'Changchun'))
+# print(getShortest('Aba' ,'Changchun'))
         
 
 
