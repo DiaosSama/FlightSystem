@@ -67,7 +67,7 @@ class deFlightWindow(QWidget):
         price_text = QLabel(deFlightInfo["price"])
 
         state_label = QLabel("状态")
-        state_text = QLabel(str(deFlightInfo["State"]))
+        state_text = QLabel('正常' if (deFlightInfo["State"]==1) else '异常')
 
         remark_label = QLabel("备注")
         remark_text = QLabel(deFlightInfo["remark"])

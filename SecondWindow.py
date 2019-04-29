@@ -489,7 +489,7 @@ class SecondWindow(QWidget):
 
         # 搜索框
         self.search_text_4 = QLineEdit()
-        self.search_text_4.setPlaceholderText("请输入用户名")
+        self.search_text_4.setPlaceholderText("请输入用户名（直接空白搜索为默认查找全部用户）")
         # 连接回车信号槽
         self.search_text_4.returnPressed.connect(self.searchUser)
 
