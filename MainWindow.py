@@ -1043,6 +1043,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # 显示该问答框
             self.box.show()
+            self.box.exec_()
 
             if self.box.clickedButton() == yes:
                 info = shortest.getShortest(origin, terminal)
@@ -1411,6 +1412,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 # 设置消息框中内容前面的图标
                 self.waitbox.setIcon(1)
                 self.waitbox.show()
+                self.waitbox.exec_()
 
                 if self.waitbox.clickedButton() == yes:
                     signal = self.orderFlight(self.usrname, ticket)
@@ -1428,6 +1430,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 # 设置消息框中内容前面的图标
                 self.waitbox.setIcon(1)
                 self.waitbox.show()
+                self.waitbox.exec_()
 
                 if self.waitbox.clickedButton() == yes:
                     signal = self.orderFlight(self.usrname, ticket)
@@ -1445,6 +1448,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 # 设置消息框中内容前面的图标
                 self.waitbox.setIcon(1)
                 self.waitbox.show()
+                self.waitbox.exec_()
 
                 if self.waitbox.clickedButton() == yes:
                     signal = self.orderFlight(self.usrname, ticket)
@@ -1462,6 +1466,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 # 设置消息框中内容前面的图标
                 self.waitbox.setIcon(1)
                 self.waitbox.show()
+                self.waitbox.exec_()
 
                 if self.waitbox.clickedButton() == yes:
                     signal = self.orderFlight(self.usrname, ticket)
@@ -1479,6 +1484,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 # 设置消息框中内容前面的图标
                 self.waitbox.setIcon(1)
                 self.waitbox.show()
+                self.waitbox.exec_()
 
                 if self.waitbox.clickedButton() == yes:
                     signal = self.orderFlight(self.usrname, ticket)

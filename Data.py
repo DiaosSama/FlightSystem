@@ -74,7 +74,7 @@ def init_data(y, m, d):
             if i == j:
                 continue
             else:
-                size = random.randint(1, 15)
+                size = random.randint(0, 10)
 
                 # 初始化价格
                 with open("info/timeTable.csv", encoding='UTF-8') as f:
@@ -165,5 +165,5 @@ def init_data(y, m, d):
 
 
 if __name__ == '__main__':
-    for i in range(1, 6):
+    for i in range(6, 9):
         init_data(2019, 4, i)
