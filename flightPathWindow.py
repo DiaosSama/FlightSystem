@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QGridLayout
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 import sys
 import cityDict
 
@@ -27,12 +28,15 @@ class flightPathWindow(QWidget):
         # 设置图标
         self.setWindowIcon(QIcon('icons/plane2.png'))
 
+        # 设置大小
         self.setFixedSize(300, 350)
+
+        self.setStyleSheet("background: #fff;")
 
         path = self.info
 
         title = QLabel("推荐航班路线")
-        title.setStyleSheet("text-align: center;border: 1px solid black;")
+        title.setStyleSheet("padding: 10px 80px;border: 1px solid black;")
         
         distence_label = QLabel("距离")
         price_label = QLabel("价钱")
@@ -48,7 +52,7 @@ class flightPathWindow(QWidget):
         layout.setSpacing(10)
         
         order = 2
-        layout.addWidget(title, 0, 0, 1, 3)
+        layout.addWidget(title, 0, 0, 1, 3, alignment=Qt.AlignCenter)
         layout.addWidget(QLabel("地点"), 1, 0, 1, 1)
         layout.addWidget(QLabel("距离(公里)"), 1, 1, 1, 1)
         layout.addWidget(QLabel("价钱(元)"), 1, 2, 1, 1)

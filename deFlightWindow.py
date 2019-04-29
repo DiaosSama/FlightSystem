@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QGridLayout
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
+import cityDict
 import sys
 
 '''
@@ -29,11 +31,13 @@ class deFlightWindow(QWidget):
 
         self.setFixedSize(300, 350)
 
+        self.setStyleSheet("background: #fff;")
+
         deFlightInfo = self.info
         date = deFlightInfo["date"]
 
         title = QLabel("航班信息详情")
-        title.setStyleSheet("text-align: center;border: 1px solid black;")
+        title.setStyleSheet("padding: 10px 80px;border: 1px solid black;")
         
         date_label = QLabel("航班日期")
         date_text = QLabel("{}年{}月{}日".format(date["year"], date["month"], date["day"]))
@@ -45,10 +49,10 @@ class deFlightWindow(QWidget):
         totalTime_text = QLabel(date["totalTime"])
 
         origin_label = QLabel("起点")
-        origin_text = QLabel(deFlightInfo["origin"])
+        origin_text = QLabel(cityDict.reCityDict[deFlightInfo["origin"]])
 
         terminal_label = QLabel("终点")
-        terminal_text = QLabel(deFlightInfo["terminal"])
+        terminal_text = QLabel(cityDict.reCityDict[deFlightInfo["terminal"]])
 
         flightNum_label = QLabel("航班号")
         flightNum_text = QLabel(deFlightInfo["flightNum"])
@@ -71,7 +75,7 @@ class deFlightWindow(QWidget):
         layout = QGridLayout()
         layout.setSpacing(10)
         
-        layout.addWidget(title, 0, 0, 1, 2)
+        layout.addWidget(title, 0, 0, 1, 2, alignment=Qt.AlignCenter)
         layout.addWidget(date_label, 1, 0, 1, 1)
         layout.addWidget(date_text, 1, 1, 1, 1)
         layout.addWidget(startTime_label, 2, 0, 1, 1)

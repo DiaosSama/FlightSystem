@@ -184,12 +184,12 @@ class SecondWindow(QWidget):
         # 中间放置显示列表
         self.flightInfoList_1 = QListWidget()
         self.flightInfoList_1.setObjectName('flightInfoList_1')
-        self.flightInfoList_1.setStyleSheet("QListWidget{border: 0px; border-top: 1px solid gray; }"
+        '''self.flightInfoList_1.setStyleSheet("QListWidget{border: 0px; border-top: 1px solid gray; }"
                                             "QListWidget::Item{padding-top:20px; padding-bottom:4px; }"
                                             "QListWidget::Item:hover{background:skyblue; }"
                                             "QListWidget::item:selected{ color:red; }"
-                                            "QListWidget::item:selected:!active{border-width:0px; background:lightgray; }"
-                                            )
+                                            "QListWidget::item:selected:!active{border-width:0px; padding:0; background:lightgray; }"
+                                            )'''
         self.flightInfoList_1.itemDoubleClicked.connect(self.detailedFlightInfo)
 
         # 搜索按钮
