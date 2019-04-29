@@ -467,36 +467,46 @@ class MainWindow(QtWidgets.QMainWindow):
         self.user_name_text.setText(self.User['usrName'])
         # self.user_name_text.setText('440*********5678')
         self.user_name_text.setStyleSheet(self.flatwhite_style)
-        #self.user_name_text.setReadOnly(True)
+        # self.user_name_text.setReadOnly(True)
 
         # 姓名
         self.real_name_babel = QtWidgets.QLabel()
         self.real_name_babel.setText('姓名')
         self.real_name_babel.setStyleSheet(self.flatwhite_style)
-        self.real_name_text = QtWidgets.QLabel()
+        self.real_name_text = QtWidgets.QLineEdit()
         self.real_name_text.setText(self.User['realName'])
         # self.real_name_text.setText("王小明")
-        #self.real_name_text.setReadOnly(True)
+        self.real_name_text.setReadOnly(True)
         self.real_name_text.setStyleSheet(self.flatwhite_style)
 
         # 年龄
         self.age_babel = QtWidgets.QLabel()
         self.age_babel.setText('年龄')
         self.age_babel.setStyleSheet(self.flatwhite_style)
-        self.age_text = QtWidgets.QLabel()
+        self.age_text = QtWidgets.QLineEdit()
         self.age_text.setText(str(self.User['age']))
         # self.age_text.setText("20")
-        #self.age_text.setReadOnly(True)
+        self.age_text.setReadOnly(True)
         self.age_text.setStyleSheet(self.flatwhite_style)
+
+        # 用户信息修改按钮
+        self.change_btn = QtWidgets.QPushButton()
+        self.change_btn.setText('修改')
+        self.change_btn.setStyleSheet(self.flatwhite_style)
 
         # 用网格布局放置用户名、姓名和年龄信息
         self.info_layout = QtWidgets.QGridLayout()
-        self.info_layout.addWidget(self.user_name_babel, 0, 0, 1, 1)
-        self.info_layout.addWidget(self.user_name_text, 0, 1, 1, 2)
-        self.info_layout.addWidget(self.real_name_babel, 1, 0, 1, 1)
-        self.info_layout.addWidget(self.real_name_text, 1, 1, 1, 2)
-        self.info_layout.addWidget(self.age_babel, 2, 0, 1, 1)
-        self.info_layout.addWidget(self.age_text, 2, 1, 1, 2)
+        self.info_layout.addWidget(self.head, 0, 0, 2, 3)
+        self.info_layout.addWidget(self.change_btn, 2, 1, 1, 1)
+        self.info_layout.addWidget(self.user_name_babel, 0, 3, 1, 1)
+        self.info_layout.addWidget(self.user_name_text, 0, 4, 1, 1)
+        self.info_layout.addWidget(self.real_name_babel, 1, 3, 1, 1)    
+        self.info_layout.addWidget(self.real_name_text, 1, 4, 1, 2) 
+        self.info_layout.addWidget(self.age_babel, 2, 3, 1, 1)
+        self.info_layout.addWidget(self.age_text, 2, 4, 1, 2)
+
+        # 修改信息按钮
+        
 
         # 个人订单标签
         #self.order_list_label = QtWidgets.QLabel()
@@ -833,7 +843,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_next_pape_button.setObjectName('user_next')
 
         # 向总布局添加子控件
-        self.personal_layout.addWidget(self.head, 0, 5, 1, 1)
         self.personal_layout.addLayout(self.info_layout, 0, 6, 1, 1)
         self.personal_layout.addLayout(self.p_flight_title, 1, 0, 1, 12)
         self.personal_layout.addLayout(self.p_flight_1, 2, 0, 2, 12)
