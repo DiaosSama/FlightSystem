@@ -256,7 +256,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_1.setEnabled(False)
         # 向第一条航班信息添加子控件
         self.flight_1.addWidget(self.start_time_1, 0, 0, 1, 1)
-        self.flight_1.addWidget(self.separator_1, 0, 1, 1, 1)
+        self.flight_1.addWidget(self.separator_1, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.flight_1.addWidget(self.end_time_1, 0, 2, 1, 2)
         self.flight_1.addWidget(self.rem_1, 0, 4, 1, 1)
         self.flight_1.addWidget(self.state_1, 0, 5, 1, 1)
@@ -292,7 +292,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_2.setEnabled(False)
         # 向第二条航班信息添加子控件
         self.flight_2.addWidget(self.start_time_2, 0, 0, 1, 1)
-        self.flight_2.addWidget(self.separator_2, 0, 1, 1, 1)
+        self.flight_2.addWidget(self.separator_2, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.flight_2.addWidget(self.end_time_2, 0, 2, 1, 2)
         self.flight_2.addWidget(self.rem_2, 0, 4, 1, 1)
         self.flight_2.addWidget(self.state_2, 0, 5, 1, 1)
@@ -328,7 +328,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_3.setEnabled(False)
         # 向第三条航班信息添加子控件
         self.flight_3.addWidget(self.start_time_3, 0, 0, 1, 1)
-        self.flight_3.addWidget(self.separator_3, 0, 1, 1, 1)
+        self.flight_3.addWidget(self.separator_3, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.flight_3.addWidget(self.end_time_3, 0, 2, 1, 2)
         self.flight_3.addWidget(self.rem_3, 0, 4, 1, 1)
         self.flight_3.addWidget(self.state_3, 0, 5, 1, 1)
@@ -364,7 +364,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_4.setEnabled(False)
         # 向第四条航班信息添加子控件
         self.flight_4.addWidget(self.start_time_4, 0, 0, 1, 1)
-        self.flight_4.addWidget(self.separator_4, 0, 1, 1, 1)
+        self.flight_4.addWidget(self.separator_4, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.flight_4.addWidget(self.end_time_4, 0, 2, 1, 2)
         self.flight_4.addWidget(self.rem_4, 0, 4, 1, 1)
         self.flight_4.addWidget(self.state_4, 0, 5, 1, 1)
@@ -400,7 +400,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.order_5.setEnabled(False)
         # 向第五条航班信息添加子控件
         self.flight_5.addWidget(self.start_time_5, 0, 0, 1, 1)
-        self.flight_5.addWidget(self.separator_5, 0, 1, 1, 1)
+        self.flight_5.addWidget(self.separator_5, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.flight_5.addWidget(self.end_time_5, 0, 2, 1, 2)
         self.flight_5.addWidget(self.rem_5, 0, 4, 1, 1)
         self.flight_5.addWidget(self.state_5, 0, 5, 1, 1)
@@ -540,7 +540,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_title.addWidget(self.p_title_origin, 0, 6, 1, 1)
         self.p_flight_title.addWidget(self.p_title_terminal, 0, 7, 1, 1)
         self.p_flight_title.addWidget(self.p_title_price, 0, 8, 1, 1)
-        self.p_flight_title.addWidget(self.p_title_state, 0, 9, 1, 3)
+        self.p_flight_title.addWidget(self.p_title_state, 0, 9, 1, 4)
 
 
         # 第一条航班信息，采用网格布局
@@ -595,7 +595,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 向第一条航班信息添加子控件
         self.p_flight_1.addWidget(self.p_flight_date_1, 0, 0, 1, 2)
         self.p_flight_1.addWidget(self.p_start_time_1, 0, 2, 1, 1)
-        self.p_flight_1.addWidget(self.p_separator_1, 0, 3, 1, 1)
+        self.p_flight_1.addWidget(self.p_separator_1, 0, 3, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_1.addWidget(self.p_end_time_1, 0, 4, 1, 2)
         self.p_flight_1.addWidget(self.p_origin_1, 0, 6, 1, 1)
         self.p_flight_1.addWidget(self.p_terminal_1, 0, 7, 1, 1)
@@ -649,7 +649,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 向第二条航班信息添加子控件
         self.p_flight_2.addWidget(self.p_flight_date_2, 0, 0, 1, 2)
         self.p_flight_2.addWidget(self.p_start_time_2, 0, 2, 1, 1)
-        self.p_flight_2.addWidget(self.p_separator_2, 0, 3, 1, 1)
+        self.p_flight_2.addWidget(self.p_separator_2, 0, 3, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_2.addWidget(self.p_end_time_2, 0, 4, 1, 2)
         self.p_flight_2.addWidget(self.p_origin_2, 0, 6, 1, 1)
         self.p_flight_2.addWidget(self.p_terminal_2, 0, 7, 1, 1)
@@ -703,7 +703,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 向第三条航班信息添加子控件
         self.p_flight_3.addWidget(self.p_flight_date_3, 0, 0, 1, 2)
         self.p_flight_3.addWidget(self.p_start_time_3, 0, 2, 1, 1)
-        self.p_flight_3.addWidget(self.p_separator_3, 0, 3, 1, 1)
+        self.p_flight_3.addWidget(self.p_separator_3, 0, 3, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_3.addWidget(self.p_end_time_3, 0, 4, 1, 2)
         self.p_flight_3.addWidget(self.p_origin_3, 0, 6, 1, 1)
         self.p_flight_3.addWidget(self.p_terminal_3, 0, 7, 1, 1)
@@ -757,7 +757,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 向第四条航班信息添加子控件
         self.p_flight_4.addWidget(self.p_flight_date_4, 0, 0, 1, 2)
         self.p_flight_4.addWidget(self.p_start_time_4, 0, 2, 1, 1)
-        self.p_flight_4.addWidget(self.p_separator_4, 0, 3, 1, 1)
+        self.p_flight_4.addWidget(self.p_separator_4, 0, 3, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_4.addWidget(self.p_end_time_4, 0, 4, 1, 2)
         self.p_flight_4.addWidget(self.p_origin_4, 0, 6, 1, 1)
         self.p_flight_4.addWidget(self.p_terminal_4, 0, 7, 1, 1)
@@ -811,7 +811,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 向第五条航班信息添加子控件
         self.p_flight_5.addWidget(self.p_flight_date_5, 0, 0, 1, 2)
         self.p_flight_5.addWidget(self.p_start_time_5, 0, 2, 1, 1)
-        self.p_flight_5.addWidget(self.p_separator_5, 0, 3, 1, 1)
+        self.p_flight_5.addWidget(self.p_separator_5, 0, 3, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_5.addWidget(self.p_end_time_5, 0, 4, 1, 2)
         self.p_flight_5.addWidget(self.p_origin_5, 0, 6, 1, 1)
         self.p_flight_5.addWidget(self.p_terminal_5, 0, 7, 1, 1)

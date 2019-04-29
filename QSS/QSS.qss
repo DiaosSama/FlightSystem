@@ -101,7 +101,7 @@ SecondWindow QListWidget#flightInfoList_1::Item:hover
 SecondWindow QListWidget#flightInfoList_1::item:selected
 { color:red; }
 SecondWindow QListWidget#flightInfoList_1::item:selected:!active
-{ background:lightgray; }
+{ border-width:0px; padding:0; background:lightgray; }
 
 QPushButton#search_btn_1,#search_btn_4 {
 	border: 0px; 
