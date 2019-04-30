@@ -900,6 +900,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_detail_4.clicked.connect(self.detailFlightInfo)
         self.p_detail_5.clicked.connect(self.detailFlightInfo)
 
+        # 用户界面修改信息按钮
+        self.change_btn.clicked.connect(self.changeInformation)
+
     def change_windows(self):
         """
         用于最大化和最小化窗口
@@ -1195,6 +1198,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # 更新乘客航班信息
         self.User = uT.usrsHashTable().get(self.usrname)[1]
         self.UserFlight = self.User["flightInfo"]
+        self.real_name_text.setText(self.User["realName"])
+        self.age_text.setText(str(self.User["age"]))
+        self.real_name_text.setReadOnly(True)
+        self.age_text.setReadOnly(True)
 
         # 更新用户UI
         if (5 * self.user_page - 5) < len(self.UserFlight):
@@ -1628,6 +1635,35 @@ class MainWindow(QtWidgets.QMainWindow):
         elif sender.objectName() == "p_detail_5":
             self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 1])
             self.newWindow.show()
+
+    def changeInformation(self):
+        if self.change_btn.text() == "确定":
+            realName = self.real_name_text.text()
+            age = int(self.age_text.text())
+            # print(realName, type(realName), age, type(age))
+            usr = uT.usrsHashTable().get(self.usrname)[1]
+            usr["realName"] = realName
+            usr["age"] = age
+            res = uT.usrsHashTable().revise(usr)
+            if res == Const.REVISE_FAILED:
+                msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "修改个人信息失败！")
+                msg_box.show()
+                msg_box.exec_()
+                self.change_btn.setText("修改")
+                self.freshUserFlight()
+                return
+            else:
+                msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "通知", "修改成功")
+                msg_box.show()
+                msg_box.exec_()
+                self.change_btn.setText("修改")
+                self.freshUserFlight()
+                return
+        else:
+            self.change_btn.setText("确定")
+            self.real_name_text.setReadOnly(False)
+            self.age_text.setReadOnly(False)
+
 
     """
     def mousePressEvent(self, event):

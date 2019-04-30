@@ -3,6 +3,7 @@ import json
 import FlightInfo
 import Const
 import datetime
+import hashlib
 
 
 def myHash(text, size=Const.HASH_SIZE):
@@ -19,6 +20,18 @@ def newHashTable():
     for i in range(Const.HASH_SIZE):
         hash_table.append(Const.EMPTY)
     return hash_table
+
+
+def saltPassword(password, salt="#%F&asuFU@Wax"):
+    """
+    加盐哈希函数
+    :param password: str
+    :param salt: str
+    :return: str
+    """
+    salt_password = hashlib.sha256(password)
+    salt_password = hashlib.sha256(salt_password+salt)
+    return salt_password
 
 
 def initFlightInfo():
