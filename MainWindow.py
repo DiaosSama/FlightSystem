@@ -485,6 +485,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.age_babel.setStyleSheet(self.flatwhite_style)
         self.age_text = QtWidgets.QLineEdit()
         self.age_text.setText(str(self.User['age']))
+        self.age_text.setValidator(QtGui.QIntValidator())  # 设置只能输入int类型的数据
         # self.age_text.setText("20")
         self.age_text.setReadOnly(True)
         self.age_text.setStyleSheet(self.flatwhite_style)
@@ -587,7 +588,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_terminal_1.setStyleSheet(self.flatwhite_style)
         # 订单状态
         self.p_order_state_1 = QtWidgets.QLabel()
-        self.p_order_state_1.setText('等待中')
+        # self.p_order_state_1.setText('等待中')
         self.p_order_state_1.setStyleSheet(self.flatwhite_style)
         # 取消按钮
         self.p_refund_1 = QtWidgets.QPushButton()
@@ -647,7 +648,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_terminal_2.setStyleSheet(self.flatwhite_style)
         # 订单状态
         self.p_order_state_2 = QtWidgets.QLabel()
-        self.p_order_state_2.setText('等待中')
+        # self.p_order_state_2.setText('等待中')
         self.p_order_state_2.setStyleSheet(self.flatwhite_style)
         # 取消按钮
         self.p_refund_2 = QtWidgets.QPushButton()
@@ -701,7 +702,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_terminal_3.setStyleSheet(self.flatwhite_style)
         # 订单状态
         self.p_order_state_3 = QtWidgets.QLabel()
-        self.p_order_state_3.setText('等待中')
+        # self.p_order_state_3.setText('等待中')
         self.p_order_state_3.setStyleSheet(self.flatwhite_style)
         # 取消按钮
         self.p_refund_3 = QtWidgets.QPushButton()
@@ -755,7 +756,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_terminal_4.setStyleSheet(self.flatwhite_style)
         # 订单状态
         self.p_order_state_4 = QtWidgets.QLabel()
-        self.p_order_state_4.setText('等待中')
+        # self.p_order_state_4.setText('等待中')
         self.p_order_state_4.setStyleSheet(self.flatwhite_style)
         # 取消按钮
         self.p_refund_4 = QtWidgets.QPushButton()
@@ -809,7 +810,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_terminal_5.setStyleSheet(self.flatwhite_style)
         # 订单状态
         self.p_order_state_5 = QtWidgets.QLabel()
-        self.p_order_state_5.setText('等待中')
+        # self.p_order_state_5.setText('等待中')
         self.p_order_state_5.setStyleSheet(self.flatwhite_style)
         # 取消按钮
         self.p_refund_5 = QtWidgets.QPushButton()
@@ -866,7 +867,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.searchstack_button.clicked.connect(self.buttonclicked)
         self.user_button.clicked.connect(self.buttonclicked)
 
-        self.left_close.clicked.connect(self.close)  # 窗口关闭按钮
+        self.left_close.clicked.connect(self.closeWindow)  # 窗口关闭按钮
         self.left_visit.clicked.connect(self.change_windows)  # 窗口最大化按钮
         self.left_mini.clicked.connect(self.showMinimized)  # 窗口最小化按钮
 
@@ -905,6 +906,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_detail_3.clicked.connect(self.detailFlightInfo)
         self.p_detail_4.clicked.connect(self.detailFlightInfo)
         self.p_detail_5.clicked.connect(self.detailFlightInfo)
+
+        # 用户界面修改信息按钮
+        self.change_btn.clicked.connect(self.changeInformation)
 
     def change_windows(self):
         """
@@ -1049,6 +1053,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # 显示该问答框
             self.box.show()
+            self.box.exec_()
 
             if self.box.clickedButton() == yes:
                 info = shortest.getShortest(origin, terminal)
@@ -1200,6 +1205,10 @@ class MainWindow(QtWidgets.QMainWindow):
         # 更新乘客航班信息
         self.User = uT.usrsHashTable().get(self.usrname)[1]
         self.UserFlight = self.User["flightInfo"]
+        self.real_name_text.setText(self.User["realName"])
+        self.age_text.setText(str(self.User["age"]))
+        self.real_name_text.setReadOnly(True)
+        self.age_text.setReadOnly(True)
 
         # 更新用户UI
         if (5 * self.user_page - 5) < len(self.UserFlight):
@@ -1213,6 +1222,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["terminal"]])
             self.p_refund_1.setEnabled(True)
             self.p_detail_1.setEnabled(True)
+            if self.usrname in self.UserFlight[5 * self.user_page - 5]["orderedList"]:
+                self.p_order_state_1.setText("已预订")
+            else:
+                self.p_order_state_1.setText("等待中")
         else:
             self.p_flight_date_1.setText("")
             self.p_start_time_1.setText("")
@@ -1220,6 +1233,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_price_1.setText('￥')
             self.p_origin_1.setText("")
             self.p_terminal_1.setText("")
+            self.p_order_state_1.setText("")
             self.p_refund_1.setEnabled(False)
             self.p_detail_1.setEnabled(False)
 
@@ -1234,6 +1248,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["terminal"]])
             self.p_refund_2.setEnabled(True)
             self.p_detail_2.setEnabled(True)
+            if self.usrname in self.UserFlight[5 * self.user_page - 4]["orderedList"]:
+                self.p_order_state_2.setText("已预订")
+            else:
+                self.p_order_state_2.setText("等待中")
         else:
             self.p_flight_date_2.setText("")
             self.p_start_time_2.setText("")
@@ -1241,6 +1259,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_price_2.setText('￥')
             self.p_origin_2.setText("")
             self.p_terminal_2.setText("")
+            self.p_order_state_2.setText("")
             self.p_refund_2.setEnabled(False)
             self.p_detail_2.setEnabled(False)
 
@@ -1255,6 +1274,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["terminal"]])
             self.p_refund_3.setEnabled(True)
             self.p_detail_3.setEnabled(True)
+            if self.usrname in self.UserFlight[5 * self.user_page - 3]["orderedList"]:
+                self.p_order_state_3.setText("已预订")
+            else:
+                self.p_order_state_3.setText("等待中")
         else:
             self.p_flight_date_3.setText("")
             self.p_start_time_3.setText("")
@@ -1262,6 +1285,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_price_3.setText('￥')
             self.p_origin_3.setText("")
             self.p_terminal_3.setText("")
+            self.p_order_state_3.setText("")
             self.p_refund_3.setEnabled(False)
             self.p_detail_3.setEnabled(False)
 
@@ -1276,6 +1300,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["terminal"]])
             self.p_refund_4.setEnabled(True)
             self.p_detail_4.setEnabled(True)
+            if self.usrname in self.UserFlight[5 * self.user_page - 2]["orderedList"]:
+                self.p_order_state_4.setText("已预订")
+            else:
+                self.p_order_state_4.setText("等待中")
         else:
             self.p_flight_date_4.setText("")
             self.p_start_time_4.setText("")
@@ -1283,6 +1311,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_price_4.setText('￥')
             self.p_origin_4.setText("")
             self.p_terminal_4.setText("")
+            self.p_order_state_4.setText("")
             self.p_refund_4.setEnabled(False)
             self.p_detail_4.setEnabled(False)
 
@@ -1297,6 +1326,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_terminal_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["terminal"]])
             self.p_refund_5.setEnabled(True)
             self.p_detail_5.setEnabled(True)
+            if self.usrname in self.UserFlight[5 * self.user_page - 1]["orderedList"]:
+                self.p_order_state_5.setText("已预订")
+            else:
+                self.p_order_state_5.setText("等待中")
         else:
             self.p_flight_date_5.setText("")
             self.p_start_time_5.setText("")
@@ -1304,6 +1337,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_price_5.setText('￥')
             self.p_origin_5.setText("")
             self.p_terminal_5.setText("")
+            self.p_order_state_5.setText("")
             self.p_refund_5.setEnabled(False)
             self.p_detail_5.setEnabled(False)
 
@@ -1384,19 +1418,94 @@ class MainWindow(QtWidgets.QMainWindow):
         sender = self.sender()
         if sender.objectName() == "order_1":
             ticket = self.Flight[5 * self.search_page - 5]
-            signal = self.orderFlight(self.usrname, ticket)
+            if ticket["remTicketNum"] == 0:
+                self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
+                                                     '所选航班已售罄，是否需要加入等待列表？')
+                yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
+                no = self.waitbox.addButton('取消', QtWidgets.QMessageBox.NoRole)
+                # 设置消息框中内容前面的图标
+                self.waitbox.setIcon(1)
+                self.waitbox.show()
+                self.waitbox.exec_()
+
+                if self.waitbox.clickedButton() == yes:
+                    signal = self.orderFlight(self.usrname, ticket)
+                else:
+                    return
+            else:
+                signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_2":
             ticket = self.Flight[5 * self.search_page - 4]
-            signal = self.orderFlight(self.usrname, ticket)
+            if ticket["remTicketNum"] == 0:
+                self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
+                                                     '所选航班已售罄，是否需要加入等待列表？')
+                yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
+                no = self.waitbox.addButton('取消', QtWidgets.QMessageBox.NoRole)
+                # 设置消息框中内容前面的图标
+                self.waitbox.setIcon(1)
+                self.waitbox.show()
+                self.waitbox.exec_()
+
+                if self.waitbox.clickedButton() == yes:
+                    signal = self.orderFlight(self.usrname, ticket)
+                else:
+                    return
+            else:
+                signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_3":
             ticket = self.Flight[5 * self.search_page - 3]
-            signal = self.orderFlight(self.usrname, ticket)
+            if ticket["remTicketNum"] == 0:
+                self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
+                                                     '所选航班已售罄，是否需要加入等待列表？')
+                yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
+                no = self.waitbox.addButton('取消', QtWidgets.QMessageBox.NoRole)
+                # 设置消息框中内容前面的图标
+                self.waitbox.setIcon(1)
+                self.waitbox.show()
+                self.waitbox.exec_()
+
+                if self.waitbox.clickedButton() == yes:
+                    signal = self.orderFlight(self.usrname, ticket)
+                else:
+                    return
+            else:
+                signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_4":
             ticket = self.Flight[5 * self.search_page - 2]
-            signal = self.orderFlight(self.usrname, ticket)
+            if ticket["remTicketNum"] == 0:
+                self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
+                                                     '所选航班已售罄，是否需要加入等待列表？')
+                yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
+                no = self.waitbox.addButton('取消', QtWidgets.QMessageBox.NoRole)
+                # 设置消息框中内容前面的图标
+                self.waitbox.setIcon(1)
+                self.waitbox.show()
+                self.waitbox.exec_()
+
+                if self.waitbox.clickedButton() == yes:
+                    signal = self.orderFlight(self.usrname, ticket)
+                else:
+                    return
+            else:
+                signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_5":
             ticket = self.Flight[5 * self.search_page - 1]
-            signal = self.orderFlight(self.usrname, ticket)
+            if ticket["remTicketNum"] == 0:
+                self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
+                                                     '所选航班已售罄，是否需要加入等待列表？')
+                yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
+                no = self.waitbox.addButton('取消', QtWidgets.QMessageBox.NoRole)
+                # 设置消息框中内容前面的图标
+                self.waitbox.setIcon(1)
+                self.waitbox.show()
+                self.waitbox.exec_()
+
+                if self.waitbox.clickedButton() == yes:
+                    signal = self.orderFlight(self.usrname, ticket)
+                else:
+                    return
+            else:
+                signal = self.orderFlight(self.usrname, ticket)
 
         # 订票成功
         if signal == Const.SUCCESS:
@@ -1533,6 +1642,46 @@ class MainWindow(QtWidgets.QMainWindow):
         elif sender.objectName() == "p_detail_5":
             self.newWindow = deWin.deFlightWindow(self.UserFlight[5 * self.user_page - 1])
             self.newWindow.show()
+
+    def changeInformation(self):
+        if self.change_btn.text() == "确定":
+            realName = self.real_name_text.text().strip()
+            age = int(self.age_text.text())
+
+            if realName == "":
+                msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "姓名不能为空！（含空格）")
+                msg_box.show()
+                msg_box.exec_()
+                return
+
+            usr = uT.usrsHashTable().get(self.usrname)[1]
+            usr["realName"] = realName
+            usr["age"] = age
+            res = uT.usrsHashTable().revise(usr)
+            if res == Const.REVISE_FAILED:
+                msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "修改个人信息失败！")
+                msg_box.show()
+                msg_box.exec_()
+                self.change_btn.setText("修改")
+                self.freshUserFlight()
+                return
+            else:
+                msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "通知", "修改成功")
+                msg_box.show()
+                msg_box.exec_()
+                self.change_btn.setText("修改")
+                self.freshUserFlight()
+                return
+        else:
+            self.change_btn.setText("确定")
+            self.real_name_text.setReadOnly(False)
+            self.age_text.setReadOnly(False)
+
+    def closeWindow(self):
+        self.hide()
+        WriteDisk()
+        self.close()
+
 
     """
     def mousePressEvent(self, event):
