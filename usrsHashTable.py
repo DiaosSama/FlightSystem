@@ -4,14 +4,17 @@ import json
 
 
 class usrsHashTable(object):
-
+    # 初始化函数
     def __init__(self):
         # 最大用户数
-        self.n = 1000
+        self.n = 10000
         self.usrs = []
         with open("./info/UserInfo2.json", 'r') as load_f:
             self.usrs = json.load(load_f)
+        # 是否修改文件
+        self.isRevised = False
 
+    # 哈希函数
     def H1(self, x):
         length = len(x)
         home = 0
@@ -19,6 +22,7 @@ class usrsHashTable(object):
             home = (home + ord(x[i])**2) % self.n
         return home
 
+    # 偏移函数
     def H2(self, x):
         return x
 
@@ -38,9 +42,10 @@ class usrsHashTable(object):
                 if offset > desVal:   
                     return TOO_MANY_USERS
             self.usrs[index] = usr
-            with open("./info/UserInfo2.json", 'w') as dump_f:
+            '''with open("./info/UserInfo2.json", 'w') as dump_f:
                 json.dump(self.usrs, dump_f)
-                print("写入 json 文件成功...")
+                print("写入 json 文件成功...")'''
+            self.isRevised = True
             # 注册成功
             return 1
         else:
@@ -68,13 +73,14 @@ class usrsHashTable(object):
             return DELETE_FAILED
         else:
             self.usrs[result[0]] = 0
-            with open("./info/UserInfo2.json", 'w') as dump_f:
+            '''with open("./info/UserInfo2.json", 'w') as dump_f:
                 json.dump(self.usrs, dump_f)
-                print("写入 json 文件成功...")
+                print("写入 json 文件成功...")'''
+            self.isRevised = True
             # 删除成功
             return 1
 
-    # 修改用户信息
+    # 修改用户
     def revise(self, usr):
         result = self.get(usr["usrName"])
         print(result)
@@ -89,9 +95,10 @@ class usrsHashTable(object):
                 
             # 更新哈希表
             self.usrs[result[0]] = result[1]
-            with open("./info/UserInfo2.json", 'w') as dump_f:
+            '''with open("./info/UserInfo2.json", 'w') as dump_f:
                 json.dump(self.usrs, dump_f)
-                print("写入 json 文件成功...")
+                print("写入 json 文件成功...")'''
+            self.isRevised = True
             # 修改成功
             return 1
         pass
@@ -107,33 +114,40 @@ class usrsHashTable(object):
             result[1]["flightInfo"].append(flightInfo)
             # 更新哈希表
             self.usrs[result[0]] = result[1]
-            with open("./info/UserInfo2.json", 'w') as dump_f:
+            '''with open("./info/UserInfo2.json", 'w') as dump_f:
                 json.dump(self.usrs, dump_f)
-                print("写入 json 文件成功...")
+                print("写入 json 文件成功...")'''
+            self.isRevised = True
             # 添加成功
             return 1
         pass
 
     # 用户删除航班信息
     def deleteFlightInfo(self, name, flightInfo):
-        result = self.get(name)
-        print(result)
-        if result == 0:
-            # 0 为删除失败代码
-            return 0
+        # 把姓名参数转化为列表
+        if not type(name)==list:
+            names = [name]
         else:
-            # 删除航班信息
-            for i in result[1]["flightInfo"]:
-                if i["origin"]==flightInfo["origin"] and i["terminal"]==flightInfo["terminal"] and i["date"]==flightInfo["date"]:
-                    result[1]["flightInfo"].remove(i)
-                    break
-            # 更新哈希表
-            self.usrs[result[0]] = result[1]
-            with open("./info/UserInfo2.json", 'w') as dump_f:
-                json.dump(self.usrs, dump_f)
-                print("写入 json 文件成功...")
-            # 1 为删除成功代码
-            return 1
+            names = name
+        for i in names:
+            result = self.get(i)
+            if result == 0:
+                # 0 为删除失败代码
+                continue
+            else:
+                # 删除航班信息
+                for i in result[1]["flightInfo"]:
+                    if i["origin"]==flightInfo["origin"] and i["terminal"]==flightInfo["terminal"] and i["date"]==flightInfo["date"]:
+                        result[1]["flightInfo"].remove(i)
+                        break
+                # 更新哈希表
+                self.usrs[result[0]] = result[1]
+        '''with open("./info/UserInfo2.json", 'w') as dump_f:
+            json.dump(self.usrs, dump_f)
+            print("写入 json 文件成功...")'''
+        self.isRevised = True
+        # 1 为删除成功代码
+        return 1
 
     # 用户修改航班信息
     def reviseFlightInfo(self, name, oldFlightInfo, newFlightInfo):
@@ -147,21 +161,25 @@ class usrsHashTable(object):
             for i in range(len(allFlightInfo)):
                 if allFlightInfo[i]["origin"]==oldFlightInfo["origin"] and allFlightInfo[i]["terminal"]==oldFlightInfo["terminal"] and allFlightInfo[i]["date"]==oldFlightInfo["date"]:
                     allFlightInfo[i] = newFlightInfo
-                    break;
+                    break
             # 更新哈希表
             self.usrs[result[0]] = result[1]
-            with open("./info/UserInfo2.json", 'w') as dump_f:
+            '''with open("./info/UserInfo2.json", 'w') as dump_f:
                 json.dump(self.usrs, dump_f)
-                print("写入 json 文件成功...")
+                print("写入 json 文件成功...")'''
+            self.isRevised = True
             # 修改成功
             return 1
 
+    # 更新用户数据表
+    def updateJson(self):
+        if self.isRevised == True:
+            with open("./info/UserInfo2.json", 'w') as dump_f:
+                    json.dump(self.usrs, dump_f)
+                    print("写入 json 文件成功...")
 '''
 if __name__ == "__main__":
-    ht = HashTable()
-    for i in ht.usrs:
-        if i == 0:
-            continue
-        print(i)
+    f = open("./info/UserInfo2.json", 'r')
+    d = json.load(f)
+    print(d)
 '''
-

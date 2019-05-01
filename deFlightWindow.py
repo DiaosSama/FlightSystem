@@ -101,7 +101,7 @@ class deFlightWindow(QWidget):
 
         self.setLayout(layout)
 
-
+'''
 if __name__ == '__main__':
     
     info =  {'date': {'year': 2019, 'month': 4, 'day': 3, 'startTime': '00:02', 'totalTime': '3.65', 'endTime': '03:41'}, 'origin': 'Aba', 'terminal': 'Boao', 'flightNum': 'MU5545', 'planeNum': 'A340-600', 'pasQuota': 500, 'remTicketNum': 380, 'price': '962', 'orderedList': [], 'waitingList': [], 'State': 1, 'remark': ''}
@@ -109,3 +109,4 @@ if __name__ == '__main__':
     ex = deFlightWindow(info)
     ex.show()
     sys.exit(App.exec_())
+'''

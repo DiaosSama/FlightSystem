@@ -82,7 +82,6 @@ class FirstWindow(QWidget):
         self.okButton.clicked.connect(self.okButton_clicked)
         self.registerButton.clicked.connect(self.registerButton_clicked)
 
-
     def okButton_clicked(self):
         account = self.lineEdit_account.text()
         password = self.lineEdit_password.text()
@@ -95,6 +94,8 @@ class FirstWindow(QWidget):
         else:
             # 登录状态
             if self.okButton.text() == '登录':
+                # 登录前先更新数据表
+                self.table.updateJson()
                 # 判断用户名是否存在
                 if account in self.usrNames:
                     rightPassword = self.table.get(account)[1]["pwd"]
@@ -130,9 +131,15 @@ class FirstWindow(QWidget):
             else:
                 usr = myClass.UserInfo.copy()
                 usr["usrName"], usr["pwd"] = account, password
-                if self.table.add(usr):
+                if self.table.add(usr)==1:
+                    self.usrNames.append(usr["usrName"])
                     # 弹出信息框
                     msg_box = QMessageBox(QMessageBox.Information, "消息", "注册用户成功！")
+                    msg_box.show()
+                    msg_box.exec_()
+                else:
+                    # 弹出信息框
+                    msg_box = QMessageBox(QMessageBox.Information, "消息", "用户已存在，注册失败！")
                     msg_box.show()
                     msg_box.exec_()
                 # 切回登录状态
@@ -141,8 +148,7 @@ class FirstWindow(QWidget):
                 # 密码置空
                 self.lineEdit_password.setText('')
                 return
-
-                
+           
     def registerButton_clicked(self):
         # 清空文本编辑框
         self.lineEdit_account.setText('')
@@ -157,7 +163,9 @@ class FirstWindow(QWidget):
             self.okButton.setText('登录')
             self.registerButton.setText('注册')
 
-
+    def closeEvent(self, a0):
+        print("firstWindow closed...")
+        return super().closeEvent(a0)
 """
 class ThirdWindow(QWidget):
     

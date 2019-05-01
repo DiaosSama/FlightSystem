@@ -67,7 +67,7 @@ class flightPathWindow(QWidget):
 
         self.setLayout(layout)
 
-
+'''
 if __name__ == '__main__':
     
     info =  [['Aba', 0, 0], ['Jiuzhaigou', 223.0, 702], ['Changchun', 2411.0, 999]]
@@ -75,3 +75,4 @@ if __name__ == '__main__':
     ex = flightPathWindow(info)
     ex.show()
     sys.exit(App.exec_())
+''' 

@@ -44,7 +44,7 @@ def distance_list(city_array):
         distance_array.append(distance(city_array[i][0],city_array[i][1]))
     return np.array(distance_array)
 
-print(distance_list(np.array([['广州','上海'],['广州','北京']])))
+#print(distance_list(np.array([['广州','上海'],['广州','北京']])))
 
 
 

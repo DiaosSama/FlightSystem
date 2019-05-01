@@ -87,7 +87,7 @@ def getShortest(beg, end):
     
     return(path)
         
-print(getShortest('Aba' ,'Changchun'))
+'''print(getShortest('Aba' ,'Changchun'))'''
         
 
 

@@ -489,6 +489,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.age_text.setReadOnly(True)
         self.age_text.setStyleSheet(self.flatwhite_style)
 
+        # 年龄
+        self.sex_babel = QtWidgets.QLabel()
+        self.sex_babel.setText('性别')
+        self.sex_babel.setStyleSheet(self.flatwhite_style)
+        self.sex_text = QtWidgets.QLineEdit()
+        self.sex_text.setText(str(self.User['sex']))
+        # self.age_text.setText("20")
+        self.sex_text.setReadOnly(True)
+        self.sex_text.setStyleSheet(self.flatwhite_style)
+
         # 用户信息修改按钮
         self.change_btn = QtWidgets.QPushButton()
         self.change_btn.setText('修改')
@@ -496,22 +506,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 用网格布局放置用户名、姓名和年龄信息
         self.info_layout = QtWidgets.QGridLayout()
-        self.info_layout.addWidget(self.head, 0, 0, 2, 3)
-        self.info_layout.addWidget(self.change_btn, 2, 1, 1, 1)
+        self.info_layout.addWidget(self.head, 0, 0, 3, 3)
+        self.info_layout.addWidget(self.change_btn, 3, 1, 1, 1)
         self.info_layout.addWidget(self.user_name_babel, 0, 3, 1, 1)
         self.info_layout.addWidget(self.user_name_text, 0, 4, 1, 1)
         self.info_layout.addWidget(self.real_name_babel, 1, 3, 1, 1)    
         self.info_layout.addWidget(self.real_name_text, 1, 4, 1, 2) 
         self.info_layout.addWidget(self.age_babel, 2, 3, 1, 1)
         self.info_layout.addWidget(self.age_text, 2, 4, 1, 2)
+        self.info_layout.addWidget(self.sex_babel, 3, 3, 1, 1)
+        self.info_layout.addWidget(self.sex_text, 3, 4, 1, 2)
 
         # 修改信息按钮
-        
-
-        # 个人订单标签
-        #self.order_list_label = QtWidgets.QLabel()
-        #self.order_list_label.setText('个人订单')
-        #self.order_list_label.setStyleSheet(self.flatwhite_style)
 
         # 标题栏，采用网格布局
         self.p_flight_title = QtWidgets.QGridLayout()

@@ -1,1 +1,0 @@
-[{"State": 1, "remark": "", "origin": "GuangZhou", "terminal": "BeiJing", "flightNum": "9C8542", "planeNum": "A320", "date": {"year": 2019, "month": 1, "day": 1, "week": 1, "startTime": "6:20", "totalTime": 150}, "pasQuota": 50, "remTicketNum": 0, "orderedList": [{"name": "Bob", "ticketNum": 50, "seatRank": 1}], "waitingList": [{"name": "Alice", "ticketNum": 2}]}]

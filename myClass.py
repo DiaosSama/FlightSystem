@@ -37,6 +37,6 @@ FlightInfo = { "State": 1,
 UserInfo = { "usrName": "",
              "pwd": "",
              "realName": "",
-             "sex": "",
              "age": 0,
+             "sex": "",
              "flightInfo": [] }
