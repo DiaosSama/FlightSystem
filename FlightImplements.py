@@ -6,6 +6,81 @@ import datetime
 import hashlib
 
 
+class FlightCache:
+
+    def __init__(self):
+        self.cache = []
+        self.cache_index = []
+        self.cache_flag = []  # 标记缓存中的信息是否被修改
+        print("Cache already.")
+
+    def find(self, date, file):
+        if date in self.cache_index:
+            print("date in cache")
+            index = self.cache_index.index(date)
+            info = self.cache.pop(index)
+            flag = self.cache_flag.pop(index)
+            self.cache.insert(0, info)
+            self.cache_flag.insert(0, flag)
+            self.cache_index.remove(date)
+            self.cache_index.insert(0, date)
+            return info
+        else:
+            f = open(file, "r")
+            info = json.load(f)
+            f.close()
+            if len(self.cache) < 5:
+                print("date not in cache and len < 5")
+                self.cache.append(info)
+                self.cache_index.append(date)
+                self.cache_flag.append(0)
+                return info
+            else:
+                print("date not in cache and len >= 5")
+                old = self.cache.pop(0)
+                olddate = self.cache_index.pop(0)
+                oldflag = self.cache_flag.pop(0)
+                self.cache.append(info)
+                self.cache_index.append(date)
+                self.cache_flag.append(0)
+
+                # 将修改过的过期信息写入磁盘
+                if oldflag == 1:
+                    print("write disk")
+                    oldfile = Const.PATH_FLIGHT_INFO + "\\" + olddate + ".json"
+                    f = open(oldfile, "w")
+                    print("open ok")
+                    json.dump(old, f)
+                    print("dump ok")
+                    f.close()
+                return info
+
+    def writedisk(self):
+        for i in self.cache_index:
+            if self.cache_flag[self.cache_index.index(i)] == 1:
+                print("flag == 1")
+                file = Const.PATH_FLIGHT_INFO + "\\" + i + ".json"
+                info = self.cache[self.cache_index.index(i)]
+                f = open(file, "w")
+                print("open ok")
+                json.dump(info, f)
+                print("dump ok")
+                f.close()
+
+    def write(self, date, info):
+        print("write")
+        index = self.cache_index.index(date)
+        self.cache.pop(index)
+        self.cache_flag.pop(index)
+        self.cache.insert(0, info)
+        self.cache_flag.insert(0, 1)
+        self.cache_index.remove(date)
+        self.cache_index.insert(0, date)
+
+
+cache = FlightCache()
+
+
 def myHash(text, size=Const.HASH_SIZE):
     home = 0
     bit = 1
@@ -34,15 +109,6 @@ def saltPassword(password, salt="#%F&asuFU@Wax"):
     return salt_password
 
 
-def initFlightInfo():
-    is_exist = os.path.exists(Const.PATH_FLIGHT_INFO)
-
-    if is_exist:
-        pass
-    else:
-        os.makedirs(Const.PATH_FLIGHT_INFO)
-
-
 def queryFlightInfo(ticket):
     """
     返回匹配的查询结果，返回一个列表
@@ -60,9 +126,7 @@ def queryFlightInfo(ticket):
         file = Const.PATH_FLIGHT_INFO + "\\" + date + ".json"
 
         if os.path.exists(file):
-            f = open(file, "r")
-            hash_table = json.load(f)
-            f.close()
+            hash_table = cache.find(date, file)
             index = home
 
             # 在哈希表中寻找起点终点相同的航班信息
@@ -99,15 +163,6 @@ def queryFlightInfo(ticket):
         return Const.DATE_INVALID
 
 
-def queryFlight(ticket):
-    """
-    返回具体航班信息
-    :param ticket:
-    :return:
-    """
-    pass
-
-
 def addFlightInfo(ticket):
     """
     增加航班信息
@@ -123,9 +178,7 @@ def addFlightInfo(ticket):
     file = Const.PATH_FLIGHT_INFO + "\\" + date + ".json"
 
     if os.path.exists(file):
-        f = open(file, "r")
-        hash_table = json.load(f)
-        f.close()
+        hash_table = cache.find(date, file)
         index = home
 
         i = 1
@@ -146,9 +199,7 @@ def addFlightInfo(ticket):
                 index = (index + i * i) % Const.HASH_SIZE
                 i += 1
 
-        f = open(file, "w")
-        json.dump(hash_table, f)
-        f.close()
+        cache.write(date, hash_table)
         return Const.SUCCESS
     else:
         hash_table = newHashTable()
@@ -173,9 +224,7 @@ def delFlightInfo(ticket):
     file = Const.PATH_FLIGHT_INFO + "\\" + date + ".json"
 
     if os.path.exists(file):
-        f = open(file, "r")
-        hash_table = json.load(f)
-        f.close()
+        hash_table = cache.find(date, file)
         index = home
 
         # 在哈希表中寻找起点终点相同的航班信息
@@ -195,9 +244,7 @@ def delFlightInfo(ticket):
                 for flight in hash_table[index]:
                     if flight == ticket.__dict__:
                         hash_table[index].remove(flight)
-                        f = open(file, "w")
-                        json.dump(hash_table, f)
-                        f.close()
+                        cache.write(date, hash_table)
                         return Const.SUCCESS
                 return Const.FLIGHT_NOT_FOUND
             else:
@@ -226,9 +273,7 @@ def revFlightInfo(oldTicket, newTicket):
     # print("newTicket",newTicket.__dict__,'\n')
 
     if os.path.exists(file):
-        f = open(file, "r")
-        hash_table = json.load(f)
-        f.close()
+        hash_table = cache.find(date, file)
         index = home
 
         # 在哈希表中寻找起点终点相同的航班信息
@@ -253,12 +298,7 @@ def revFlightInfo(oldTicket, newTicket):
                         hash_table[index].remove(flight)
                         hash_table[index].append(newTicket.__dict__)
                         print("after hash_table[index]", hash_table[index], '\n')
-                        f = open(file, "w")
-                        print("open ok")
-                        json.dump(hash_table, f)
-                        print("dump ok")
-                        f.close()
-                        print("close ok")
+                        cache.write(date, hash_table)
                         return Const.SUCCESS
                 return Const.FLIGHT_NOT_FOUND
             else:
@@ -280,3 +320,7 @@ def isValidDate(date_str):
 def formatDate(year, month, day):
     # 日期格式化
     return str(year)+'-'+str(month)+'-'+str(day)
+
+
+def WriteDisk():
+    cache.writedisk()

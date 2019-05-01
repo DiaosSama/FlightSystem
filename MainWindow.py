@@ -485,6 +485,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.age_babel.setStyleSheet(self.flatwhite_style)
         self.age_text = QtWidgets.QLineEdit()
         self.age_text.setText(str(self.User['age']))
+        self.age_text.setValidator(QtGui.QIntValidator())  # 设置只能输入int类型的数据
         # self.age_text.setText("20")
         self.age_text.setReadOnly(True)
         self.age_text.setStyleSheet(self.flatwhite_style)
@@ -860,7 +861,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.searchstack_button.clicked.connect(self.buttonclicked)
         self.user_button.clicked.connect(self.buttonclicked)
 
-        self.left_close.clicked.connect(self.close)  # 窗口关闭按钮
+        self.left_close.clicked.connect(self.closeWindow)  # 窗口关闭按钮
         self.left_visit.clicked.connect(self.change_windows)  # 窗口最大化按钮
         self.left_mini.clicked.connect(self.showMinimized)  # 窗口最小化按钮
 
@@ -1638,9 +1639,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def changeInformation(self):
         if self.change_btn.text() == "确定":
-            realName = self.real_name_text.text()
+            realName = self.real_name_text.text().strip()
             age = int(self.age_text.text())
-            # print(realName, type(realName), age, type(age))
+
+            if realName == "":
+                msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "姓名不能为空！（含空格）")
+                msg_box.show()
+                msg_box.exec_()
+                return
+
             usr = uT.usrsHashTable().get(self.usrname)[1]
             usr["realName"] = realName
             usr["age"] = age
@@ -1663,6 +1670,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.change_btn.setText("确定")
             self.real_name_text.setReadOnly(False)
             self.age_text.setReadOnly(False)
+
+    def closeWindow(self):
+        self.hide()
+        WriteDisk()
+        self.close()
 
 
     """
