@@ -90,7 +90,7 @@ class usrsHashTable(object):
             return REVISE_FAILED
         else:
             # 更新除用户名和航班信息之外的信息
-            if not usr["usrName"] == "":
+            if not (usr["pwd"] == "" or usr["pwd"]==result[1]["pwd"]):
                 result[1]["pwd"] = FlightImplements.saltPassword(usr["pwd"].encode("utf-8"))    
             result[1]["realName"] = usr["realName"]
             result[1]["sex"] = usr["sex"]
