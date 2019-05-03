@@ -5,6 +5,7 @@ from PyQt5.QtGui import *
 from PIL import Image
 import usrsHashTable
 import myClass
+import FlightImplements
 from SecondWindow import *
 from MainWindow import *
 
@@ -100,7 +101,7 @@ class FirstWindow(QWidget):
                 if account in self.usrNames:
                     rightPassword = self.table.get(account)[1]["pwd"]
                     # 判断密码是否正确
-                    if password == rightPassword:
+                    if FlightImplements.saltPassword(password.encode("utf-8")) == rightPassword:
                         # 通过验证，进入系统
                         # 管理员窗口
                         if account == "admin":

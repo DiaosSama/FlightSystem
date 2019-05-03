@@ -1,5 +1,6 @@
 from myClass import *
 from Const import *
+import FlightImplements
 import json
 
 
@@ -41,6 +42,7 @@ class usrsHashTable(object):
                 desVal = 500
                 if offset > desVal:   
                     return TOO_MANY_USERS
+            usr["pwd"] = FlightImplements.saltPassword(usr["pwd"].encode("utf-8"))
             self.usrs[index] = usr
             '''with open("./info/UserInfo2.json", 'w') as dump_f:
                 json.dump(self.usrs, dump_f)
@@ -88,7 +90,8 @@ class usrsHashTable(object):
             return REVISE_FAILED
         else:
             # 更新除用户名和航班信息之外的信息
-            result[1]["pwd"] = usr["pwd"]
+            if not usr["usrName"] == "":
+                result[1]["pwd"] = FlightImplements.saltPassword(usr["pwd"].encode("utf-8"))    
             result[1]["realName"] = usr["realName"]
             result[1]["sex"] = usr["sex"]
             result[1]["age"] = usr["age"]
@@ -179,7 +182,7 @@ class usrsHashTable(object):
                     print("写入 json 文件成功...")
 '''
 if __name__ == "__main__":
-    f = open("./info/UserInfo2.json", 'r')
-    d = json.load(f)
-    print(d)
+    f = open("./info/UserInfo2.json", 'w')
+    d = json.dumps([0]*10000)
+    f.write(d)
 '''

@@ -494,11 +494,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sex_babel = QtWidgets.QLabel()
         self.sex_babel.setText('性别')
         self.sex_babel.setStyleSheet(self.flatwhite_style)
-        self.sex_text = QtWidgets.QLineEdit()
-        self.sex_text.setText(str(self.User['sex']))
-        # self.age_text.setText("20")
-        self.sex_text.setReadOnly(True)
-        self.sex_text.setStyleSheet(self.flatwhite_style)
+        self.sex_text = QtWidgets.QHBoxLayout()
+        self.male_option = QtWidgets.QRadioButton('男')
+        self.female_option = QtWidgets.QRadioButton('女')
+        self.sex_text.addWidget(self.male_option)
+        self.sex_text.addWidget(self.female_option)
+        self.male_option.setStyleSheet(self.flatwhite_style)
+        self.female_option.setStyleSheet(self.flatwhite_style)  
+        self.male_option.setDisabled(True)
+        self.female_option.setDisabled(True)
+        if self.User['sex'] == '男':
+            self.male_option.setChecked(True)
+        else:
+            self.female_option.setChecked(True)
 
         # 用户信息修改按钮
         self.change_btn = QtWidgets.QPushButton()
@@ -516,7 +524,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.info_layout.addWidget(self.age_babel, 2, 3, 1, 1)
         self.info_layout.addWidget(self.age_text, 2, 4, 1, 2)
         self.info_layout.addWidget(self.sex_babel, 3, 3, 1, 1)
-        self.info_layout.addWidget(self.sex_text, 3, 4, 1, 2)
+        self.info_layout.addLayout(self.sex_text, 3, 4, 1, 2)
 
         # 修改信息按钮
 
@@ -757,7 +765,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 订单状态
         self.p_order_state_4 = QtWidgets.QLabel()
         # self.p_order_state_4.setText('等待中')
-        self.p_order_state_4.setStyleSheet(self.flatwhite_style)
+        self.p_order_state_4.setStyleSheet(self.flatwhite_style)    
         # 取消按钮
         self.p_refund_4 = QtWidgets.QPushButton()
         self.p_refund_4.setStyleSheet(self.flatwhite_style)
@@ -1209,6 +1217,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.age_text.setText(str(self.User["age"]))
         self.real_name_text.setReadOnly(True)
         self.age_text.setReadOnly(True)
+        if self.User["sex"] == '男':
+            self.male_option.setChecked(True)
+        else:
+            self.female_option.setChecked(True)
 
         # 更新用户UI
         if (5 * self.user_page - 5) < len(self.UserFlight):
@@ -1657,7 +1669,12 @@ class MainWindow(QtWidgets.QMainWindow):
             usr = uT.usrsHashTable().get(self.usrname)[1]
             usr["realName"] = realName
             usr["age"] = age
+            if self.male_option.isChecked() == True:
+                usr["sex"] == "男"
+            else:
+                usr["sex"] == "女"
             res = uT.usrsHashTable().revise(usr)
+            uT.usrsHashTable().revise(usr)
             if res == Const.REVISE_FAILED:
                 msg_box = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Warning, "警告", "修改个人信息失败！")
                 msg_box.show()
@@ -1676,6 +1693,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.change_btn.setText("确定")
             self.real_name_text.setReadOnly(False)
             self.age_text.setReadOnly(False)
+            self.male_option.setDisabled(False)
+            self.female_option.setDisabled(False)
 
     def closeWindow(self):
         self.hide()

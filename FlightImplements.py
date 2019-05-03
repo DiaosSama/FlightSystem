@@ -104,9 +104,10 @@ def saltPassword(password, salt="#%F&asuFU@Wax"):
     :param salt: str
     :return: str
     """
-    salt_password = hashlib.sha256(password)
-    salt_password = hashlib.sha256(salt_password+salt)
-    return salt_password
+    salt_password = hashlib.sha256(password).hexdigest()
+    salt_password = hashlib.sha256((salt_password+salt).encode("utf-8"))
+    print(salt_password.hexdigest())
+    return salt_password.hexdigest()
 
 
 def queryFlightInfo(ticket):

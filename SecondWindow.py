@@ -550,8 +550,8 @@ class SecondWindow(QWidget):
         layout.addWidget(devide2_label, 3, 1)
         layout.addWidget(usrName_label_4, 4, 0)
         layout.addWidget(self.usrName_text_4, 4, 1)
-        layout.addWidget(pwd_label_4, 5, 0)
-        layout.addWidget(self.pwd_text_4, 5, 1)
+        #layout.addWidget(pwd_label_4, 5, 0)
+        #layout.addWidget(self.pwd_text_4, 5, 1)
         layout.addWidget(realName_label_4, 6, 0)
         layout.addWidget(self.realName_text_4, 6, 1)
         layout.addWidget(sex_label_4, 7, 0)
@@ -639,6 +639,7 @@ class SecondWindow(QWidget):
 
         pwd_label_6 = QLabel("密码")
         self.pwd_text_6 = QLineEdit()
+        self.pwd_text_6.setPlaceholderText("如需修改密码才填此项")
 
         realName_label_6 = QLabel("真实姓名")
         self.realName_text_6 = QLineEdit()
@@ -917,13 +918,15 @@ class SecondWindow(QWidget):
         self.orderedList_7.append("姓名\t订票量")
         orderedList = data["orderedList"]
         for i in orderedList:
-            self.orderedList_7.append(i["name"]+'\t'+str(i["ticketNum"]))
+            #self.orderedList_7.append(i["usrName"]+'\t'+str(i["ticketNum"]))
+            self.orderedList_7.append(i)
 
         self.waitingList_7.clear()
         self.waitingList_7.append("姓名\t订票量")
         waitingList = data["waitingList"]
         for i in waitingList:
-            self.waitingList_7.append(i["name"]+'\t'+str(i["ticketNum"]))
+            #self.waitingList_7.append(i["usrName"]+'\t'+str(i["ticketNum"]))
+            self.waitingList_7.append(i)
         
         # 跳转到查看页面
         self.leftlist.setCurrentRow(6)
@@ -1182,7 +1185,7 @@ class SecondWindow(QWidget):
         print("【*】 当前用户信息")
         print(user)
         self.usrName_text_4.setText(user["usrName"])
-        self.pwd_text_4.setText(user["pwd"])
+        #self.pwd_text_4.setText(user["pwd"])
         self.realName_text_4.setText(user["realName"])
         self.sex_text_4.setText(user["sex"])
         self.age_text_4.setText(str(user["age"]))
@@ -1225,13 +1228,18 @@ class SecondWindow(QWidget):
             msg_box.exec_()
         # 写入用户表
         else:
-            # 弹出信息框
-            msg_box = QMessageBox(QMessageBox.Information, "信息", "已添加当前用户！")
-            msg_box.show()
-            msg_box.exec_()
-            
-            self.table.add(newUserInfo)
-            print("【*】 添加用户成功")
+            if self.table.add(newUserInfo) == 1:
+                # 弹出信息框
+                msg_box = QMessageBox(QMessageBox.Information, "信息", "已添加当前用户！")
+                msg_box.show()
+                msg_box.exec_()
+                print("【*】 添加用户成功")
+            else:
+                # 弹出信息框
+                msg_box = QMessageBox(QMessageBox.Warning, "警告", "当前用户已存在！")
+                msg_box.show()
+                msg_box.exec_()
+                print("【*】 添加用户失败")
               
     # 重置用户信息
     def resetUserInfo(self):
@@ -1244,7 +1252,7 @@ class SecondWindow(QWidget):
     # 修改用户信息
     def reviseUserInfo(self):
         self.usrName_text_6.setText(self.usrName_text_4.text())
-        self.pwd_text_6.setText(self.pwd_text_4.text())
+        #self.pwd_text_6.setText(self.pwd_text_4.text())
         self.realName_text_6.setText(self.realName_text_4.text())
         self.sex_text_6.setText(self.sex_text_4.text())
         self.age_text_6.setText(self.age_text_4.text())
@@ -1262,14 +1270,18 @@ class SecondWindow(QWidget):
             msg_box.show()
             msg_box.exec_()
         else:
-            self.table.delete(deleteUsrName)
-            print("【*】 删除用户成功")
-
-            # 弹出信息框
-            msg_box = QMessageBox(QMessageBox.Information, "信息", "已删除当前用户！")
-            msg_box.show()
-            msg_box.exec_()
-
+            if self.table.delete(deleteUsrName) == 1:
+                print("【*】 删除用户成功")
+                # 弹出信息框
+                msg_box = QMessageBox(QMessageBox.Information, "信息", "已删除当前用户！")
+                msg_box.show()
+                msg_box.exec_()
+            else:
+                print("【*】 删除用户失败")
+                # 弹出信息框
+                msg_box = QMessageBox(QMessageBox.Warning, "警告", "删除当前用户失败！")
+                msg_box.show()
+                msg_box.exec_()
             # 更新显示列表
             self.searchUser()
 
@@ -1447,6 +1459,7 @@ class SecondWindow(QWidget):
     def closeEvent(self, a0):
         self.hide()
         self.table.updateJson()
+        FlightImplements.WriteDisk()
         print("secondWindow closed...")
         return super().closeEvent(a0)
 ######################################################################

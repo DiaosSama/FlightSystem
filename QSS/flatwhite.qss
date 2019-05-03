@@ -148,7 +148,7 @@ color:#FFFFFF;
 margin:1px 1px 2px 1px;
 background-color:rgba(238,0,0,128);
 }
-
+/*
 QRadioButton::indicator{
 width:15px;
 height:15px;
@@ -169,7 +169,7 @@ image:url(:/qss/flatwhite/radiobutton_checked.png);
 QRadioButton::indicator::checked:disabled{
 image:url(:/qss/flatwhite/radiobutton_checked_disable.png);
 }
-
+*/
 QGroupBox::indicator,QTreeWidget::indicator,QListWidget::indicator{
 padding:0px -3px 0px 0px;
 }
