@@ -70,7 +70,6 @@ class SecondWindow(QWidget):
 
         # 在QStackedWidget对象中填充了六个子控件
         self.stack = QStackedWidget(self)
-
         self.stack.addWidget(self.stack1)
         self.stack.addWidget(self.stack2)
         self.stack.addWidget(self.stack3)
@@ -604,7 +603,7 @@ class SecondWindow(QWidget):
 
         # 采用水平布局放置保存和重置按钮
         button_layout = QHBoxLayout()
-        button_layout.addStretch()
+        button_layout.addStretch()  
         button_layout.addWidget(saveButton)
         button_layout.addStretch()
         button_layout.addWidget(resetButton)
@@ -727,6 +726,10 @@ class SecondWindow(QWidget):
         self.remTicketNum_text_7 = QLineEdit()
         self.remTicketNum_text_7.setReadOnly(True)
 
+        price_label_7 = QLabel("价格")
+        self.price_text_7 = QLineEdit()
+        self.price_text_7.setReadOnly(True)
+
         state_label_7 = QLabel("状态")
         self.stateText_7 = QLineEdit()
         self.stateText_7.setReadOnly(True)
@@ -794,11 +797,14 @@ class SecondWindow(QWidget):
         layout.addWidget(remTicketNum_label_7, 4, 0, 1, 1)
         layout.addWidget(self.remTicketNum_text_7, 4, 1, 1, 2)
 
-        layout.addWidget(state_label_7, 4, 3, 1, 1)
-        layout.addWidget(self.stateText_7, 4, 4, 1, 2)
+        layout.addWidget(price_label_7, 4, 3, 1, 1)
+        layout.addWidget(self.price_text_7, 4, 4, 1, 2)
 
-        layout.addWidget(remark_label_7, 5, 0, 1, 1)
-        layout.addWidget(self.remark_text_7, 5, 1, 1, 5)
+        layout.addWidget(state_label_7, 5, 0, 1, 1)
+        layout.addWidget(self.stateText_7, 5, 1, 1, 2)
+
+        layout.addWidget(remark_label_7, 5, 3, 1, 1)
+        layout.addWidget(self.remark_text_7, 5, 4, 1, 2)
 
         layout.addWidget(orderedList_label_7, 6, 0, 1, 1)
         layout.addWidget(self.orderedList_7, 6, 1, 1, 2)
@@ -904,6 +910,8 @@ class SecondWindow(QWidget):
         self.totalTime_text_7.setText(str(date["totalTime"]) + '小时')
 		       
         self.pasQuota_text_7.setText(str(data["pasQuota"]))
+
+        self.price_text_7.setText(str(data["price"]))
 		        
         self.remTicketNum_text_7.setText(str(data["remTicketNum"]))
         state = data["State"]
@@ -955,7 +963,8 @@ class SecondWindow(QWidget):
             }
             data = FlightInfo.FlightInfo(date, origin, terminal)
             self.flightArray_1 = FlightImplements.queryFlightInfo(data)
-            if self.flightArray_1 != Const.FLIGHT_NOT_FOUND :
+            print(self.flightArray_1)
+            if self.flightArray_1 != Const.FLIGHT_NOT_FOUND and self.flightArray_1 != Const.NO_SUIT_FLIGHT:
                 self.flightInfoList_1.clear()
                 for i in self.flightArray_1:
                     item_text = "起飞时间：" + i['date']['startTime'] + '\t' + \
