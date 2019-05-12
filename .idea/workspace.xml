@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="346df052-a317-4931-83e2-4e960545682a" name="Default Changelist" comment="" />
+    <list default="true" id="346df052-a317-4931-83e2-4e960545682a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +21,7 @@
     <SUITE FILE_PATH="coverage/FlightSystem$test.coverage" NAME="test Coverage Results" MODIFIED="1555564351571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FlightSystem$SecondWindow.coverage" NAME="SecondWindow Coverage Results" MODIFIED="1555589743608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FlightSystem$FirstWindow.coverage" NAME="FirstWindow Coverage Results" MODIFIED="1555234731848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="E:/桌面/2017级SCUT/大二下学期/数据结构大作业/DataStructure" />
-    <SUITE FILE_PATH="coverage/FlightSystem$FirstWindow__1_.coverage" NAME="FirstWindow (1) Coverage Results" MODIFIED="1556870574619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/FlightSystem$FirstWindow__1_.coverage" NAME="FirstWindow (1) Coverage Results" MODIFIED="1557637935247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FlightSystem$flightPathWindow.coverage" NAME="flightPathWindow Coverage Results" MODIFIED="1556368829586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FlightSystem$Data.coverage" NAME="Data Coverage Results" MODIFIED="1556347580692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/FlightSystem$getDistante.coverage" NAME="getDistante Coverage Results" MODIFIED="1551502024378" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -188,26 +191,26 @@
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.26" value="1" />
-          <entry key="project.open.time.27" value="2" />
+          <entry key="project.open.time.27" value="3" />
           <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.29" value="2" />
           <entry key="project.open.time.41" value="1" />
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.opened" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="9" />
           <entry key="json" value="2" />
-          <entry key="py" value="7229" />
+          <entry key="py" value="7239" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="2" />
-          <entry key="Python" value="7238" />
+          <entry key="Python" value="7248" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -228,22 +231,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="1692" column="38" selection-start-line="1692" selection-start-column="38" selection-end-line="1692" selection-end-column="38" />
+            <state relative-caret-position="337">
+              <caret line="1083" column="32" selection-start-line="1083" selection-start-column="32" selection-end-line="1083" selection-end-column="32" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
-                <element signature="e#521#3134#0" />
-                <element signature="e#3173#19716#0" />
-                <element signature="e#19753#37812#0" />
-                <element signature="e#37851#40149#0" />
-                <element signature="e#40189#40332#0" />
-                <marker date="1556869687380" expanded="true" signature="63351:68494" ph="..." />
-                <marker date="1556869687380" expanded="true" signature="69596:70906" ph="..." />
-                <marker date="1556869687380" expanded="true" signature="70943:75840" ph="..." />
-                <marker date="1556869687380" expanded="true" signature="72519:75840" ph="..." />
+                <element signature="e#46756#52882#0" />
+                <element signature="e#52923#61896#0" />
               </folding>
             </state>
           </provider>
@@ -252,7 +248,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FlightImplements.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="696">
+            <state relative-caret-position="1728">
               <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -264,15 +260,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SecondWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
+            <state relative-caret-position="20280">
               <caret line="856" selection-start-line="856" selection-end-line="856" />
-              <folding>
-                <element signature="e#26338#26717#0" />
-                <element signature="e#26789#27294#0" />
-                <element signature="e#27351#27647#0" />
-                <element signature="e#27713#30105#0" />
-                <element signature="e#30174#31781#0" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -280,7 +269,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/usrsHashTable.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
+            <state relative-caret-position="1344">
               <caret line="59" selection-start-line="59" selection-end-line="59" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -289,11 +278,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/FirstWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39">
-              <caret line="86" column="16" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="16" />
+            <state relative-caret-position="207">
+              <caret line="93" column="22" lean-forward="true" selection-start-line="93" selection-start-column="22" selection-end-line="93" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -419,17 +408,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="576" />
-    <option name="y" value="-18" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -441,7 +431,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -627,7 +616,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17750533" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08848614" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -807,6 +796,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Const.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-96">
+          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/FlightImplements.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1728">
+          <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SecondWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20280">
+          <caret line="856" selection-start-line="856" selection-end-line="856" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usrsHashTable.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1344">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/shortest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2088">
@@ -817,24 +840,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/myClass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="30" column="28" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Const.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-96">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/flightPathWindow.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="50" selection-start-column="50" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -845,63 +861,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SecondWindow.py">
+    <entry file="file://$PROJECT_DIR$/FirstWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="856" selection-start-line="856" selection-end-line="856" />
-          <folding>
-            <element signature="e#26338#26717#0" />
-            <element signature="e#26789#27294#0" />
-            <element signature="e#27351#27647#0" />
-            <element signature="e#27713#30105#0" />
-            <element signature="e#30174#31781#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FlightImplements.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="207">
+          <caret line="93" column="22" lean-forward="true" selection-start-line="93" selection-start-column="22" selection-end-line="93" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MainWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="1692" column="38" selection-start-line="1692" selection-start-column="38" selection-end-line="1692" selection-end-column="38" />
+        <state relative-caret-position="337">
+          <caret line="1083" column="32" selection-start-line="1083" selection-start-column="32" selection-end-line="1083" selection-end-column="32" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
-            <element signature="e#521#3134#0" />
-            <element signature="e#3173#19716#0" />
-            <element signature="e#19753#37812#0" />
-            <element signature="e#37851#40149#0" />
-            <element signature="e#40189#40332#0" />
-            <marker date="1556869687380" expanded="true" signature="63351:68494" ph="..." />
-            <marker date="1556869687380" expanded="true" signature="69596:70906" ph="..." />
-            <marker date="1556869687380" expanded="true" signature="70943:75840" ph="..." />
-            <marker date="1556869687380" expanded="true" signature="72519:75840" ph="..." />
+            <element signature="e#46756#52882#0" />
+            <element signature="e#52923#61896#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usrsHashTable.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/FirstWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="86" column="16" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="16" />
         </state>
       </provider>
     </entry>
