@@ -458,7 +458,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 头像
         self.head = QtWidgets.QLabel()
         self.head.setGeometry(0, 0, 30, 30)
-        self.head.setPixmap(QtGui.QPixmap('./pictures/head0.jpg'))
+        # self.head.setPixmap(QtGui.QPixmap('./pictures/head0.jpg'))
         self.head.setStyleSheet(self.flatwhite_style)
 
         # 用户名
@@ -509,9 +509,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.User['sex'] == '男':
             self.male_option.setChecked(True)
             self.female_option.setDisabled(True)
+            self.head.setPixmap(QtGui.QPixmap('./pictures/head1.jpg'))
         else:
             self.female_option.setChecked(True)
             self.male_option.setDisabled(True)
+            self.head.setPixmap(QtGui.QPixmap('./pictures/head2.jpg'))
 
         # 用户信息修改按钮
         self.change_btn = QtWidgets.QPushButton()
@@ -1226,10 +1228,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.User["sex"] == '男':
             self.male_option.setChecked(True)
             self.female_option.setDisabled(True)
+            self.head.setPixmap(QtGui.QPixmap('./pictures/head1.jpg'))
         else:
             self.female_option.setChecked(True)
             self.male_option.setDisabled(True)
-        
+            self.head.setPixmap(QtGui.QPixmap('./pictures/head2.jpg'))
 
         # 更新用户UI
         if (5 * self.user_page - 5) < len(self.UserFlight):
