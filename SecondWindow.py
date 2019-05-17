@@ -941,10 +941,9 @@ class SecondWindow(QWidget):
         self.stack.setCurrentIndex(6)
         
     # 搜索航班信息
-    def searchFlightInfo(self, item):
+    def searchFlightInfo(self):
         origin = self.origin_1.currentText()
         terminal = self.terminal_1.currentText()
-
         y = self.year_1.currentText()
         m = self.month_1.currentText()
         d = self.day_1.currentText()
@@ -1029,7 +1028,7 @@ class SecondWindow(QWidget):
             flight = FlightInfo.FlightInfo(self.flight_7)
             if(FlightImplements.delFlightInfo(flight)):
                 # 删除成功
-                bothList = flight['orderedList'] + flight['waitingList']
+                bothList = flight.orderedList + flight.waitingList
                 # 删除已购票的用户中的航班信息
                 if not bothList == []:
                     self.table.deleteFlightInfo(self, bothList, flight)
@@ -1038,6 +1037,7 @@ class SecondWindow(QWidget):
                 msg_box.exec_()
                 print("删除成功", flight.__dict__)
                 self.flight_7 = []
+                self.searchFlightInfo()
         else:
             msg_box = QMessageBox(QMessageBox.Warning, "警告", "当前未指定航班！")
             msg_box.show()
@@ -1086,17 +1086,19 @@ class SecondWindow(QWidget):
                             'year' : y,
                             'month' : m,
                             'day' : d,
-                            'startTime' : 0,
-                            'totalTime' : 0
+                            'startTime' : startTime,
+                            'totalTime' : totalTime
                         }
-                        flight = FlightInfo.FlightInfo(date, origin, terminal, startTime, totalTime,
+                        flight = FlightInfo.FlightInfo(date, origin, terminal, 
                                             flightNum, planeNum, pasQuota, remTicketNum, price)
+                        flight.date['endTime'] = flight.getEndTime()
                         if(FlightImplements.addFlightInfo(flight)):
                             # 添加成功
                             msg_box = QMessageBox(QMessageBox.Information, "信息", "已添加当前航班！")
                             msg_box.show()
                             msg_box.exec_()
                             print("添加成功", flight.__dict__)
+                            self.searchFlightInfo()
 
     # 保存修改的航班信息
     def saveFlightInfo(self):
@@ -1139,12 +1141,14 @@ class SecondWindow(QWidget):
             newTicket = FlightInfo.FlightInfo(date, origin, terminal, flightNum, planeNum, pasQuota, remTicketNum, price,
                                 self.flight_3["orderedList"], self.flight_3["waitingList"],
                                 state, remark)
+            newTicket.date['endTime'] = newTicket.getEndTime()                   
             if(FlightImplements.revFlightInfo(oldTicket, newTicket)):
                 # 修改成功
                 msg_box = QMessageBox(QMessageBox.Information, "信息", "已修改当前航班！")
                 msg_box.show()
                 msg_box.exec_()
                 print('修改成功')
+                self.searchFlightInfo()
             else:
                 # 修改失败
                 msg_box = QMessageBox(QMessageBox.Information, "信息", "修改当前航班失败！")
@@ -1309,12 +1313,12 @@ class SecondWindow(QWidget):
             sex = self.sex_text_6.text()
             age = self.age_text_6.text()
 
-            if pwd=='':
+            '''if pwd=='':
                 # 弹出信息框
                 msg_box = QMessageBox(QMessageBox.Warning, "警告", "密码不能为空")
                 msg_box.show()
                 msg_box.exec_()
-                return 
+                return '''
 
             newUserInfo = myClass.UserInfo.copy()
             newUserInfo["usrName"] = usrName

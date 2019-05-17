@@ -67,7 +67,7 @@ class FlightInfo:
         orihour, orimin = self.date["startTime"].split(':')
         orihour = int(orihour)
         orimin = int(orimin)
-        orihour += (orimin + min) / 60
+        orihour += int((orimin + min) / 60)
         orimin = (orimin + min) % 60
         orihour %= 24
         hour = str(orihour).zfill(2)

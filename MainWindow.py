@@ -1219,6 +1219,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def freshUserFlight(self):
         # 更新乘客航班信息
         # self.User = uT.usrsHashTable().get(self.usrname)[1]
+        stylegreen = "QLabel{color:green;}"
+        styleyellow = "QLabel{color:yellow;}"
         self.User = self.usrHashTable.get(self.usrname)[1]
         self.UserFlight = self.User["flightInfo"]
         self.real_name_text.setText(self.User["realName"])
@@ -1248,8 +1250,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_detail_1.setEnabled(True)
             if self.usrname in self.UserFlight[5 * self.user_page - 5]["orderedList"]:
                 self.p_order_state_1.setText("已预订")
+                self.p_order_state_1.setStyleSheet("font-size:18px; color:green; font-weight:700;")
             else:
                 self.p_order_state_1.setText("等待中")
+                self.p_order_state_1.setStyleSheet("font-size:18px; color:#EE9A00; font-weight:700;")
         else:
             self.p_flight_date_1.setText("")
             self.p_start_time_1.setText("")
@@ -1274,8 +1278,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_detail_2.setEnabled(True)
             if self.usrname in self.UserFlight[5 * self.user_page - 4]["orderedList"]:
                 self.p_order_state_2.setText("已预订")
+                self.p_order_state_2.setStyleSheet("font-size:18px; color:green; font-weight:700;")
             else:
                 self.p_order_state_2.setText("等待中")
+                self.p_order_state_2.setStyleSheet("font-size:18px; color:#EE9A00; font-weight:700;")
         else:
             self.p_flight_date_2.setText("")
             self.p_start_time_2.setText("")
@@ -1300,8 +1306,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_detail_3.setEnabled(True)
             if self.usrname in self.UserFlight[5 * self.user_page - 3]["orderedList"]:
                 self.p_order_state_3.setText("已预订")
+                self.p_order_state_3.setStyleSheet("font-size:18px; color:green; font-weight:700;")
             else:
                 self.p_order_state_3.setText("等待中")
+                self.p_order_state_3.setStyleSheet("font-size:18px; color:#EE9A00; font-weight:700;")
         else:
             self.p_flight_date_3.setText("")
             self.p_start_time_3.setText("")
@@ -1326,8 +1334,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_detail_4.setEnabled(True)
             if self.usrname in self.UserFlight[5 * self.user_page - 2]["orderedList"]:
                 self.p_order_state_4.setText("已预订")
+                self.p_order_state_4.setStyleSheet("font-size:18px; color:green; font-weight:700;")
             else:
                 self.p_order_state_4.setText("等待中")
+                self.p_order_state_4.setStyleSheet("font-size:18px; color:#EE9A00; font-weight:700;")
         else:
             self.p_flight_date_4.setText("")
             self.p_start_time_4.setText("")
@@ -1352,8 +1362,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.p_detail_5.setEnabled(True)
             if self.usrname in self.UserFlight[5 * self.user_page - 1]["orderedList"]:
                 self.p_order_state_5.setText("已预订")
+                self.p_order_state_5.setStyleSheet("font-size:18px; color:green; font-weight:700;")
             else:
                 self.p_order_state_5.setText("等待中")
+                self.p_order_state_5.setStyleSheet("font-size:18px; color:#EE9A00; font-weight:700;")
         else:
             self.p_flight_date_5.setText("")
             self.p_start_time_5.setText("")
@@ -1442,7 +1454,7 @@ class MainWindow(QtWidgets.QMainWindow):
         sender = self.sender()
         if sender.objectName() == "order_1":
             ticket = self.Flight[5 * self.search_page - 5]
-            if ticket["remTicketNum"] == 0:
+            if int(ticket["remTicketNum"]) == 0:
                 self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
                                                      '所选航班已售罄，是否需要加入等待列表？')
                 yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
@@ -1460,7 +1472,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_2":
             ticket = self.Flight[5 * self.search_page - 4]
-            if ticket["remTicketNum"] == 0:
+            if int(ticket["remTicketNum"]) == 0:
                 self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
                                                      '所选航班已售罄，是否需要加入等待列表？')
                 yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
@@ -1478,7 +1490,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_3":
             ticket = self.Flight[5 * self.search_page - 3]
-            if ticket["remTicketNum"] == 0:
+            if int(ticket["remTicketNum"]) == 0:
                 self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
                                                      '所选航班已售罄，是否需要加入等待列表？')
                 yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
@@ -1496,7 +1508,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_4":
             ticket = self.Flight[5 * self.search_page - 2]
-            if ticket["remTicketNum"] == 0:
+            if int(ticket["remTicketNum"]) == 0:
                 self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
                                                      '所选航班已售罄，是否需要加入等待列表？')
                 yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
@@ -1514,7 +1526,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 signal = self.orderFlight(self.usrname, ticket)
         elif sender.objectName() == "order_5":
             ticket = self.Flight[5 * self.search_page - 1]
-            if ticket["remTicketNum"] == 0:
+            if int(ticket["remTicketNum"]) == 0:
                 self.waitbox = QtWidgets.QMessageBox(QtWidgets.QMessageBox.Question, '通知',
                                                      '所选航班已售罄，是否需要加入等待列表？')
                 yes = self.waitbox.addButton('确定', QtWidgets.QMessageBox.YesRole)
@@ -1556,14 +1568,16 @@ class MainWindow(QtWidgets.QMainWindow):
         # usr = uT.get(name)[1]
         # print(ticket)
         if (name not in ticket["orderedList"]) and (name not in ticket["waitingList"]):
-            if ticket["remTicketNum"] > 0:
+            if int(ticket["remTicketNum"]) > 0:
                 oldTicket = FlightInfo(ticket)
                 ticket["orderedList"].append(name)
-                ticket["remTicketNum"] -= 1
+                ticket["remTicketNum"] = int(ticket["remTicketNum"]) - 1
                 newTicket = FlightInfo(ticket)
                 revFlightInfo(oldTicket, newTicket)
                 # uT.usrsHashTable().addFlightInfo(name, ticket)
                 self.usrHashTable.addFlightInfo(name, ticket)
+                for newname in oldTicket.orderedList:
+                    self.usrHashTable.reviseFlightInfo(newname, oldTicket.__dict__, ticket)
                 return Const.SUCCESS
             else:
                 oldTicket = FlightInfo(ticket)
@@ -1571,7 +1585,11 @@ class MainWindow(QtWidgets.QMainWindow):
                 newTicket = FlightInfo(ticket)
                 revFlightInfo(oldTicket, newTicket)
                 # uT.usrsHashTable().addFlightInfo(ticket)
-                self.usrHashTable.addFlightInfo(ticket)
+                self.usrHashTable.addFlightInfo(name, ticket)
+                for newname in oldTicket.orderedList:
+                    self.usrHashTable.reviseFlightInfo(newname, oldTicket.__dict__, ticket)
+                for newname in oldTicket.waitingList:
+                    self.usrHashTable.reviseFlightInfo(newname, oldTicket.__dict__, ticket)
                 return Const.TICKET_WAITING
         else:
             return Const.TICKET_ORDERED  # 不可重复订票
@@ -1613,6 +1631,7 @@ class MainWindow(QtWidgets.QMainWindow):
             oldTicket = FlightInfo(ticket)
             ticket["orderedList"].remove(name)
             if len(ticket["waitingList"]) > 0:
+                print(1)
                 waitname = ticket["waitingList"].pop(0)
                 ticket["orderedList"].append(waitname)
                 newTicket = FlightInfo(ticket)
@@ -1620,14 +1639,21 @@ class MainWindow(QtWidgets.QMainWindow):
                 # uT.usrsHashTable().deleteFlightInfo(name, ticket)
                 # uT.usrsHashTable().reviseFlightInfo(waitname, oldTicket.__dict__, ticket)
                 self.usrHashTable.deleteFlightInfo(name, ticket)
-                self.usrHashTable.reviseFlightInfo(waitname, oldTicket.__dict__, ticket)
+                # self.usrHashTable.reviseFlightInfo(waitname, oldTicket.__dict__, ticket)
+                for newname in newTicket.orderedList:
+                    self.usrHashTable.reviseFlightInfo(newname, oldTicket.__dict__, ticket)
+                for newname in newTicket.waitingList:
+                    self.usrHashTable.reviseFlightInfo(newname, oldTicket.__dict__, ticket)
                 return Const.SUCCESS
             else:
-                ticket["remTicketNum"] += 1
+                print(2)
+                ticket["remTicketNum"] = int(ticket["remTicketNum"]) + 1
                 newTicket = FlightInfo(ticket)
                 revFlightInfo(oldTicket, newTicket)
                 # uT.usrsHashTable().deleteFlightInfo(name, ticket)
                 self.usrHashTable.deleteFlightInfo(name, ticket)
+                for newname in newTicket.orderedList:
+                    self.usrHashTable.reviseFlightInfo(newname, oldTicket.__dict__, ticket)
                 return Const.SUCCESS
         elif name in ticket["waitingList"]:
             oldTicket = FlightInfo(ticket)
