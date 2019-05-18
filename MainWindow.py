@@ -182,14 +182,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.date_layout = QtWidgets.QHBoxLayout()
 
         # 用水平布局摆放年月日
-        self.date_layout.addWidget(self.year_label)
         self.date_layout.addWidget(self.year_combobox)
+        self.date_layout.addWidget(self.year_label)
+        
         self.date_layout.addStretch()
-        self.date_layout.addWidget(self.month_label)
         self.date_layout.addWidget(self.month_combobox)
+        self.date_layout.addWidget(self.month_label)
+        
         self.date_layout.addStretch()
-        self.date_layout.addWidget(self.day_label)
         self.date_layout.addWidget(self.day_combobox)
+        self.date_layout.addWidget(self.day_label)
+        
 
         # 搜索按钮
         self.search_button = QtWidgets.QPushButton()
@@ -662,14 +665,29 @@ class MainWindow(QtWidgets.QMainWindow):
         self.next_button_layout.addStretch()
         self.next_button_layout.addWidget(self.next_page_button)
 
+        self.origin_terminal_layout = QtWidgets.QHBoxLayout()
+        self.origin_terminal_layout.addWidget(self.origin_label)
+        self.origin_terminal_layout.addWidget(self.origin_combobox)
+        self.origin_terminal_layout.addStretch()
+        self.origin_terminal_layout.addWidget(self.terminal_label)
+        self.origin_terminal_layout.addWidget(self.terminal_combobox)
+        self.origin_terminal_layout.addStretch()
+        self.origin_terminal_layout.addWidget(self.date_label)
+        self.origin_terminal_layout.addLayout(self.date_layout)
+
 
         # 向总布局添加子控件
+        '''
         self.search_layout.addWidget(self.origin_label, 0, 0, 1, 1)
         self.search_layout.addWidget(self.origin_combobox, 0, 1, 1, 2)
         self.search_layout.addWidget(self.terminal_label, 1, 0, 1, 1)
         self.search_layout.addWidget(self.terminal_combobox, 1, 1, 1, 2)
+        '''
+        self.search_layout.addLayout(self.origin_terminal_layout, 0, 0, 1, 3)
+        '''
         self.search_layout.addWidget(self.date_label, 2, 0, 1, 1)
-        self.search_layout.addLayout(self.date_layout, 2, 1, 1, 2)
+        #self.search_layout.addLayout(self.date_layout, 2, 1, 1, 2)
+        '''
         self.search_layout.addLayout(self.search_button_layout, 3, 0, 1, 3)
         self.search_layout.addWidget(self.flight_title, 4, 0, 1, 3, alignment=QtCore.Qt.AlignCenter)
         self.search_layout.addLayout(self.flight_1, 5, 0, 2, 3)
