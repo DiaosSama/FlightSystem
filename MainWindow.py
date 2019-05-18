@@ -9,6 +9,8 @@ import usrsHashTable as uT
 import deFlightWindow as deWin
 import flightPathWindow as fpWin
 import shortest
+import random
+import cityDict
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -27,7 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # self.setStyleSheet(self.flatwhite_style)
 
-        self.setFixedSize(960, 700)
+        self.setFixedSize(1080, 680)
         self.main_widget = QtWidgets.QWidget()  # 创建窗口主部件
         self.main_layout = QtWidgets.QGridLayout()  # 创建主部件的网格布局
         self.main_widget.setLayout(self.main_layout)  # 设置窗口主部件布局为网格布局
@@ -192,21 +194,21 @@ class MainWindow(QtWidgets.QMainWindow):
         # 搜索按钮
         self.search_button = QtWidgets.QPushButton()
         self.search_button.setText('搜索')
+        self.search_button.setFixedWidth(100)
 
         # 前一天按钮
         self.last_day_button = QtWidgets.QPushButton()
         self.last_day_button.setText('前一天')
+        self.last_day_button.setFixedWidth(100)
 
         # 后一天按钮
         self.next_day_button = QtWidgets.QPushButton()
         self.next_day_button.setText('后一天')
-
-        # 航班信息标签
-        #self.flight_label = QtWidgets.QLabel()
-        #self.flight_label.setText('航班信息')
+        self.next_day_button.setFixedWidth(100)
 
         # 标题栏，采用网格布局
-        self.flight_title = QtWidgets.QGridLayout()
+        self.flight_title = QtWidgets.QLabel("============================  当天航班信息  ============================")
+        '''
         # 起飞时间标题
         self.title_startTime = QtWidgets.QLabel()
         self.title_startTime.setText('起飞时间')
@@ -228,186 +230,413 @@ class MainWindow(QtWidgets.QMainWindow):
         self.flight_title.addWidget(self.title_rem, 0, 4, 1, 1)
         self.flight_title.addWidget(self.title_state, 0, 5, 1, 1)
         self.flight_title.addWidget(self.title_price, 0, 6, 1, 3)
+        '''
 
         # 第一条航班信息，采用网格布局
         self.flight_1 = QtWidgets.QGridLayout()
+        # 航空公司图标
+        '''
+        img = QtGui.QImage(r'./icons/logo1.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.icon1 = QtWidgets.QPushButton()
+        '''
+        self.icon1.setIcon(icon)
+        '''
+        self.icon1.setIconSize(QtCore.QSize(20, 20))
+        self.icon1.setEnabled(False)
+        
+        self.icon1.setMaximumWidth(20)
+        self.icon1.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 航班号
+        self.flight_number_1 = QtWidgets.QLabel("")
+        self.flight_number_1.setStyleSheet("font-size:14px; font-weight:700")
+        # 飞机号
+        self.plane_number_1 = QtWidgets.QLabel("")
+        self.plane_number_1.setStyleSheet("font-size:14px; color:#A5A5A5; font-weight:0")
         # 起飞时间
-        self.start_time_1 = QtWidgets.QLabel()
-        # 分隔符
-        self.separator_1 = QtWidgets.QLabel()
-        self.separator_1.setText('->')
+        self.start_time_1 = QtWidgets.QLabel("")
         # 到达时间
-        self.end_time_1 = QtWidgets.QLabel()
+        self.end_time_1 = QtWidgets.QLabel("")
+        # 分隔符
+        '''
+        img = QtGui.QImage(r'./icons/arrow.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.separator_1 = QtWidgets.QPushButton()
+        '''
+        self.separator_1.setIcon(icon)
+        '''
+        self.separator_1.setIconSize(QtCore.QSize(200, 50))
+        self.separator_1.setEnabled(False)
+        self.separator_1.setMinimumWidth(200)
+        self.separator_1.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 起点站
+        self.orign_label_1 = QtWidgets.QLabel("")
+        self.orign_label_1.setStyleSheet("font-size:14px;font-weight:0")
+        # 终点站
+        self.terminal_label_1 = QtWidgets.QLabel("")
+        self.terminal_label_1.setStyleSheet("font-size:14px;font-weight:0")
         # 余票量
         self.rem_1 = QtWidgets.QLabel()
         # 状态量
-        self.state_1 = QtWidgets.QLabel()
+        self.state_1 = QtWidgets.QLabel("")
         # 航班价格
-        self.price_1 = QtWidgets.QLabel()
+        self.price_1 = QtWidgets.QLabel("")
         # 购买按钮
         self.order_1 = QtWidgets.QPushButton()
         self.order_1.setText('购买')
+        self.order_1.setStyleSheet("background:rgba(255,127,0,0.6);color:white")
         # 详情连接
         self.detail_1 = QtWidgets.QPushButton()
         self.detail_1.setText('航班详情')
         self.detail_1.setObjectName("detail_1")
+        self.detail_1.setStyleSheet("border:0; font-size:14; background: rgba(255,255,255,0); text-decoration:underline")
         self.detail_1.setEnabled(False)
 
         self.order_1.setObjectName("order_1")
         self.order_1.setEnabled(False)
         # 向第一条航班信息添加子控件
-        self.flight_1.addWidget(self.start_time_1, 0, 0, 1, 1)
-        self.flight_1.addWidget(self.separator_1, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
-        self.flight_1.addWidget(self.end_time_1, 0, 2, 1, 2)
-        self.flight_1.addWidget(self.rem_1, 0, 4, 1, 1)
-        self.flight_1.addWidget(self.state_1, 0, 5, 1, 1)
-        self.flight_1.addWidget(self.price_1, 0, 6, 1, 1)
-        self.flight_1.addWidget(self.order_1, 0, 7, 1, 1)
-        self.flight_1.addWidget(self.detail_1, 0, 8, 1, 1)
+        self.flight_1.addWidget(self.icon1, 0, 0, 1, 1)
+        self.flight_1.addWidget(self.flight_number_1, 0, 1, 1, 2)
+        self.flight_1.addWidget(self.plane_number_1, 1, 1, 1, 2)
+        self.flight_1.addWidget(self.start_time_1, 0, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_1.addWidget(self.orign_label_1, 1, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_1.addWidget(self.separator_1, 0, 5, 2, 2)
+        self.flight_1.addWidget(self.end_time_1, 0, 7, 1, 2)
+        self.flight_1.addWidget(self.terminal_label_1, 1, 7, 1, 2)
+        self.flight_1.addWidget(self.state_1, 0, 9, 2, 1)
+        self.flight_1.addWidget(self.price_1, 0, 10, 2, 1)
+        self.flight_1.addWidget(self.order_1, 0, 11, 2, 1)
+        self.flight_1.addWidget(self.detail_1, 0, 12, 2, 1)
 
         # 第二条航班信息，采用网格布局
         self.flight_2 = QtWidgets.QGridLayout()
+        # 航空公司图标
+        '''
+        img = QtGui.QImage(r'./icons/logo1.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.icon2 = QtWidgets.QPushButton()
+        '''
+        self.icon2.setIcon(icon)
+        self.icon2.setIconSize(QtCore.QSize(20, 20))
+        self.icon2.setEnabled(False)
+        '''
+        self.icon2.setMaximumWidth(20)
+        self.icon2.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 航班号
+        self.flight_number_2 = QtWidgets.QLabel("")
+        self.flight_number_2.setStyleSheet("font-size:14px; font-weight:700")
+        # 飞机号
+        self.plane_number_2 = QtWidgets.QLabel("")
+        self.plane_number_2.setStyleSheet("font-size:14px; color:#A5A5A5; font-weight:0")
         # 起飞时间
-        self.start_time_2 = QtWidgets.QLabel()
-        # 分隔符
-        self.separator_2 = QtWidgets.QLabel()
-        self.separator_2.setText('->')
+        self.start_time_2 = QtWidgets.QLabel("")
         # 到达时间
-        self.end_time_2 = QtWidgets.QLabel()
+        self.end_time_2 = QtWidgets.QLabel("")
+        # 分隔符
+        '''
+        img = QtGui.QImage(r'./icons/arrow.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.separator_2 = QtWidgets.QPushButton()
+        '''
+        self.separator_2.setIcon(icon)
+        '''
+        self.separator_2.setIconSize(QtCore.QSize(200, 50))
+        self.separator_2.setEnabled(False)
+        self.separator_2.setMinimumWidth(200)
+        self.separator_2.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 起点站
+        self.orign_label_2 = QtWidgets.QLabel("")
+        self.orign_label_2.setStyleSheet("font-size:14px;font-weight:0")
+        # 终点站
+        self.terminal_label_2 = QtWidgets.QLabel("")
+        self.terminal_label_2.setStyleSheet("font-size:14px;font-weight:0")
         # 余票量
         self.rem_2 = QtWidgets.QLabel()
         # 状态量
-        self.state_2 = QtWidgets.QLabel()
+        self.state_2 = QtWidgets.QLabel("")
         # 航班价格
-        self.price_2 = QtWidgets.QLabel()
+        self.price_2 = QtWidgets.QLabel("")
         # 购买按钮
         self.order_2 = QtWidgets.QPushButton()
         self.order_2.setText('购买')
+        self.order_2.setStyleSheet("background:rgba(255,127,0,0.6);color:white")
         # 详情连接
         self.detail_2 = QtWidgets.QPushButton()
         self.detail_2.setText('航班详情')
         self.detail_2.setObjectName("detail_2")
+        self.detail_2.setStyleSheet("border:0; font-size:14; background: rgba(255,255,255,0); text-decoration:underline")
         self.detail_2.setEnabled(False)
 
         self.order_2.setObjectName("order_2")
         self.order_2.setEnabled(False)
         # 向第二条航班信息添加子控件
-        self.flight_2.addWidget(self.start_time_2, 0, 0, 1, 1)
-        self.flight_2.addWidget(self.separator_2, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
-        self.flight_2.addWidget(self.end_time_2, 0, 2, 1, 2)
-        self.flight_2.addWidget(self.rem_2, 0, 4, 1, 1)
-        self.flight_2.addWidget(self.state_2, 0, 5, 1, 1)
-        self.flight_2.addWidget(self.price_2, 0, 6, 1, 1)
-        self.flight_2.addWidget(self.order_2, 0, 7, 1, 1)
-        self.flight_2.addWidget(self.detail_2, 0, 8, 1, 1)
+        self.flight_2.addWidget(self.icon2, 0, 0, 1, 1)
+        self.flight_2.addWidget(self.flight_number_2, 0, 1, 1, 2)
+        self.flight_2.addWidget(self.plane_number_2, 1, 1, 1, 2)
+        self.flight_2.addWidget(self.start_time_2, 0, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_2.addWidget(self.orign_label_2, 1, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_2.addWidget(self.separator_2, 0, 5, 2, 2)
+        self.flight_2.addWidget(self.end_time_2, 0, 7, 1, 2)
+        self.flight_2.addWidget(self.terminal_label_2, 1, 7, 1, 2)
+        self.flight_2.addWidget(self.state_2, 0, 9, 2, 1)
+        self.flight_2.addWidget(self.price_2, 0, 10, 2, 1)
+        self.flight_2.addWidget(self.order_2, 0, 11, 2, 1)
+        self.flight_2.addWidget(self.detail_2, 0, 12, 2, 1)
 
         # 第三条航班信息，采用网格布局
         self.flight_3 = QtWidgets.QGridLayout()
+        # 航空公司图标
+        '''
+        img = QtGui.QImage(r'./icons/logo1.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.icon3 = QtWidgets.QPushButton()
+        '''
+        self.icon3.setIcon(icon)
+        self.icon3.setIconSize(QtCore.QSize(20, 20))
+        self.icon3.setEnabled(False)
+        '''
+        self.icon3.setMaximumWidth(20)
+        self.icon3.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 航班号
+        self.flight_number_3 = QtWidgets.QLabel("")
+        self.flight_number_3.setStyleSheet("font-size:14px; font-weight:700")
+        # 飞机号
+        self.plane_number_3 = QtWidgets.QLabel("")
+        self.plane_number_3.setStyleSheet("font-size:14px; color:#A5A5A5; font-weight:0")
         # 起飞时间
-        self.start_time_3 = QtWidgets.QLabel()
-        # 分隔符
-        self.separator_3 = QtWidgets.QLabel()
-        self.separator_3.setText('->')
+        self.start_time_3 = QtWidgets.QLabel("")
         # 到达时间
-        self.end_time_3 = QtWidgets.QLabel()
+        self.end_time_3 = QtWidgets.QLabel("")
+        # 分隔符
+        '''
+        img = QtGui.QImage(r'./icons/arrow.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.separator_3 = QtWidgets.QPushButton()
+        '''
+        self.separator_3.setIcon(icon)
+        '''
+        self.separator_3.setIconSize(QtCore.QSize(200, 50))
+        self.separator_3.setEnabled(False)
+        self.separator_3.setMinimumWidth(200)
+        self.separator_3.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 起点站
+        self.orign_label_3 = QtWidgets.QLabel("")
+        self.orign_label_3.setStyleSheet("font-size:14px;font-weight:0")
+        # 终点站
+        self.terminal_label_3 = QtWidgets.QLabel("")
+        self.terminal_label_3.setStyleSheet("font-size:14px;font-weight:0")
         # 余票量
         self.rem_3 = QtWidgets.QLabel()
         # 状态量
-        self.state_3 = QtWidgets.QLabel()
+        self.state_3 = QtWidgets.QLabel("")
         # 航班价格
-        self.price_3 = QtWidgets.QLabel()
+        self.price_3 = QtWidgets.QLabel("")
         # 购买按钮
         self.order_3 = QtWidgets.QPushButton()
         self.order_3.setText('购买')
+        self.order_3.setStyleSheet("background:rgba(255,127,0,0.6);color:white")
         # 详情连接
         self.detail_3 = QtWidgets.QPushButton()
         self.detail_3.setText('航班详情')
         self.detail_3.setObjectName("detail_3")
+        self.detail_3.setStyleSheet("border:0; font-size:14; background: rgba(255,255,255,0); text-decoration:underline")
         self.detail_3.setEnabled(False)
 
         self.order_3.setObjectName("order_3")
         self.order_3.setEnabled(False)
         # 向第三条航班信息添加子控件
-        self.flight_3.addWidget(self.start_time_3, 0, 0, 1, 1)
-        self.flight_3.addWidget(self.separator_3, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
-        self.flight_3.addWidget(self.end_time_3, 0, 2, 1, 2)
-        self.flight_3.addWidget(self.rem_3, 0, 4, 1, 1)
-        self.flight_3.addWidget(self.state_3, 0, 5, 1, 1)
-        self.flight_3.addWidget(self.price_3, 0, 6, 1, 1)
-        self.flight_3.addWidget(self.order_3, 0, 7, 1, 1)
-        self.flight_3.addWidget(self.detail_3, 0, 8, 1, 1)
+        self.flight_3.addWidget(self.icon3, 0, 0, 1, 1)
+        self.flight_3.addWidget(self.flight_number_3, 0, 1, 1, 2)
+        self.flight_3.addWidget(self.plane_number_3, 1, 1, 1, 2)
+        self.flight_3.addWidget(self.start_time_3, 0, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_3.addWidget(self.orign_label_3, 1, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_3.addWidget(self.separator_3, 0, 5, 2, 2)
+        self.flight_3.addWidget(self.end_time_3, 0, 7, 1, 2)
+        self.flight_3.addWidget(self.terminal_label_3, 1, 7, 1, 2)
+        self.flight_3.addWidget(self.state_3, 0, 9, 2, 1)
+        self.flight_3.addWidget(self.price_3, 0, 10, 2, 1)
+        self.flight_3.addWidget(self.order_3, 0, 11, 2, 1)
+        self.flight_3.addWidget(self.detail_3, 0, 12, 2, 1)
 
         # 第四条航班信息，采用网格布局
         self.flight_4 = QtWidgets.QGridLayout()
+        # 航空公司图标
+        '''
+        img = QtGui.QImage(r'./icons/logo1.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.icon4 = QtWidgets.QPushButton()
+        '''
+        self.icon4.setIcon(icon)
+        self.icon4.setIconSize(QtCore.QSize(20, 20))
+        self.icon4.setEnabled(False)
+        '''
+        self.icon4.setMaximumWidth(20)
+        self.icon4.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 航班号
+        self.flight_number_4 = QtWidgets.QLabel("")
+        self.flight_number_4.setStyleSheet("font-size:14px; font-weight:700")
+        # 飞机号
+        self.plane_number_4 = QtWidgets.QLabel("")
+        self.plane_number_4.setStyleSheet("font-size:14px; color:#A5A5A5; font-weight:0")
         # 起飞时间
-        self.start_time_4 = QtWidgets.QLabel()
-        # 分隔符
-        self.separator_4 = QtWidgets.QLabel()
-        self.separator_4.setText('->')
+        self.start_time_4 = QtWidgets.QLabel("")
         # 到达时间
-        self.end_time_4 = QtWidgets.QLabel()
+        self.end_time_4 = QtWidgets.QLabel("")
+        # 分隔符
+        '''
+        img = QtGui.QImage(r'./icons/arrow.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.separator_4 = QtWidgets.QPushButton()
+        '''
+        self.separator_4.setIcon(icon)
+        '''
+        self.separator_4.setIconSize(QtCore.QSize(200, 50))
+        self.separator_4.setEnabled(False)
+        self.separator_4.setMinimumWidth(200)
+        self.separator_4.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 起点站
+        self.orign_label_4 = QtWidgets.QLabel("")
+        self.orign_label_4.setStyleSheet("font-size:14px;font-weight:0")
+        # 终点站
+        self.terminal_label_4 = QtWidgets.QLabel("")
+        self.terminal_label_4.setStyleSheet("font-size:14px;font-weight:0")
         # 余票量
         self.rem_4 = QtWidgets.QLabel()
         # 状态量
-        self.state_4 = QtWidgets.QLabel()
+        self.state_4 = QtWidgets.QLabel("")
         # 航班价格
-        self.price_4 = QtWidgets.QLabel()
+        self.price_4 = QtWidgets.QLabel("")
         # 购买按钮
         self.order_4 = QtWidgets.QPushButton()
         self.order_4.setText('购买')
+        self.order_4.setStyleSheet("background:rgba(255,127,0,0.6);color:white")
         # 详情连接
         self.detail_4 = QtWidgets.QPushButton()
         self.detail_4.setText('航班详情')
         self.detail_4.setObjectName("detail_4")
+        self.detail_4.setStyleSheet("border:0; font-size:14; background: rgba(255,255,255,0); text-decoration:underline")
         self.detail_4.setEnabled(False)
 
         self.order_4.setObjectName("order_4")
         self.order_4.setEnabled(False)
         # 向第四条航班信息添加子控件
-        self.flight_4.addWidget(self.start_time_4, 0, 0, 1, 1)
-        self.flight_4.addWidget(self.separator_4, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
-        self.flight_4.addWidget(self.end_time_4, 0, 2, 1, 2)
-        self.flight_4.addWidget(self.rem_4, 0, 4, 1, 1)
-        self.flight_4.addWidget(self.state_4, 0, 5, 1, 1)
-        self.flight_4.addWidget(self.price_4, 0, 6, 1, 1)
-        self.flight_4.addWidget(self.order_4, 0, 7, 1, 1)
-        self.flight_4.addWidget(self.detail_4, 0, 8, 1, 1)
+        self.flight_4.addWidget(self.icon4, 0, 0, 1, 1)
+        self.flight_4.addWidget(self.flight_number_4, 0, 1, 1, 2)
+        self.flight_4.addWidget(self.plane_number_4, 1, 1, 1, 2)
+        self.flight_4.addWidget(self.start_time_4, 0, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_4.addWidget(self.orign_label_4, 1, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_4.addWidget(self.separator_4, 0, 5, 2, 2)
+        self.flight_4.addWidget(self.end_time_4, 0, 7, 1, 2)
+        self.flight_4.addWidget(self.terminal_label_4, 1, 7, 1, 2)
+        self.flight_4.addWidget(self.state_4, 0, 9, 2, 1)
+        self.flight_4.addWidget(self.price_4, 0, 10, 2, 1)
+        self.flight_4.addWidget(self.order_4, 0, 11, 2, 1)
+        self.flight_4.addWidget(self.detail_4, 0, 12, 2, 1)
 
         # 第五条航班信息，采用网格布局
         self.flight_5 = QtWidgets.QGridLayout()
+        # 航空公司图标
+        '''
+        img = QtGui.QImage(r'./icons/logo1.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.icon5 = QtWidgets.QPushButton()
+        '''
+        self.icon5.setIcon(icon)
+        self.icon5.setIconSize(QtCore.QSize(20, 20))
+        self.icon5.setEnabled(False)
+        '''
+        self.icon5.setMaximumWidth(20)
+        self.icon5.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 航班号
+        self.flight_number_5 = QtWidgets.QLabel("")
+        self.flight_number_5.setStyleSheet("font-size:14px; font-weight:700")
+        # 飞机号
+        self.plane_number_5 = QtWidgets.QLabel("")
+        self.plane_number_5.setStyleSheet("font-size:14px; color:#A5A5A5; font-weight:0")
         # 起飞时间
-        self.start_time_5 = QtWidgets.QLabel()
-        # 分隔符
-        self.separator_5 = QtWidgets.QLabel()
-        self.separator_5.setText('->')
+        self.start_time_5 = QtWidgets.QLabel("")
         # 到达时间
-        self.end_time_5 = QtWidgets.QLabel()
+        self.end_time_5 = QtWidgets.QLabel("")
+        # 分隔符
+        '''
+        img = QtGui.QImage(r'./icons/arrow.png')
+        pixmap = QtGui.QPixmap(img)
+        fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+        icon = QtGui.QIcon(fitPixmap)
+        '''
+        self.separator_5 = QtWidgets.QPushButton()
+        '''
+        self.separator_5.setIcon(icon)
+        '''
+        self.separator_5.setIconSize(QtCore.QSize(200, 50))
+        self.separator_5.setEnabled(False)
+        self.separator_5.setMinimumWidth(200)
+        self.separator_5.setStyleSheet("background:rgba(0,0,0,0);border:0;padding:0;margin:0")
+        # 起点站
+        self.orign_label_5 = QtWidgets.QLabel("")
+        self.orign_label_5.setStyleSheet("font-size:14px;font-weight:0")
+        # 终点站
+        self.terminal_label_5 = QtWidgets.QLabel("")
+        self.terminal_label_5.setStyleSheet("font-size:14px;font-weight:0")
         # 余票量
         self.rem_5 = QtWidgets.QLabel()
         # 状态量
-        self.state_5 = QtWidgets.QLabel()
+        self.state_5 = QtWidgets.QLabel("")
         # 航班价格
-        self.price_5 = QtWidgets.QLabel()
+        self.price_5 = QtWidgets.QLabel("")
         # 购买按钮
         self.order_5 = QtWidgets.QPushButton()
         self.order_5.setText('购买')
+        self.order_5.setStyleSheet("background:rgba(255,127,0,0.6);color:white")
         # 详情连接
         self.detail_5 = QtWidgets.QPushButton()
         self.detail_5.setText('航班详情')
         self.detail_5.setObjectName("detail_5")
+        self.detail_5.setStyleSheet("border:0; font-size:14; background: rgba(255,255,255,0); text-decoration:underline")
         self.detail_5.setEnabled(False)
 
         self.order_5.setObjectName("order_5")
         self.order_5.setEnabled(False)
         # 向第五条航班信息添加子控件
-        self.flight_5.addWidget(self.start_time_5, 0, 0, 1, 1)
-        self.flight_5.addWidget(self.separator_5, 0, 1, 1, 1, alignment=QtCore.Qt.AlignCenter)
-        self.flight_5.addWidget(self.end_time_5, 0, 2, 1, 2)
-        self.flight_5.addWidget(self.rem_5, 0, 4, 1, 1)
-        self.flight_5.addWidget(self.state_5, 0, 5, 1, 1)
-        self.flight_5.addWidget(self.price_5, 0, 6, 1, 1)
-        self.flight_5.addWidget(self.order_5, 0, 7, 1, 1)
-        self.flight_5.addWidget(self.detail_5, 0, 8, 1, 1)
+        self.flight_5.addWidget(self.icon5, 0, 0, 1, 1)
+        self.flight_5.addWidget(self.flight_number_5, 0, 1, 1, 2)
+        self.flight_5.addWidget(self.plane_number_5, 1, 1, 1, 2)
+        self.flight_5.addWidget(self.start_time_5, 0, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_5.addWidget(self.orign_label_5, 1, 3, 1, 2, alignment=QtCore.Qt.AlignRight)
+        self.flight_5.addWidget(self.separator_5, 0, 5, 2, 2)
+        self.flight_5.addWidget(self.end_time_5, 0, 7, 1, 2)
+        self.flight_5.addWidget(self.terminal_label_5, 1, 7, 1, 2)
+        self.flight_5.addWidget(self.state_5, 0, 9, 2, 1)
+        self.flight_5.addWidget(self.price_5, 0, 10, 2, 1)
+        self.flight_5.addWidget(self.order_5, 0, 11, 2, 1)
+        self.flight_5.addWidget(self.detail_5, 0, 12, 2, 1)
 
         # 前一页按钮
         self.last_page_button = QtWidgets.QPushButton()
@@ -421,6 +650,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.next_page_button.setObjectName('search_next')
         self.next_page_button.setEnabled(False)  # 设置下一页不可用
 
+        self.search_button_layout = QtWidgets.QHBoxLayout()
+        self.search_button_layout.addWidget(self.last_day_button)
+        self.search_button_layout.addStretch()
+        self.search_button_layout.addWidget(self.search_button)
+        self.search_button_layout.addStretch()
+        self.search_button_layout.addWidget(self.next_day_button)
+
+        self.next_button_layout = QtWidgets.QHBoxLayout()
+        self.next_button_layout.addWidget(self.last_page_button)
+        self.next_button_layout.addStretch()
+        self.next_button_layout.addWidget(self.next_page_button)
+
+
         # 向总布局添加子控件
         self.search_layout.addWidget(self.origin_label, 0, 0, 1, 1)
         self.search_layout.addWidget(self.origin_combobox, 0, 1, 1, 2)
@@ -428,17 +670,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.search_layout.addWidget(self.terminal_combobox, 1, 1, 1, 2)
         self.search_layout.addWidget(self.date_label, 2, 0, 1, 1)
         self.search_layout.addLayout(self.date_layout, 2, 1, 1, 2)
-        self.search_layout.addWidget(self.last_day_button, 3, 0, 1, 1)
-        self.search_layout.addWidget(self.search_button, 3, 1, 1, 1)
-        self.search_layout.addWidget(self.next_day_button, 3, 2, 1, 1)
-        self.search_layout.addLayout(self.flight_title, 4, 0, 1, 3)
+        self.search_layout.addLayout(self.search_button_layout, 3, 0, 1, 3)
+        self.search_layout.addWidget(self.flight_title, 4, 0, 1, 3, alignment=QtCore.Qt.AlignCenter)
         self.search_layout.addLayout(self.flight_1, 5, 0, 2, 3)
         self.search_layout.addLayout(self.flight_2, 7, 0, 2, 3)
         self.search_layout.addLayout(self.flight_3, 9, 0, 2, 3)
         self.search_layout.addLayout(self.flight_4, 11, 0, 2, 3)
         self.search_layout.addLayout(self.flight_5, 13, 0, 2, 3)
-        self.search_layout.addWidget(self.last_page_button, 15, 0, 1, 1)
-        self.search_layout.addWidget(self.next_page_button, 15, 2, 1, 1)
+        self.search_layout.addLayout(self.next_button_layout, 15, 0, 1, 3)
 
         self.stackSearch.setLayout(self.search_layout)
         self.stackSearch.setStyleSheet(self.flatwhite_style)
@@ -537,6 +776,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 标题栏，采用网格布局
         self.p_flight_title = QtWidgets.QGridLayout()
+        self.p_flight_title.setVerticalSpacing(6)
         # 航班日期标题
         self.p_title_date = QtWidgets.QLabel()
         self.p_title_date.setText('航班日期')
@@ -572,15 +812,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_title.addWidget(self.p_title_origin, 0, 6, 1, 1)
         self.p_flight_title.addWidget(self.p_title_terminal, 0, 7, 1, 1)
         self.p_flight_title.addWidget(self.p_title_price, 0, 8, 1, 1)
-        self.p_flight_title.addWidget(self.p_title_state, 0, 9, 1, 4)
+        self.p_flight_title.addWidget(self.p_title_state, 0, 9, 1, 3)
 
 
         # 第一条航班信息，采用网格布局
         self.p_flight_1 = QtWidgets.QGridLayout()
-
         # 航班日期
         self.p_flight_date_1 = QtWidgets.QLabel()
-        self.p_flight_date_1.setText('')
         self.p_flight_date_1.setStyleSheet(self.flatwhite_style)
         # 起飞时间
         self.p_start_time_1 = QtWidgets.QLabel()
@@ -588,7 +826,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 分隔符
         self.p_separator_1 = QtWidgets.QLabel()
         self.p_separator_1.setStyleSheet(self.flatwhite_style)
-        self.p_separator_1.setText('---->')
+        #self.p_separator_1.setText('---->')
         # 到达时间
         self.p_end_time_1 = QtWidgets.QLabel()
         self.p_end_time_1.setStyleSheet(self.flatwhite_style)
@@ -609,12 +847,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_1 = QtWidgets.QPushButton()
         self.p_refund_1.setStyleSheet(self.flatwhite_style)
         self.p_refund_1.setText('取消')
+        self.p_refund_1.setMaximumWidth(50)
+
         # 航班详情
         self.p_detail_1 = QtWidgets.QPushButton()
         self.p_detail_1.setText('航班详情')
         self.p_detail_1.setObjectName("p_detail_1")
+        
+        #self.p_detail_1.setStyleSheet(self.flatwhite_style)
+        self.p_detail_1.setStyleSheet("font-size:18px; background: rgba(255,255,255,0); text-decoration:underline")
         self.p_detail_1.setEnabled(False)
-        self.p_detail_1.setStyleSheet(self.flatwhite_style)
 
         self.p_refund_1.setObjectName("p_refund_1")
         self.p_refund_1.setEnabled(False)
@@ -632,7 +874,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_1.addWidget(self.p_origin_1, 0, 6, 1, 1)
         self.p_flight_1.addWidget(self.p_terminal_1, 0, 7, 1, 1)
         self.p_flight_1.addWidget(self.p_price_1, 0, 8, 1, 1)
-        self.p_flight_1.addWidget(self.p_order_state_1, 0, 9, 1, 1)
+        self.p_flight_1.addWidget(self.p_order_state_1, 0, 9, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_1.addWidget(self.p_refund_1, 0, 10, 1, 1)
         self.p_flight_1.addWidget(self.p_detail_1, 0, 11, 1, 1)
 
@@ -648,7 +890,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 分隔符
         self.p_separator_2 = QtWidgets.QLabel()
         self.p_separator_2.setStyleSheet(self.flatwhite_style)
-        self.p_separator_2.setText('---->')
+        #self.p_separator_2.setText('---->')
         # 到达时间
         self.p_end_time_2 = QtWidgets.QLabel()
         self.p_end_time_2.setStyleSheet(self.flatwhite_style)
@@ -669,12 +911,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_2 = QtWidgets.QPushButton()
         self.p_refund_2.setStyleSheet(self.flatwhite_style)
         self.p_refund_2.setText('取消')
+        self.p_refund_2.setMaximumWidth(50)
         # 航班详情
         self.p_detail_2 = QtWidgets.QPushButton()
         self.p_detail_2.setText('航班详情')
         self.p_detail_2.setObjectName("p_detail_2")
+        
+        #self.p_detail_2.setStyleSheet(self.flatwhite_style)
+        self.p_detail_2.setStyleSheet("font-size:18px; background: rgba(255,255,255,0); text-decoration:underline")
         self.p_detail_2.setEnabled(False)
-        self.p_detail_2.setStyleSheet(self.flatwhite_style)
 
         self.p_refund_2.setObjectName("p_refund_2")
         self.p_refund_2.setEnabled(False)
@@ -686,7 +931,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_2.addWidget(self.p_origin_2, 0, 6, 1, 1)
         self.p_flight_2.addWidget(self.p_terminal_2, 0, 7, 1, 1)
         self.p_flight_2.addWidget(self.p_price_2, 0, 8, 1, 1)
-        self.p_flight_2.addWidget(self.p_order_state_2, 0, 9, 1, 1)
+        self.p_flight_2.addWidget(self.p_order_state_2, 0, 9, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_2.addWidget(self.p_refund_2, 0, 10, 1, 1)
         self.p_flight_2.addWidget(self.p_detail_2, 0, 11, 1, 1)
 
@@ -702,7 +947,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 分隔符
         self.p_separator_3 = QtWidgets.QLabel()
         self.p_separator_3.setStyleSheet(self.flatwhite_style)
-        self.p_separator_3.setText('---->')
+        #self.p_separator_3.setText('---->')
         # 到达时间
         self.p_end_time_3 = QtWidgets.QLabel()
         self.p_end_time_3.setStyleSheet(self.flatwhite_style)
@@ -723,12 +968,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_3 = QtWidgets.QPushButton()
         self.p_refund_3.setStyleSheet(self.flatwhite_style)
         self.p_refund_3.setText('取消')
+        self.p_refund_3.setMaximumWidth(50)
         # 航班详情
         self.p_detail_3 = QtWidgets.QPushButton()
         self.p_detail_3.setText('航班详情')
         self.p_detail_3.setObjectName("p_detail_3")
+       
+        #self.p_detail_3.setStyleSheet(self.flatwhite_style)
+        self.p_detail_3.setStyleSheet("font-size:18px; background: rgba(255,255,255,0); text-decoration:underline")
         self.p_detail_3.setEnabled(False)
-        self.p_detail_3.setStyleSheet(self.flatwhite_style)
         self.p_refund_3.setObjectName("p_refund_3")
         self.p_refund_3.setEnabled(False)
 
@@ -740,7 +988,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_3.addWidget(self.p_origin_3, 0, 6, 1, 1)
         self.p_flight_3.addWidget(self.p_terminal_3, 0, 7, 1, 1)
         self.p_flight_3.addWidget(self.p_price_3, 0, 8, 1, 1)
-        self.p_flight_3.addWidget(self.p_order_state_3, 0, 9, 1, 1)
+        self.p_flight_3.addWidget(self.p_order_state_3, 0, 9, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_3.addWidget(self.p_refund_3, 0, 10, 1, 1)
         self.p_flight_3.addWidget(self.p_detail_3, 0, 11, 1, 1)
         
@@ -756,7 +1004,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 分隔符
         self.p_separator_4 = QtWidgets.QLabel()
         self.p_separator_4.setStyleSheet(self.flatwhite_style)
-        self.p_separator_4.setText('---->')
+        #self.p_separator_4.setText('---->')
         # 到达时间
         self.p_end_time_4 = QtWidgets.QLabel()
         self.p_end_time_4.setStyleSheet(self.flatwhite_style)
@@ -777,12 +1025,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_4 = QtWidgets.QPushButton()
         self.p_refund_4.setStyleSheet(self.flatwhite_style)
         self.p_refund_4.setText('取消')
+        self.p_refund_4.setMaximumWidth(50)
         # 航班详情
         self.p_detail_4 = QtWidgets.QPushButton()
         self.p_detail_4.setText('航班详情')
         self.p_detail_4.setObjectName("p_detail_4")
+        
+        #self.p_detail_4.setStyleSheet(self.flatwhite_style)
+        self.p_detail_4.setStyleSheet("font-size:18px; background: rgba(255,255,255,0); text-decoration:underline")
         self.p_detail_4.setEnabled(False)
-        self.p_detail_4.setStyleSheet(self.flatwhite_style)
 
         self.p_refund_4.setObjectName("p_refund_4")
         self.p_refund_4.setEnabled(False)
@@ -794,7 +1045,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_4.addWidget(self.p_origin_4, 0, 6, 1, 1)
         self.p_flight_4.addWidget(self.p_terminal_4, 0, 7, 1, 1)
         self.p_flight_4.addWidget(self.p_price_4, 0, 8, 1, 1)
-        self.p_flight_4.addWidget(self.p_order_state_4, 0, 9, 1, 1)
+        self.p_flight_4.addWidget(self.p_order_state_4, 0, 9, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_4.addWidget(self.p_refund_4, 0, 10, 1, 1)
         self.p_flight_4.addWidget(self.p_detail_4, 0, 11, 1, 1)
 
@@ -810,7 +1061,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # 分隔符
         self.p_separator_5 = QtWidgets.QLabel()
         self.p_separator_5.setStyleSheet(self.flatwhite_style)
-        self.p_separator_5.setText('---->')
+        #self.p_separator_5.setText('---->')
         # 到达时间
         self.p_end_time_5 = QtWidgets.QLabel()
         self.p_end_time_5.setStyleSheet(self.flatwhite_style)
@@ -831,12 +1082,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_refund_5 = QtWidgets.QPushButton()
         self.p_refund_5.setStyleSheet(self.flatwhite_style)
         self.p_refund_5.setText('取消')
+        self.p_refund_5.setMaximumWidth(50)
         # 航班详情
         self.p_detail_5 = QtWidgets.QPushButton()
         self.p_detail_5.setText('航班详情')
         self.p_detail_5.setObjectName("p_detail_5")
+        self.p_detail_5.setStyleSheet("font-size:18px; background: rgba(255,255,255,0); text-decoration:underline")
         self.p_detail_5.setEnabled(False)
-        self.p_detail_5.setStyleSheet(self.flatwhite_style)
+        #self.p_detail_5.setStyleSheet(self.flatwhite_style)
+        
 
         self.p_refund_5.setObjectName("p_refund_5")
         self.p_refund_5.setEnabled(False)
@@ -848,7 +1102,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.p_flight_5.addWidget(self.p_origin_5, 0, 6, 1, 1)
         self.p_flight_5.addWidget(self.p_terminal_5, 0, 7, 1, 1)
         self.p_flight_5.addWidget(self.p_price_5, 0, 8, 1, 1)
-        self.p_flight_5.addWidget(self.p_order_state_5, 0, 9, 1, 1)
+        self.p_flight_5.addWidget(self.p_order_state_5, 0, 9, 1, 1, alignment=QtCore.Qt.AlignCenter)
         self.p_flight_5.addWidget(self.p_refund_5, 0, 10, 1, 1)
         self.p_flight_5.addWidget(self.p_detail_5, 0, 11, 1, 1)
 
@@ -1094,6 +1348,27 @@ class MainWindow(QtWidgets.QMainWindow):
             self.order_1.setEnabled(True)
             self.detail_1.setEnabled(True)
 
+            i = random.randint(0,7)
+            img = QtGui.QImage(r'./icons/logo' + str(i) + '.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+            icon = QtGui.QIcon(fitPixmap)
+            self.icon1.setIcon(icon)
+
+            self.flight_names = ["国际航空","南方航空","海南航空","国泰航空","厦门航空","深圳航空","中华航空","山东航空"]
+            self.flight_number_1.setText(self.flight_names[i] + str(self.Flight[5 * self.search_page - 5]["flightNum"]))
+
+            self.plane_number_1.setText(str(self.Flight[5 * self.search_page - 5]["planeNum"]))
+
+            self.orign_label_1.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 5]["origin"]]+str("机场"))
+            self.terminal_label_1.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 5]["terminal"]]+str("机场"))
+
+            img = QtGui.QImage(r'./icons/arrow.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+            icon = QtGui.QIcon(fitPixmap)
+            self.separator_1.setIcon(icon)
+
             state = self.Flight[5 * self.search_page - 5]["State"]
             if state == Const.STATE_GOOD:
                 self.state_1.setText("正常")
@@ -1104,9 +1379,15 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.start_time_1.setText("")
             self.end_time_1.setText("")
-            self.price_1.setText('￥')
+            self.price_1.setText('')
             self.rem_1.setText("")
             self.state_1.setText("")
+            self.icon1.setIcon(QtGui.QIcon())
+            self.separator_1.setIcon(QtGui.QIcon())
+            self.flight_number_1.setText("")
+            self.plane_number_1.setText("")
+            self.orign_label_1.setText("")
+            self.terminal_label_1.setText("")
             self.order_1.setEnabled(False)
             self.detail_1.setEnabled(False)
 
@@ -1118,6 +1399,26 @@ class MainWindow(QtWidgets.QMainWindow):
             self.order_2.setEnabled(True)
             self.detail_2.setEnabled(True)
 
+            i = random.randint(0,7)
+            img = QtGui.QImage(r'./icons/logo' + str(i) + '.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+            icon = QtGui.QIcon(fitPixmap)
+            self.icon2.setIcon(icon)
+
+            self.flight_number_2.setText(self.flight_names[i] + str(self.Flight[5 * self.search_page - 4]["flightNum"]))
+
+            self.plane_number_2.setText(str(self.Flight[5 * self.search_page - 4]["planeNum"]))
+
+            self.orign_label_2.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 4]["origin"]]+str("机场"))
+            self.terminal_label_2.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 4]["terminal"]]+str("机场"))
+
+            img = QtGui.QImage(r'./icons/arrow.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+            icon = QtGui.QIcon(fitPixmap)
+            self.separator_2.setIcon(icon)
+
             state = self.Flight[5 * self.search_page - 4]["State"]
             if state == Const.STATE_GOOD:
                 self.state_2.setText("正常")
@@ -1128,9 +1429,15 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.start_time_2.setText("")
             self.end_time_2.setText("")
-            self.price_2.setText('￥')
+            self.price_2.setText('')
             self.rem_2.setText("")
             self.state_2.setText("")
+            self.icon2.setIcon(QtGui.QIcon())
+            self.separator_2.setIcon(QtGui.QIcon())
+            self.flight_number_2.setText("")
+            self.plane_number_2.setText("")
+            self.orign_label_2.setText("")
+            self.terminal_label_2.setText("")
             self.order_2.setEnabled(False)
             self.detail_2.setEnabled(False)
 
@@ -1142,6 +1449,26 @@ class MainWindow(QtWidgets.QMainWindow):
             self.order_3.setEnabled(True)
             self.detail_3.setEnabled(True)
 
+            i = random.randint(0,7)
+            img = QtGui.QImage(r'./icons/logo' + str(i) + '.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+            icon = QtGui.QIcon(fitPixmap)
+            self.icon3.setIcon(icon)
+
+            self.flight_number_3.setText(self.flight_names[i] + str(self.Flight[5 * self.search_page - 3]["flightNum"]))
+
+            self.plane_number_3.setText(str(self.Flight[5 * self.search_page - 3]["planeNum"]))
+
+            self.orign_label_3.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 3]["origin"]]+str("机场"))
+            self.terminal_label_3.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 3]["terminal"]]+str("机场"))
+            
+            img = QtGui.QImage(r'./icons/arrow.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+            icon = QtGui.QIcon(fitPixmap)
+            self.separator_3.setIcon(icon)
+
             state = self.Flight[5 * self.search_page - 3]["State"]
             if state == Const.STATE_GOOD:
                 self.state_3.setText("正常")
@@ -1152,9 +1479,15 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.start_time_3.setText("")
             self.end_time_3.setText("")
-            self.price_3.setText('￥')
+            self.price_3.setText('')
             self.rem_3.setText("")
             self.state_3.setText("")
+            self.icon3.setIcon(QtGui.QIcon())
+            self.separator_3.setIcon(QtGui.QIcon())
+            self.flight_number_3.setText("")
+            self.plane_number_3.setText("")
+            self.orign_label_3.setText("")
+            self.terminal_label_3.setText("")
             self.order_3.setEnabled(False)
             self.detail_3.setEnabled(False)
 
@@ -1166,6 +1499,26 @@ class MainWindow(QtWidgets.QMainWindow):
             self.order_4.setEnabled(True)
             self.detail_4.setEnabled(True)
 
+            i = random.randint(0,7)
+            img = QtGui.QImage(r'./icons/logo' + str(i) + '.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+            icon = QtGui.QIcon(fitPixmap)
+            self.icon4.setIcon(icon)
+
+            self.flight_number_4.setText(self.flight_names[i] + str(self.Flight[5 * self.search_page - 2]["flightNum"]))
+
+            self.plane_number_4.setText(str(self.Flight[5 * self.search_page - 2]["planeNum"]))
+
+            self.orign_label_4.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 2]["origin"]]+str("机场"))
+            self.terminal_label_4.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 2]["terminal"]]+str("机场"))
+
+            img = QtGui.QImage(r'./icons/arrow.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+            icon = QtGui.QIcon(fitPixmap)
+            self.separator_4.setIcon(icon)
+
             state = self.Flight[5 * self.search_page - 2]["State"]
             if state == Const.STATE_GOOD:
                 self.state_4.setText("正常")
@@ -1176,9 +1529,15 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.start_time_4.setText("")
             self.end_time_4.setText("")
-            self.price_4.setText('￥')
+            self.price_4.setText('')
             self.rem_4.setText("")
             self.state_4.setText("")
+            self.icon4.setIcon(QtGui.QIcon())
+            self.separator_4.setIcon(QtGui.QIcon())
+            self.flight_number_4.setText("")
+            self.plane_number_4.setText("")
+            self.orign_label_4.setText("")
+            self.terminal_label_4.setText("")
             self.order_4.setEnabled(False)
             self.detail_4.setEnabled(False)
 
@@ -1190,6 +1549,26 @@ class MainWindow(QtWidgets.QMainWindow):
             self.order_5.setEnabled(True)
             self.detail_5.setEnabled(True)
 
+            i = random.randint(0,7)
+            img = QtGui.QImage(r'./icons/logo' + str(i) + '.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(20, 20, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)    #注意 scaled() 返回一个 QtGui.QPixmap
+            icon = QtGui.QIcon(fitPixmap)
+            self.icon5.setIcon(icon)
+
+            self.flight_number_5.setText(self.flight_names[i] + str(self.Flight[5 * self.search_page - 1]["flightNum"]))
+
+            self.plane_number_5.setText(str(self.Flight[5 * self.search_page - 1]["planeNum"]))
+
+            self.orign_label_5.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 1]["origin"]]+str("机场"))
+            self.terminal_label_5.setText(cityDict.reCityDict[self.Flight[5 * self.search_page - 1]["terminal"]]+str("机场"))
+
+            img = QtGui.QImage(r'./icons/arrow.png')
+            pixmap = QtGui.QPixmap(img)
+            fitPixmap = pixmap.scaled(200, 50, QtCore.Qt.IgnoreAspectRatio, QtCore.Qt.SmoothTransformation)   
+            icon = QtGui.QIcon(fitPixmap)
+            self.separator_5.setIcon(icon)
+
             state = self.Flight[5 * self.search_page - 1]["State"]
             if state == Const.STATE_GOOD:
                 self.state_5.setText("正常")
@@ -1200,9 +1579,15 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.start_time_5.setText("")
             self.end_time_5.setText("")
-            self.price_5.setText('￥')
+            self.price_5.setText('')
             self.rem_5.setText("")
             self.state_5.setText("")
+            self.icon5.setIcon(QtGui.QIcon())
+            self.separator_5.setIcon(QtGui.QIcon())
+            self.flight_number_5.setText("")
+            self.plane_number_5.setText("")
+            self.orign_label_5.setText("")
+            self.terminal_label_5.setText("")
             self.order_5.setEnabled(False)
             self.detail_5.setEnabled(False)
 
@@ -1242,6 +1627,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                          str(self.UserFlight[5 * self.user_page - 5]["date"]["month"])+'-'+
                                          str(self.UserFlight[5 * self.user_page - 5]["date"]["day"]))
             self.p_start_time_1.setText(self.UserFlight[5 * self.user_page - 5]["date"]["startTime"])
+            self.p_separator_1.setText('---->')
             self.p_end_time_1.setText(self.UserFlight[5 * self.user_page - 5]["date"]["endTime"])
             self.p_price_1.setText('￥' + str(self.UserFlight[5 * self.user_page - 5]["price"]))
             self.p_origin_1.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 5]["origin"]])
@@ -1257,8 +1643,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.p_flight_date_1.setText("")
             self.p_start_time_1.setText("")
+            self.p_separator_1.setText('')
             self.p_end_time_1.setText("")
-            self.p_price_1.setText('￥')
+            self.p_price_1.setText('')
             self.p_origin_1.setText("")
             self.p_terminal_1.setText("")
             self.p_order_state_1.setText("")
@@ -1270,6 +1657,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                          str(self.UserFlight[5 * self.user_page - 4]["date"]["month"]) + '-' +
                                          str(self.UserFlight[5 * self.user_page - 4]["date"]["day"]))
             self.p_start_time_2.setText(self.UserFlight[5 * self.user_page - 4]["date"]["startTime"])
+            self.p_separator_2.setText('---->')
             self.p_end_time_2.setText(self.UserFlight[5 * self.user_page - 4]["date"]["endTime"])
             self.p_price_2.setText('￥' + str(self.UserFlight[5 * self.user_page - 4]["price"]))
             self.p_origin_2.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 4]["origin"]])
@@ -1285,8 +1673,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.p_flight_date_2.setText("")
             self.p_start_time_2.setText("")
+            self.p_separator_2.setText('')
             self.p_end_time_2.setText("")
-            self.p_price_2.setText('￥')
+            self.p_price_2.setText('')
             self.p_origin_2.setText("")
             self.p_terminal_2.setText("")
             self.p_order_state_2.setText("")
@@ -1298,6 +1687,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                          str(self.UserFlight[5 * self.user_page - 3]["date"]["month"]) + '-' +
                                          str(self.UserFlight[5 * self.user_page - 3]["date"]["day"]))
             self.p_start_time_3.setText(self.UserFlight[5 * self.user_page - 3]["date"]["startTime"])
+            self.p_separator_3.setText('---->')
             self.p_end_time_3.setText(self.UserFlight[5 * self.user_page - 3]["date"]["endTime"])
             self.p_price_3.setText('￥' + str(self.UserFlight[5 * self.user_page - 3]["price"]))
             self.p_origin_3.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 3]["origin"]])
@@ -1313,8 +1703,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.p_flight_date_3.setText("")
             self.p_start_time_3.setText("")
+            self.p_separator_3.setText('')
             self.p_end_time_3.setText("")
-            self.p_price_3.setText('￥')
+            self.p_price_3.setText('')
             self.p_origin_3.setText("")
             self.p_terminal_3.setText("")
             self.p_order_state_3.setText("")
@@ -1326,6 +1717,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                          str(self.UserFlight[5 * self.user_page - 2]["date"]["month"]) + '-' +
                                          str(self.UserFlight[5 * self.user_page - 2]["date"]["day"]))
             self.p_start_time_4.setText(self.UserFlight[5 * self.user_page - 2]["date"]["startTime"])
+            self.p_separator_4.setText('---->')
             self.p_end_time_4.setText(self.UserFlight[5 * self.user_page - 2]["date"]["endTime"])
             self.p_price_4.setText('￥' + str(self.UserFlight[5 * self.user_page - 2]["price"]))
             self.p_origin_4.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 2]["origin"]])
@@ -1341,8 +1733,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.p_flight_date_4.setText("")
             self.p_start_time_4.setText("")
+            self.p_separator_4.setText('')
             self.p_end_time_4.setText("")
-            self.p_price_4.setText('￥')
+            self.p_price_4.setText('')
             self.p_origin_4.setText("")
             self.p_terminal_4.setText("")
             self.p_order_state_4.setText("")
@@ -1354,6 +1747,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                          str(self.UserFlight[5 * self.user_page - 1]["date"]["month"]) + '-' +
                                          str(self.UserFlight[5 * self.user_page - 1]["date"]["day"]))
             self.p_start_time_5.setText(self.UserFlight[5 * self.user_page - 1]["date"]["startTime"])
+            self.p_separator_5.setText('---->')
             self.p_end_time_5.setText(self.UserFlight[5 * self.user_page - 1]["date"]["endTime"])
             self.p_price_5.setText('￥' + str(self.UserFlight[5 * self.user_page - 1]["price"]))
             self.p_origin_5.setText(self.city_EnToCh[self.UserFlight[5 * self.user_page - 1]["origin"]])
@@ -1369,8 +1763,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.p_flight_date_5.setText("")
             self.p_start_time_5.setText("")
+            self.p_separator_5.setText('')
             self.p_end_time_5.setText("")
-            self.p_price_5.setText('￥')
+            self.p_price_5.setText('')
             self.p_origin_5.setText("")
             self.p_terminal_5.setText("")
             self.p_order_state_5.setText("")

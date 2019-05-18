@@ -113,7 +113,7 @@ color:#57595B;
 padding:5px;
 min-height:15px;
 border-radius:5px;
-background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #E4E4E4,stop:1 #E4E4E4);
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #F4F4F4,stop:1 #F4F4F4);
 }
 
 .QPushButton:hover,.QToolButton:hover{
